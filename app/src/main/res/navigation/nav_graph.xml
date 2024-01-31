@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/first_fragment"
+    android:id="@+id/nav_graph">
+
+    <keep_state_fragment
+        android:id="@+id/first_fragment"
+        android:name="com.jspstudio.community.view.fragment.FirstFragment"
+        app:popUpToSaveState="true"
+        tools:layout="@layout/fragment_first"
+        android:label="FirstFragment" >
+
+        <action
+            android:id="@+id/action_first_to_detail"
+            app:destination="@+id/book_detail_fragment"/>
+
+    </keep_state_fragment>
+
+    <keep_state_fragment
+        android:id="@+id/second_fragment"
+        android:name="com.jspstudio.community.view.fragment.SecondFragment"
+        app:popUpToSaveState="true"
+        tools:layout="@layout/fragment_second"
+        android:label="SecondFragment" />
+
+    <keep_state_fragment
+        android:id="@+id/third_fragment"
+        android:name="com.jspstudio.community.view.fragment.ThirdFragment"
+        app:popUpToSaveState="true"
+        tools:layout="@layout/fragment_third"
+        android:label="ThirdFragment" />
+
+    <keep_state_fragment
+        android:id="@+id/book_detail_fragment"
+        android:name="com.jspstudio.community.view.fragment.BookDetailFragment"
+        android:label="BookDetailFragment" />
+
+</navigation>
