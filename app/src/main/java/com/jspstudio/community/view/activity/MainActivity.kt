@@ -12,6 +12,8 @@ import com.jspstudio.community.R
 import com.jspstudio.community.databinding.ActivityMainBinding
 import com.jspstudio.community.util.KeepStateFragment
 
+// github token : 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
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
