@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -55,4 +56,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
 
     implementation("com.github.bumptech.glide:glide:4.14.2")
+    implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+    implementation(platform("com.google.firebase:firebase-firestore"))
+    implementation(platform("com.google.firebase:firebase-storage"))
 }

@@ -2,11 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/first_fragment"
+    app:startDestination="@id/home_fragment"
     android:id="@+id/nav_graph">
 
     <keep_state_fragment
-        android:id="@+id/first_fragment"
+        android:id="@+id/home_fragment"
         android:name="com.jspstudio.community.view.fragment.FirstFragment"
         app:popUpToSaveState="true"
         tools:layout="@layout/fragment_first"
@@ -32,9 +32,9 @@
         tools:layout="@layout/fragment_third"
         android:label="ThirdFragment" />
 
-    <keep_state_fragment
-        android:id="@+id/book_detail_fragment"
-        android:name="com.jspstudio.community.view.fragment.BookDetailFragment"
-        android:label="BookDetailFragment" />
+<!--    <keep_state_fragment-->
+<!--        android:id="@+id/book_detail_fragment"-->
+<!--        android:name="com.jspstudio.community.view.fragment.BookDetailFragment"-->
+<!--        android:label="BookDetailFragment" />-->
 
 </navigation>

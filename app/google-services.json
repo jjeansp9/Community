@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "856461700851",
+    "project_id": "community-5d51f",
+    "storage_bucket": "community-5d51f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856461700851:android:efeb7e5cf413507deb9186",
+        "android_client_info": {
+          "package_name": "com.jspstudio.community"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfaEJgKniMvBg03rgle4Rqx0U5ymt2pLU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

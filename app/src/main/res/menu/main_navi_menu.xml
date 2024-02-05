@@ -2,14 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/first_fragment"
-        android:title="first_fragment" />
+        android:id="@+id/home_fragment"
+        android:icon="@drawable/tab_home_nor"
+        android:title="home"/>
 
     <item
         android:id="@+id/second_fragment"
-        android:title="second_fragment" />
+        android:icon="@drawable/tab_chat_nor"
+        android:title="chat"/>
 
     <item
         android:id="@+id/third_fragment"
-        android:title="third_fragment" />
+        android:icon="@drawable/tab_friend_nor"
+        android:title="friend"/>
 </menu>

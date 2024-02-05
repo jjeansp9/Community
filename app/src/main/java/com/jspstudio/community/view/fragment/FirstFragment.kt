@@ -31,11 +31,10 @@ class FirstFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setRecyclerView()
 
     }
 
-    private fun setRecyclerView() {
+//    private fun setRecyclerView() {
 //        binding.bookRecyclerView.layoutManager = LinearLayoutManager(requireContext())
 //        binding.bookRecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
 //        val adapter = BookAdapter(requireContext(), resources.getStringArray(R.array.book_list))
@@ -48,6 +47,6 @@ class FirstFragment: Fragment() {
 //            }
 //        })
 //        binding.bookRecyclerView.adapter = adapter
-
-    }
+//
+//    }
 }
