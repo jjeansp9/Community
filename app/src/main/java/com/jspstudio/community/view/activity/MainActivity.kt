@@ -35,6 +35,5 @@ class MainActivity : AppCompatActivity() {
 
         // MainActivity의 main_navi와 navController 연결
         binding.mainNavi.setupWithNavController(navController)
-
     }
 }
