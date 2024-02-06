@@ -1,5 +1,7 @@
 package com.jspstudio.community.view.activity
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -15,11 +17,27 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         enableEdgeToEdge()
         binding.vmLogin = viewModel
         binding.lifecycleOwner= this
+
+        val brightness = 0.5f
+
+        val colorMatrix = ColorMatrix(floatArrayOf(
+            brightness, 0f, 0f, 0f, 0f,
+            0f, brightness, 0f, 0f, 0f,
+            0f, 0f, brightness, 0f, 0f,
+            0f, 0f, 0f, 1f, 0f
+        ))
+
+        binding.img.colorFilter = ColorMatrixColorFilter(colorMatrix)
+
         click()
         //var keyHash = Utility.getKeyHash(this)
     }
 
     private fun click() {
+        binding.btnKakao.setOnClickListener { kakaoLogin() }
+    }
+
+    private fun kakaoLogin() {
 
     }
 }
