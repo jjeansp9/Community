@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Community</string>
+
+    <string name="kakao_native_app_key">kakao8809f8c3d93b6ca4839dcdf33930a275</string>
 </resources>

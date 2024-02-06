@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.storage.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -57,6 +59,19 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
-    implementation(platform("com.google.firebase:firebase-firestore"))
-    implementation(platform("com.google.firebase:firebase-storage"))
+
+    implementation("com.kakao.sdk:v2-user:2.19.0") // 카카오 로그인
+    implementation("com.google.android.gms:play-services-auth:20.4.0") // 구글 로그인 SDK 라이브러리
+    //implementation("com.google.android.gms:play-services-location:21.0.1") // Google Fused 라이브러리
+    implementation("com.navercorp.nid:oauth:5.3.0") // 네이버 로그인을 위한 SDK 라이브러리
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3") // okHttp 4.x 버전
+
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01")
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 }

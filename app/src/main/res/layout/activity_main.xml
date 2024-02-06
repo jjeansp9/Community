@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <import type="com.jspstudio.community.viewmodel.MainViewModel"/>
+        <variable
+            name="vmMain"
+            type="com.jspstudio.community.viewmodel.MainViewModel" />
+    </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -24,8 +30,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/white"
+            app:itemActiveIndicatorStyle="@color/white"
             app:itemBackground="@color/white"
-            app:itemIconSize="36dp"
+            app:itemIconSize="27dp"
             app:itemIconTint="@color/nav_item"
             app:itemTextColor="@color/nav_item"
             app:labelVisibilityMode="unlabeled"

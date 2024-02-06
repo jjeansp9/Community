@@ -2,24 +2,24 @@ package com.jspstudio.community.view.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.databinding.DataBindingUtil
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.jspstudio.community.R
+import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityMainBinding
 import com.jspstudio.community.util.KeepStateFragment
+import com.jspstudio.community.viewmodel.MainViewModel
 
 // github token : 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
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+    private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.vmMain = viewModel
+        binding.lifecycleOwner= this
         setNavigation()
     }
     private fun setNavigation() {
