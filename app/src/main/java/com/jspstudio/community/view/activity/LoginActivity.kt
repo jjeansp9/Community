@@ -1,5 +1,6 @@
 package com.jspstudio.community.view.activity
 
+import android.content.Intent
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
@@ -35,9 +36,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun click() {
         binding.btnKakao.setOnClickListener { kakaoLogin() }
+        binding.btnGuest.setOnClickListener { guestLogin() }
     }
 
     private fun kakaoLogin() {
 
+    }
+
+    private fun guestLogin() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
