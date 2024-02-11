@@ -35,12 +35,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.img.colorFilter = ColorMatrixColorFilter(colorMatrix)
 
         click()
+        observe()
         //var keyHash = Utility.getKeyHash(this)
     }
 
     private fun click() {
-        binding.btnKakao.setOnClickListener { binding.vmLogin.kakaoLogin() } // Kakao Login
-        binding.btnGuest.setOnClickListener { binding.vmLogin.guestLogin() } // Guest Login
+        binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin() } // Kakao Login
+        binding.btnGuest.setOnClickListener { binding.vmLogin?.guestLogin() } // Guest Login
+    }
+
+    private fun observe() {
+
     }
 
     private fun guestLogin() {

@@ -13,7 +13,7 @@ import com.jspstudio.community.viewmodel.MainViewModel
 
 // github token : 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
 
-class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
+class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main, "MainActivity") {
     private val viewModel: MainViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
