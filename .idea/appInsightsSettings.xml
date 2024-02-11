@@ -27,10 +27,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.jspstudio.community" />
+                  <option name="mobileSdkAppId" value="1:856461700851:android:efeb7e5cf413507deb9186" />
+                  <option name="projectId" value="community-5d51f" />
+                  <option name="projectNumber" value="856461700851" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
