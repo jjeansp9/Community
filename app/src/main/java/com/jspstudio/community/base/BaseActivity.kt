@@ -8,9 +8,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
 abstract class BaseActivity<T : ViewDataBinding>(
-    @LayoutRes private val layoutResourceId: Int
+    @LayoutRes private val layoutResourceId: Int,
+    tag : String
 ) : AppCompatActivity() {
 
+    protected val TAG = tag
     lateinit var binding : T
 
     override fun onCreate(savedInstanceState: Bundle?) {
