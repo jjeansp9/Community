@@ -9,14 +9,18 @@ import androidx.activity.viewModels
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityLoginBinding
+import com.jspstudio.community.sns.KakaoLoginMgr
+import com.jspstudio.community.view.util.Constant
 import com.jspstudio.community.viewmodel.LoginViewModel
 
-class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login) {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login, "LoginActivity") {
+
     private val viewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding.vmLogin = viewModel
+        binding.vmLogin = LoginViewModel(this)
         binding.lifecycleOwner= this
 
         val brightness = 0.5f
@@ -35,12 +39,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     }
 
     private fun click() {
-        binding.btnKakao.setOnClickListener { kakaoLogin() }
-        binding.btnGuest.setOnClickListener { guestLogin() }
-    }
-
-    private fun kakaoLogin() {
-
+        binding.btnKakao.setOnClickListener { binding.vmLogin.kakaoLogin() } // Kakao Login
+        binding.btnGuest.setOnClickListener { binding.vmLogin.guestLogin() } // Guest Login
     }
 
     private fun guestLogin() {

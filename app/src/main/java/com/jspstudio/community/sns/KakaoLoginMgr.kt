@@ -36,15 +36,6 @@ class KakaoLoginMgr(private val context : Context) {
                 LogMgr.e(TAG, "login fail : $error.message")
             }else if(token != null){
                 updateSocialToken(token.accessToken)
-                //                    Log.i("kakaoLogin", "카카오 고유ID : " + user.id)
-//                    Log.i("kakaoLogin", "카카오 닉네임 : " + user.kakaoAccount!!.profile!!.nickname)
-//                    Log.i("kakaoLogin", "카카오 이메일 : " + user.kakaoAccount!!.email)
-//                    Log.i("kakaoLogin", "카카오 성별 : " + user.kakaoAccount!!.gender)
-//                    Log.i("kakaoLogin", "카카오 연령대 : " + user.kakaoAccount!!.ageRange)
-//                    Log.i(
-//                        "kakaoLogin",
-//                        "카카오 프로필사진 : " + user.kakaoAccount!!.profile!!.profileImageUrl
-//                    )
             }
         }
     }
