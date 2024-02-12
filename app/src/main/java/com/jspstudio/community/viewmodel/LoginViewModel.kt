@@ -176,6 +176,7 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
 //        profile["name"] = UserData.name.toString()
 //        profile["id"] = UserData.id.toString()
 //        profile["profile"] = ""
+//        profile["loginType"] = UserData.loginType.toString()
 //        profile["start_time"] = sdf.format(Date())
 //
 //        userRef.document(sdf.format(Date()) + "_" + UserData.id.toString()).set(profile)
