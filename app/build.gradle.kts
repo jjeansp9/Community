@@ -62,7 +62,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx")
 
     implementation("com.kakao.sdk:v2-user:2.19.0") // 카카오 로그인
-    implementation("com.google.android.gms:play-services-auth:20.4.0") // 구글 로그인 SDK 라이브러리
+    implementation("com.google.android.gms:play-services-auth:20.7.0") // 구글 로그인 SDK 라이브러리
     //implementation("com.google.android.gms:play-services-location:21.0.1") // Google Fused 라이브러리
     implementation("com.navercorp.nid:oauth:5.3.0") // 네이버 로그인을 위한 SDK 라이브러리
 
