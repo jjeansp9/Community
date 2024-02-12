@@ -22,6 +22,19 @@
             android:alpha="0.8" />
 
         <TextView
+            android:id="@+id/btn_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/btn_guest"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="16dp"
+            android:textSize="28sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="이메일 인증"/>
+
+        <TextView
             android:id="@+id/btn_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

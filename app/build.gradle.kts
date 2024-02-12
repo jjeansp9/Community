@@ -59,6 +59,7 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.14.2")
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
+    implementation("com.google.firebase:firebase-auth-ktx")
 
     implementation("com.kakao.sdk:v2-user:2.19.0") // 카카오 로그인
     implementation("com.google.android.gms:play-services-auth:20.4.0") // 구글 로그인 SDK 라이브러리

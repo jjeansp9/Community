@@ -6,6 +6,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import com.google.firebase.auth.FirebaseAuth
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityLoginBinding
@@ -15,7 +16,8 @@ import com.jspstudio.community.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login, "LoginActivity") {
 
-    private val viewModel: LoginViewModel by viewModels()
+    private lateinit var auth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +36,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         binding.img.colorFilter = ColorMatrixColorFilter(colorMatrix)
 
+        auth = FirebaseAuth.getInstance()
         click()
         observe()
         //var keyHash = Utility.getKeyHash(this)
@@ -42,6 +45,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun click() {
         binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin() } // Kakao Login
         binding.btnGuest.setOnClickListener { binding.vmLogin?.guestLogin() } // Guest Login
+        binding.btnEmail.setOnClickListener { binding.vmLogin?.emailLogin(auth, "jjeansp9@gmail.com", "13132424", this) } // Email Login
     }
 
     private fun observe() {
