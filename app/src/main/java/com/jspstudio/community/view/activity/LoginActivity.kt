@@ -6,18 +6,22 @@ import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityLoginBinding
 import com.jspstudio.community.sns.KakaoLoginMgr
+import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.view.util.Constant
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login, "LoginActivity") {
 
     private lateinit var auth: FirebaseAuth
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,16 +48,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun click() {
         binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin() } // Kakao Login
+        binding.btnNaver.setOnClickListener { binding.vmLogin?.naverLogin() } // Naver Login
+        binding.btnGoogle.setOnClickListener { binding.vmLogin?.googleLogin(auth) } // Google Login
         binding.btnGuest.setOnClickListener { binding.vmLogin?.guestLogin() } // Guest Login
         binding.btnEmail.setOnClickListener { binding.vmLogin?.emailLogin(auth, "jjeansp9@gmail.com", "13132424", this) } // Email Login
     }
 
     private fun observe() {
 
-    }
-
-    private fun guestLogin() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 }
