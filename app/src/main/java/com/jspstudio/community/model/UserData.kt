@@ -1,8 +1,11 @@
 package com.jspstudio.community.model
 
-data class UserData(
-    var id : String? = "",
-    var profileImg : String? = "",
-    var loginType : String? = "",
-    var gender : String? = ""
-)
+object UserData {
+    var id: String? = ""
+    var name: String? = ""
+    var profileImg: String? = ""
+    var loginType: String? = ""
+    var gender: String? = ""
+    var birth: String? = ""
+    var mbti: String? = ""
+}

@@ -32,7 +32,9 @@ class NaverLoginMgr(private val context: Context) {
     }
 
     fun startNaverLogin(updateSocialToken: (String) -> Unit) {
-        naverSetOAuthLoginCallback { updateSocialToken(it)}
+        naverSetOAuthLoginCallback {
+            updateSocialToken(it)
+        }
         NaverIdLoginSDK.authenticate(context, oAuthLoginCallback)
 
     }

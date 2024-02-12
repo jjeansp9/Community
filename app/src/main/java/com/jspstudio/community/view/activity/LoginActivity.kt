@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,6 +15,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityLoginBinding
+import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.KakaoLoginMgr
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.view.util.Constant
@@ -55,6 +57,17 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     }
 
     private fun observe() {
-
+        binding.vmLogin?.resultCode?.observe(this){
+            when(it){
+                ResponseCode.SUCCESS -> {
+                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, MainActivity::class.java))
+                }
+                ResponseCode.NOT_FOUND -> {
+                    Toast.makeText(this, "회원가입 화면으로 ㄱㄱ", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, SignUpActivity::class.java))
+                }
+            }
+        }
     }
 }
