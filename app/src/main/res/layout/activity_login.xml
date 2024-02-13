@@ -49,28 +49,34 @@
 
         <TextView
             android:id="@+id/btn_email"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/btn_guest"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/base_horizontal"
             android:layout_marginBottom="16dp"
-            android:textSize="28sp"
+            android:padding="@dimen/btn_padding"
+            android:background="@drawable/bg_corner_12"
+            android:backgroundTint="@color/brand_color"
+            android:textSize="@dimen/text_size_18"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:text="이메일 인증"/>
 
         <TextView
             android:id="@+id/btn_guest"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/btn_kakao"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="@dimen/base_horizontal"
             android:layout_marginBottom="16dp"
-            android:textSize="28sp"
+            android:padding="@dimen/btn_padding"
+            android:background="@drawable/bg_corner_12"
+            android:backgroundTint="@color/brand_color"
+            android:textSize="@dimen/text_size_18"
             android:textColor="@color/white"
-            android:textStyle="bold"
             android:text="둘러보기"/>
 
         <ImageView

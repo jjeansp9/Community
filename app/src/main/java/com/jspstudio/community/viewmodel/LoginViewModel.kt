@@ -139,7 +139,7 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
     }
 
     fun guestLogin() {
-
+        _resultCode.value = ResponseCode.NOT_FOUND
     }
 
     private val _resultCode = MutableLiveData<Int>()
