@@ -1,24 +1,25 @@
 package com.jspstudio.community.view.fragment.signup
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.jspstudio.community.R
+import com.jspstudio.community.base.BaseFragment
+import com.jspstudio.community.databinding.FragmentNameBinding
+import com.jspstudio.community.user.UserData
+import com.jspstudio.community.util.LogMgr
+import com.jspstudio.community.viewmodel.LoginViewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class NameFragment : Fragment() {
-    // TODO: Rename and change types of parameters
+class NameFragment : BaseFragment<FragmentNameBinding>("NameFragment") {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -30,24 +31,7 @@ class NameFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_name, container, false)
-    }
-
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NameFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             NameFragment().apply {
@@ -56,5 +40,20 @@ class NameFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentNameBinding.inflate(inflater, container, false)
+        binding.vmLogin = ViewModelProvider(this)[LoginViewModel::class.java]
+        binding.lifecycleOwner = viewLifecycleOwner
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.vmLogin?.name?.observe(mContext) { UserData.name = it }
     }
 }

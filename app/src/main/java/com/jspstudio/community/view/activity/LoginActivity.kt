@@ -16,7 +16,9 @@ import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityLoginBinding
 import com.jspstudio.community.network.ResponseCode
+import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
+import com.jspstudio.community.sns.NaverLoginMgr
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.view.util.Constant
 import com.jspstudio.community.viewmodel.LoginViewModel
@@ -25,10 +27,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private lateinit var auth: FirebaseAuth
 
+    var kakaoLoginMgr : KakaoLoginMgr? = null
+    var naverLoginMgr : NaverLoginMgr? = null
+    var googleLoginMgr : GoogleLoginMgr? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding.vmLogin = LoginViewModel(this)
+        binding.vmLogin = LoginViewModel()
         binding.lifecycleOwner= this
 
         val brightness = 0.5f
@@ -42,16 +48,23 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
         binding.img.colorFilter = ColorMatrixColorFilter(colorMatrix)
 
+        setSnsMgr()
         auth = FirebaseAuth.getInstance()
         click()
         observe()
         //var keyHash = Utility.getKeyHash(this)
     }
 
+    private fun setSnsMgr() {
+        kakaoLoginMgr = KakaoLoginMgr(this)
+        naverLoginMgr = NaverLoginMgr(this)
+        googleLoginMgr = GoogleLoginMgr(this)
+    }
+
     private fun click() {
-        binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin() } // Kakao Login
-        binding.btnNaver.setOnClickListener { binding.vmLogin?.naverLogin() } // Naver Login
-        binding.btnGoogle.setOnClickListener { binding.vmLogin?.googleLogin(auth) } // Google Login
+        binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin(kakaoLoginMgr!!) } // Kakao Login
+        binding.btnNaver.setOnClickListener { binding.vmLogin?.naverLogin(naverLoginMgr!!) } // Naver Login
+        binding.btnGoogle.setOnClickListener { binding.vmLogin?.googleLogin(googleLoginMgr!!, auth) } // Google Login
         binding.btnGuest.setOnClickListener { binding.vmLogin?.guestLogin() } // Guest Login
         binding.btnEmail.setOnClickListener { binding.vmLogin?.emailLogin(auth, "jjeansp9@gmail.com", "13132424", this) } // Email Login
     }

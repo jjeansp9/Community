@@ -1,51 +1,32 @@
 package com.jspstudio.community.viewmodel
 
-import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import androidx.activity.ComponentActivity
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.firebase.Firebase
-import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.actionCodeSettings
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseViewModel
-import com.jspstudio.community.model.UserData
+import com.jspstudio.community.user.UserData
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
 import com.jspstudio.community.sns.NaverLoginMgr
 import com.jspstudio.community.util.LogMgr
-import com.jspstudio.community.view.activity.MainActivity
-import com.jspstudio.community.view.util.Constant
-import com.jspstudio.community.view.util.Variable
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
-import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
-class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewModel") {
+class LoginViewModel() : BaseViewModel("LoginViewModel") {
 
-    val kakaoLoginMgr : KakaoLoginMgr = KakaoLoginMgr(context)
-    val naverLoginMgr : NaverLoginMgr = NaverLoginMgr(context)
-    val googleLoginMgr : GoogleLoginMgr = GoogleLoginMgr(context)
-
-    fun kakaoLogin() {
+    fun kakaoLogin(kakaoLoginMgr: KakaoLoginMgr) {
         kakaoLoginMgr.startKakaoLogin {
             UserApiClient.instance.me { user, throwable ->
                 if (it != null && it.isNotEmpty()) {
@@ -62,7 +43,7 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
                     val progileImg = user?.kakaoAccount!!.profile!!.profileImageUrl.toString()
 
                     UserData.id = id
-                    UserData.name = name
+                    //UserData.name = name
                     UserData.profileImg = progileImg
                     UserData.loginType = "Kakao"
                     requestLogin()
@@ -71,7 +52,7 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
         }
     }
 
-    fun naverLogin() {
+    fun naverLogin(naverLoginMgr : NaverLoginMgr) {
         naverLoginMgr.startNaverLogin {
             NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
                 override fun onSuccess(result: NidProfileResponse) {
@@ -85,7 +66,7 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
                     if (progileImg != null) LogMgr.e(TAG, "naver profil url: " + progileImg)
 
                     UserData.id = id
-                    UserData.name = name
+                    //UserData.name = name
                     UserData.profileImg = progileImg
                     UserData.loginType = "Naver"
                     requestLogin()
@@ -96,7 +77,7 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
         }
     }
 
-    fun googleLogin(auth: FirebaseAuth) {
+    fun googleLogin(googleLoginMgr: GoogleLoginMgr, auth: FirebaseAuth) {
 //        googleLoginMgr.startGoogleLogin { idToken ->
 //            // Handle the ID token and sign in with Firebase Auth
 //            val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -161,13 +142,13 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
                 val profile : Map<String, String> = snapshot.data as Map<String, String>
                 LogMgr.e(TAG, snapshot.data.toString())
                 val id = profile["id"]
-                if (id.toString() == UserData.id.toString()) {
+                if (id.toString() == UserData.id.toString()) { // db에 저장된 id가 있는경우 메인화면으로
                     _resultCode.value = ResponseCode.SUCCESS
                     return@addSnapshotListener
                 }
             }
 
-            _resultCode.value = ResponseCode.NOT_FOUND
+            _resultCode.value = ResponseCode.NOT_FOUND // 없는경우 회원가입으로
         }
 
 //        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
@@ -180,5 +161,12 @@ class LoginViewModel(context : ComponentActivity) : BaseViewModel("LoginViewMode
 //        profile["start_time"] = sdf.format(Date())
 //
 //        userRef.document(sdf.format(Date()) + "_" + UserData.id.toString()).set(profile)
+    }
+
+    var _name = MutableLiveData<String>()
+    var name : LiveData<String> = _name
+
+    fun etName(s: String){
+        _name.value = s.ifEmpty { "" }
     }
 }

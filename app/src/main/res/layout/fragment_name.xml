@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.fragment.signup.NameFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<layout>
+    <data>
+        <import type="com.jspstudio.community.viewmodel.LoginViewModel"/>
+        <variable
+            name="vmLogin"
+            type="com.jspstudio.community.viewmodel.LoginViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="NAME" />
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".view.fragment.signup.NameFragment"
+        android:padding="@dimen/base_horizontal"
+        android:id="@+id/root">
 
-</FrameLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_24"
+            android:textColor="@color/font_color_default"
+            android:textStyle="bold"
+            android:text="닉네임을 입력해주세요" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_edit_text_default"
+            android:padding="@dimen/et_padding"
+            android:textSize="@dimen/text_size_16"
+            android:onTextChanged="@{(s,start,befor,count)->vmLogin.etName(s.toString())}"
+            android:hint="닉네임 입력"/>
+
+    </LinearLayout>
+</layout>

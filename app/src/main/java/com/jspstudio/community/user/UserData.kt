@@ -1,4 +1,4 @@
-package com.jspstudio.community.model
+package com.jspstudio.community.user
 
 object UserData {
     var id: String? = ""

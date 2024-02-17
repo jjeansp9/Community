@@ -7,4 +7,16 @@
 
     <color name="bnv_sel">#002D41</color>
     <color name="bnv_unSel">#A6A6A6</color>
+
+    <color name="font_color_333">#333</color>
+    <color name="font_color_444">#444</color>
+    <color name="font_color_555">#555</color>
+    <color name="font_color_666">#666</color>
+    <color name="font_color_777">#777</color>
+    <color name="font_color_888">#888</color>
+    <color name="font_color_999">#999</color>
+    <color name="font_color_default">#1D1D1D</color>
+    <color name="font_coin_detail">#373737</color>
+
+    <color name="color_et_stroke">#D8D8D8</color>
 </resources>
