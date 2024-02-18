@@ -19,6 +19,7 @@ import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
 import com.jspstudio.community.sns.NaverLoginMgr
 import com.jspstudio.community.util.LogMgr
+import com.jspstudio.community.view.util.Constant
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.profile.NidProfileCallback
@@ -45,7 +46,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
                     UserData.id = id
                     //UserData.name = name
                     UserData.profileImg = progileImg
-                    UserData.loginType = "Kakao"
+                    UserData.loginType = Constant.LOGIN_TYPE_KAKAO
                     requestLogin()
                 }
             }
@@ -68,7 +69,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
                     UserData.id = id
                     //UserData.name = name
                     UserData.profileImg = progileImg
-                    UserData.loginType = "Naver"
+                    UserData.loginType = Constant.LOGIN_TYPE_NAVER
                     requestLogin()
                 }
                 override fun onError(errorCode: Int, message: String) {}

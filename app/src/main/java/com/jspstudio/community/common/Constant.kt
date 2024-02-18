@@ -10,4 +10,6 @@ object Constant {
     const val SIGN_UP_GENDER_AND_BIRTH = 1
     const val SIGN_UP_MBTI = 2
     const val SIGN_UP_FINISH = 3
+
+    const val NAME_MIN_LENGTH = 2
 }

@@ -41,25 +41,25 @@
             app:layout_constraintTop_toBottomOf="@id/appbar_layout">
 
             <View
+                android:id="@+id/stack_1"
                 android:layout_width="0dp"
-                android:layout_height="8dp"
+                android:layout_height="4dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_corner_12"
-                android:backgroundTint="@color/black"/>
+                android:background="@drawable/bg_corner_12"/>
             <View
+                android:id="@+id/stack_2"
                 android:layout_width="0dp"
-                android:layout_height="8dp"
+                android:layout_height="4dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_corner_12"
-                android:backgroundTint="@color/black"/>
+                android:background="@drawable/bg_corner_12"/>
             <View
+                android:id="@+id/stack_3"
                 android:layout_width="0dp"
-                android:layout_height="8dp"
+                android:layout_height="4dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_corner_12"
-                android:backgroundTint="@color/black"/>
+                android:background="@drawable/bg_corner_12"/>
 
         </LinearLayout>
 

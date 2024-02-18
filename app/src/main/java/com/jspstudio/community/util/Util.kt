@@ -1,6 +1,5 @@
 package com.jspstudio.community.util
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -9,21 +8,12 @@ import android.os.Build
 import android.os.Parcelable
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
-import androidx.annotation.NonNull
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.widget.ContentLoadingProgressBar
-import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import java.io.Serializable
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 object Util {
@@ -32,9 +22,7 @@ object Util {
     fun rateOfReturn(beforeValue: Double, afterValue: Double): Double { return ((afterValue - beforeValue) / beforeValue) * 100 } // 수익률 구하기
     fun calculateFinalPrice(initialAmount: Double, returnRate: Double): Double { return initialAmount * (1 + returnRate / 100) } // 평가금액 구하기
 
-    fun formattedDecimal(value : Double, decimalNum: String) : String {
-        return decimalNum.format(value)
-    }
+    fun formattedDecimal(value : Double, decimalNum: String) : String { return decimalNum.format(value) }
 
     /**
      * dp값 or px값 가져오기
@@ -47,6 +35,12 @@ object Util {
         return str.replace(",", "").replace("%", "").replace("∞", "")
     }
 
+    fun showKeyboard(mContext: Context, view: View) {
+        view.requestFocus()
+        val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+    }
+
     /**
      * 파라미터로 받은 editText의 개수만큼 focus 얻어오고 키보드를 내리는 메소드
      * */
@@ -54,6 +48,7 @@ object Util {
         val inputMethodManager = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             ?: return
         for (view in focusList) {
+            view?.clearFocus()
             view?.let {
                 inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
             }
@@ -61,6 +56,7 @@ object Util {
     }
 
     fun hideKeyboard(mContext: Context, focus: View?) {
+        focus?.clearFocus()
         val inputMethodManager = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             ?: return
         focus?.let {

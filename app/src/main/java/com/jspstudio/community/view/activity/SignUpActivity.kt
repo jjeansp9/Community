@@ -1,21 +1,30 @@
 package com.jspstudio.community.view.activity
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivitySignUpBinding
 import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.UserInfoCheck
 import com.jspstudio.community.util.LogMgr
+import com.jspstudio.community.util.Util
 import com.jspstudio.community.util.ViewPagerUtil
 import com.jspstudio.community.view.adapter.SignUpVPAdapter
 import com.jspstudio.community.view.custom.CustomToast
+import com.jspstudio.community.view.fragment.signup.NameFragment
 import com.jspstudio.community.view.util.Constant
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up, "SignUpActivity") {
 
-    var pagerAdapter : SignUpVPAdapter? = null
+    private var pagerAdapter : SignUpVPAdapter? = null
+    private var fragment: Fragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +43,43 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         pagerAdapter = SignUpVPAdapter(this)
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.adapter = pagerAdapter
-        ViewPagerUtil.setScrollDuration(binding.viewPager, 100)
+        ViewPagerUtil.setScrollDuration(binding.viewPager, 500)
+        // ViewPager2에 페이지 변경 리스너 설정
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                // FragmentStateAdapter와 ViewPager2의 현재 아이템 인덱스를 사용하여 현재 프래그먼트 참조 업데이트
+                val brandColor = ContextCompat.getColor(this@SignUpActivity, R.color.brand_color)
+                val grayColor = ContextCompat.getColor(this@SignUpActivity, R.color.gray_light)
+                when(position) {
+                    Constant.SIGN_UP_NAME -> {
+                        binding.btnNext.text = getString(R.string.next)
+                        ViewCompat.setBackgroundTintList(binding.stack1, ColorStateList.valueOf(brandColor))
+                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(grayColor))
+                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
+                    }
+                    Constant.SIGN_UP_GENDER_AND_BIRTH -> {
+                        binding.btnNext.text = getString(R.string.next)
+
+                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(brandColor))
+                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
+                    }
+                    Constant.SIGN_UP_MBTI -> {
+                        binding.btnNext.text = getString(R.string.complete)
+                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(brandColor))
+                    }
+                }
+
+                CustomToast(this@SignUpActivity, position.toString())
+            }
+        })
     }
 
     private fun click() {
         binding.btnNext.setOnClickListener {
             val nextItem = binding.viewPager.currentItem + 1
+            val currentFragmentTag = "f" + binding.viewPager.currentItem
+            fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
             when(nextItem - 1) {
                 Constant.SIGN_UP_NAME -> nameConfirm(nextItem)
                 Constant.SIGN_UP_GENDER_AND_BIRTH -> genderAndBirthConfirm(nextItem)
@@ -52,12 +92,22 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     private fun observe() {
 
     }
-
     private fun nameConfirm(nextItem: Int) {
-        LogMgr.e(TAG, UserData.name)
+
         if (UserData.name == null) return
-        if (UserData.name!!.isEmpty()) {
+        if (UserData.name!!.isEmpty() || UserData.name!!.replace(" ", "").isEmpty()) {
+            (fragment as NameFragment).showNameKeyboard()
             CustomToast(this, "닉네임을 입력해주세요")
+            return
+
+        } else if (!UserInfoCheck.nameCheckSpace(UserData.name!!)) {
+            (fragment as NameFragment).showNameKeyboard()
+            CustomToast(this, "숫자,특수문자는 사용할 수 없습니다")
+            return
+
+        } else if (UserData.name!!.length < Constant.NAME_MIN_LENGTH) {
+            (fragment as NameFragment).showNameKeyboard()
+            CustomToast(this, "닉네임은 ${Constant.NAME_MIN_LENGTH}글자 이상이어야 합니다")
             return
         }
         binding.viewPager.currentItem = nextItem
@@ -68,7 +118,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     private fun mbtiConfirm() {
-        binding.btnNext.text = getString(R.string.complete)
     }
 
     private fun finishSignUp() {
@@ -82,10 +131,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 finish()
             } else {
                 binding.viewPager.currentItem = binding.viewPager.currentItem - 1
-                val btnText = binding.btnNext.text.toString()
-                if (btnText == getString(R.string.complete)) {
-                    binding.btnNext.text = getString(R.string.next)
-                }
             }
         }
     }

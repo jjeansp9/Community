@@ -29,11 +29,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_edit_text_default"
+            android:background="@drawable/bg_edit_text"
             android:padding="@dimen/et_padding"
             android:textSize="@dimen/text_size_16"
+            android:textColor="@color/font_color_default"
+            android:inputType="text"
+            android:maxLines="@integer/name_max_lines"
+            android:maxLength="@integer/name_max_length"
             android:onTextChanged="@{(s,start,befor,count)->vmLogin.etName(s.toString())}"
-            android:hint="닉네임 입력"/>
+            android:hint="닉네임 입력 (2글자 이상)"/>
 
     </LinearLayout>
 </layout>

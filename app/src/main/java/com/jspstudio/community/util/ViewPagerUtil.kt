@@ -13,6 +13,7 @@ object ViewPagerUtil {
     fun setScrollDuration(viewPager2: ViewPager2, duration: Int) {
         try {
             // ViewPager2의 RecyclerView 필드에 접근
+            val getDuration = duration / 10
             val recyclerViewField: Field = ViewPager2::class.java.getDeclaredField("mRecyclerView")
             recyclerViewField.isAccessible = true
             val recyclerView: RecyclerView = recyclerViewField.get(viewPager2) as RecyclerView
@@ -20,7 +21,7 @@ object ViewPagerUtil {
             // RecyclerView의 LayoutManager에 접근하여 스크롤 속도 조절
             recyclerView.layoutManager = object : LinearLayoutManager(recyclerView.context, HORIZONTAL, false) {
                 override fun smoothScrollToPosition(recyclerView: RecyclerView?, state: RecyclerView.State?, position: Int) {
-                    val scroller = LinearSmoothScrollerCustom(duration, recyclerView!!.context)
+                    val scroller = LinearSmoothScrollerCustom(getDuration, recyclerView!!.context)
                     scroller.targetPosition = position
                     startSmoothScroll(scroller)
                 }
