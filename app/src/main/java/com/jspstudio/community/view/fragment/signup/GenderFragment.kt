@@ -1,21 +1,20 @@
 package com.jspstudio.community.view.fragment.signup
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
-import com.jspstudio.community.databinding.FragmentGenderAndBirthBinding
-import com.jspstudio.community.databinding.FragmentNameBinding
+import com.jspstudio.community.databinding.FragmentGenderBinding
+import com.jspstudio.community.user.UserData
+import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class GenderAndBirthFragment : BaseFragment<FragmentGenderAndBirthBinding>("GenderBirthFragment") {
+class GenderFragment : BaseFragment<FragmentGenderBinding>("GenderFragment") {
     private var param1: String? = null
     private var param2: String? = null
 
@@ -27,22 +26,11 @@ class GenderAndBirthFragment : BaseFragment<FragmentGenderAndBirthBinding>("Gend
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            GenderAndBirthFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentGenderAndBirthBinding.inflate(inflater, container, false)
+        binding = FragmentGenderBinding.inflate(inflater, container, false)
         binding.vmLogin = ViewModelProvider(this)[LoginViewModel::class.java]
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
@@ -50,6 +38,16 @@ class GenderAndBirthFragment : BaseFragment<FragmentGenderAndBirthBinding>("Gend
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    public fun checkGender() : Boolean {
+        if (binding.rbMale.isChecked) {
+            UserData.gender = "male"
+            return true
+        } else if (binding.rbFemale.isChecked) {
+            UserData.gender = "female"
+            return true
+        }
+        return false
     }
 }

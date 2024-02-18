@@ -73,11 +73,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.vmLogin?.resultCode?.observe(this){
             when(it){
                 ResponseCode.SUCCESS -> {
-                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                 }
                 ResponseCode.NOT_FOUND -> {
-                    Toast.makeText(this, "회원가입 화면으로 ㄱㄱ", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, SignUpActivity::class.java))
                 }
             }

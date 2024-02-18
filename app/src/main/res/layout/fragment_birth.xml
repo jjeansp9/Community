@@ -10,8 +10,18 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.fragment.signup.GenderAndBirthFragment">
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".view.fragment.signup.BirthFragment"
+        android:padding="@dimen/base_horizontal">
 
+        <TextView
+            android:id="@+id/tv_sel_birth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_stroke_default"
+            android:padding="@dimen/et_padding"
+            android:text="생일 선택"/>
 
     </LinearLayout>
 </layout>

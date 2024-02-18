@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="com.jspstudio.community.viewmodel.LoginViewModel"/>
+        <variable
+            name="vmLogin"
+            type="com.jspstudio.community.viewmodel.LoginViewModel" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        tools:context=".view.fragment.signup.GenderFragment"
+        android:padding="@dimen/base_horizontal"
+        android:id="@+id/root">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_24"
+            android:textColor="@color/font_color_default"
+            android:textStyle="bold"
+            android:text="성별을 선택해주세요" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:background="@drawable/bg_stroke_default">
+
+            <RadioButton
+                android:id="@+id/rb_male"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="남성"/>
+
+            <RadioButton
+                android:id="@+id/rb_female"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="여성"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+</layout>

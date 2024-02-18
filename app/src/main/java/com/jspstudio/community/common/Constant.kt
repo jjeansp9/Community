@@ -7,8 +7,9 @@ object Constant {
     const val LOGIN_TYPE_GUEST = "GUEST"
 
     const val SIGN_UP_NAME = 0
-    const val SIGN_UP_GENDER_AND_BIRTH = 1
-    const val SIGN_UP_MBTI = 2
+    const val SIGN_UP_GENDER = 1
+    const val SIGN_UP_BIRTH = 2
+    const val SIGN_UP_MBTI = 3
 
     const val NAME_MIN_LENGTH = 2
 }

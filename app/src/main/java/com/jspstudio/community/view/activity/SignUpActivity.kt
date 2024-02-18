@@ -20,6 +20,7 @@ import com.jspstudio.community.util.Util
 import com.jspstudio.community.util.ViewPagerUtil
 import com.jspstudio.community.view.adapter.SignUpVPAdapter
 import com.jspstudio.community.view.custom.CustomToast
+import com.jspstudio.community.view.fragment.signup.GenderFragment
 import com.jspstudio.community.view.fragment.signup.NameFragment
 import com.jspstudio.community.view.util.Constant
 import com.jspstudio.community.viewmodel.LoginViewModel
@@ -46,12 +47,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         pagerAdapter = SignUpVPAdapter(this)
         binding.viewPager.isUserInputEnabled = false
         binding.viewPager.adapter = pagerAdapter
-        ViewPagerUtil.setScrollDuration(binding.viewPager, 500)
+        //ViewPagerUtil.setScrollDuration(binding.viewPager, 2000)
         // ViewPager2에 페이지 변경 리스너 설정
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                // FragmentStateAdapter와 ViewPager2의 현재 아이템 인덱스를 사용하여 현재 프래그먼트 참조 업데이트
                 val brandColor = ContextCompat.getColor(this@SignUpActivity, R.color.brand_color)
                 val grayColor = ContextCompat.getColor(this@SignUpActivity, R.color.gray_light)
                 when(position) {
@@ -60,20 +60,28 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                         binding.stack1.setBackgroundResource(R.color.brand_color)
                         binding.stack2.setBackgroundResource(R.color.gray_light)
                         binding.stack3.setBackgroundResource(R.color.gray_light)
+                        binding.stack4.setBackgroundResource(R.color.gray_light)
 //                        ViewCompat.setBackgroundTintList(binding.stack1, ColorStateList.valueOf(brandColor))
 //                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(grayColor))
 //                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
                     }
-                    Constant.SIGN_UP_GENDER_AND_BIRTH -> {
+                    Constant.SIGN_UP_GENDER -> {
                         binding.btnNext.text = getString(R.string.next)
                         binding.stack2.setBackgroundResource(R.color.brand_color)
                         binding.stack3.setBackgroundResource(R.color.gray_light)
 //                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(brandColor))
 //                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
                     }
+                    Constant.SIGN_UP_BIRTH -> {
+                        binding.btnNext.text = getString(R.string.next)
+                        binding.stack3.setBackgroundResource(R.color.brand_color)
+                        binding.stack4.setBackgroundResource(R.color.gray_light)
+//                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(brandColor))
+//                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
+                    }
                     Constant.SIGN_UP_MBTI -> {
                         binding.btnNext.text = getString(R.string.complete)
-                        binding.stack3.setBackgroundResource(R.color.brand_color)
+                        binding.stack4.setBackgroundResource(R.color.brand_color)
                         //ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(brandColor))
                     }
                 }
@@ -88,7 +96,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
             when(nextItem - 1) {
                 Constant.SIGN_UP_NAME -> nameConfirm(nextItem)
-                Constant.SIGN_UP_GENDER_AND_BIRTH -> genderAndBirthConfirm(nextItem)
+                Constant.SIGN_UP_GENDER -> genderConfirm(nextItem)
+                Constant.SIGN_UP_BIRTH -> birthConfirm(nextItem)
                 Constant.SIGN_UP_MBTI -> mbtiConfirmAndFinish()
             }
         }
@@ -117,7 +126,16 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         }
     }
 
-    private fun genderAndBirthConfirm(nextItem: Int) {
+    private fun genderConfirm(nextItem: Int) {
+        val isCheck = (fragment as GenderFragment).checkGender()
+        if (!isCheck) {
+            CustomToast(this, "성별을 선택해주세요")
+        } else {
+            binding.viewPager.currentItem = nextItem
+        }
+    }
+
+    private fun birthConfirm(nextItem: Int) {
         binding.viewPager.currentItem = nextItem
     }
 
