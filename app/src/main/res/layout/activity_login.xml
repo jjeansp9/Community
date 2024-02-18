@@ -22,32 +22,6 @@
             android:alpha="0.8" />
 
         <TextView
-            android:id="@+id/btn_naver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/btn_google"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="16dp"
-            android:textSize="28sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:text="네이버로그인"/>
-
-        <TextView
-            android:id="@+id/btn_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/btn_email"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="16dp"
-            android:textSize="28sp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:text="구글로그인"/>
-
-        <TextView
             android:id="@+id/btn_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -57,9 +31,9 @@
             android:layout_marginHorizontal="@dimen/base_horizontal"
             android:layout_marginBottom="16dp"
             android:padding="@dimen/btn_padding"
-            android:background="@drawable/bg_corner_12"
+            android:background="@drawable/bg_corner_10"
             android:backgroundTint="@color/brand_color"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="@dimen/text_size_16"
             android:textColor="@color/white"
             android:text="이메일 인증"/>
 
@@ -73,19 +47,90 @@
             android:layout_marginHorizontal="@dimen/base_horizontal"
             android:layout_marginBottom="16dp"
             android:padding="@dimen/btn_padding"
-            android:background="@drawable/bg_corner_12"
+            android:background="@drawable/bg_corner_10"
             android:backgroundTint="@color/brand_color"
-            android:textSize="@dimen/text_size_18"
+            android:textSize="@dimen/text_size_16"
             android:textColor="@color/white"
             android:text="둘러보기"/>
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/btn_kakao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/base_horizontal"
+            android:layout_marginBottom="16dp"
+            android:padding="@dimen/btn_padding"
+            app:layout_constraintBottom_toTopOf="@id/btn_naver"
+            android:background="@drawable/bg_corner_10"
+            android:backgroundTint="@color/sns_color_kakao"
+            android:stateListAnimator="@xml/animate_button_push">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_kakao"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16"
+                android:text="@string/sns_kakao"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_naver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/base_horizontal"
+            android:padding="@dimen/btn_padding"
+            app:layout_constraintBottom_toTopOf="@id/btn_google"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_corner_10"
+            android:backgroundTint="@color/sns_color_naver"
+            android:stateListAnimator="@xml/animate_button_push">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_naver"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16"
+                android:text="@string/sns_naver"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/base_horizontal"
+            android:padding="@dimen/btn_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="60dp"
-            android:src="@drawable/login_kakao"/>
+            android:background="@drawable/bg_corner_10"
+            android:backgroundTint="@color/sns_color_google"
+            android:stateListAnimator="@xml/animate_button_push">
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_google"
+                android:padding="2dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_16"
+                android:text="@string/sns_google"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

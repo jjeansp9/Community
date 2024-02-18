@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import com.google.firebase.auth.FirebaseAuth
 import com.jspstudio.community.R
@@ -13,19 +14,26 @@ import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
 import com.jspstudio.community.sns.NaverLoginMgr
+import com.jspstudio.community.user.UserData
+import com.jspstudio.community.util.OnSingleClickListener
+import com.jspstudio.community.util.UtilPref
 import com.jspstudio.community.view.activity.MainActivity
+import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login, "LoginActivity") {
 
     private lateinit var auth: FirebaseAuth
 
-    var kakaoLoginMgr : KakaoLoginMgr? = null
-    var naverLoginMgr : NaverLoginMgr? = null
-    var googleLoginMgr : GoogleLoginMgr? = null
+    private var kakaoLoginMgr : KakaoLoginMgr? = null
+    private var naverLoginMgr : NaverLoginMgr? = null
+    private var googleLoginMgr : GoogleLoginMgr? = null
+
+    private var btnClick = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        checkUser()
         enableEdgeToEdge()
         binding.vmLogin = LoginViewModel()
         binding.lifecycleOwner= this
@@ -48,6 +56,16 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         //var keyHash = Utility.getKeyHash(this)
     }
 
+    private fun checkUser() {
+        UtilPref.getUserData(this)
+        if (UserData.id != null && UserData.id!!.trim().isNotEmpty()) {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     private fun setSnsMgr() {
         kakaoLoginMgr = KakaoLoginMgr(this)
         naverLoginMgr = NaverLoginMgr(this)
@@ -55,7 +73,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     }
 
     private fun click() {
-        binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin(kakaoLoginMgr!!) } // Kakao Login
+        // todo : 회원가입을 이미 한 유저라면 로그인할 때 pref에 data 저장하기
+        binding.btnKakao.setOnClickListener(object : OnSingleClickListener() {
+            override fun onSingleClick(v: View?) {
+                binding.vmLogin?.kakaoLogin(kakaoLoginMgr!!)
+            }
+        })
+        //binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin(kakaoLoginMgr!!) } // Kakao Login
         binding.btnNaver.setOnClickListener { binding.vmLogin?.naverLogin(naverLoginMgr!!) } // Naver Login
         binding.btnGoogle.setOnClickListener { binding.vmLogin?.googleLogin(googleLoginMgr!!, auth) } // Google Login
         binding.btnGuest.setOnClickListener { binding.vmLogin?.guestLogin() } // Guest Login
@@ -67,6 +91,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             when(it){
                 ResponseCode.SUCCESS -> {
                     startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 }
                 ResponseCode.NOT_FOUND -> {
                     startActivity(Intent(this, SignUpActivity::class.java))

@@ -8,16 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
-import com.jspstudio.community.databinding.FragmentBirthBinding
 import com.jspstudio.community.databinding.FragmentMbtiBinding
 import com.jspstudio.community.user.UserData
-import com.jspstudio.community.view.adapter.YearAdapter
-import com.jspstudio.community.viewmodel.LoginViewModel
+import com.jspstudio.community.view.adapter.BottomSeetListAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,7 +50,7 @@ class MbtiFragment : BaseFragment<FragmentMbtiBinding>("MbtiFragment") {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.tvSelMbti.setOnClickListener {
-            showYearPicker()
+            showMbtiPicker()
         }
     }
 
@@ -66,7 +63,7 @@ class MbtiFragment : BaseFragment<FragmentMbtiBinding>("MbtiFragment") {
         )
     }
 
-    private fun showYearPicker() {
+    public fun showMbtiPicker() {
 
         val dialog = BottomSheetDialog(mContext)
         val view = layoutInflater.inflate(R.layout.dialog_bottom_sheet_list, null)
@@ -76,7 +73,7 @@ class MbtiFragment : BaseFragment<FragmentMbtiBinding>("MbtiFragment") {
             "INFJ", "INFP", "ENFJ", "ENFP",
             "ISTJ", "ISFJ", "ESTJ", "ESFJ",
             "ISTP", "ISFP", "ESTP", "ESFP").sorted()
-        val adapter = YearAdapter(mbtiType) { mbti ->
+        val adapter = BottomSeetListAdapter(mContext, mbtiType) { mbti ->
             binding.tvSelMbti.text = mbti
             UserData.mbti = mbti
             dialog.dismiss()

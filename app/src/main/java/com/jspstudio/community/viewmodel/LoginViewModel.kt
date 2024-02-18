@@ -47,7 +47,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
 
                     UserData.id = id
                     //UserData.name = name
-                    UserData.profileImg = progileImg
+                    UserData.profile = progileImg
                     UserData.loginType = Constant.LOGIN_TYPE_KAKAO
                     requestLogin()
                 }
@@ -70,7 +70,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
 
                     UserData.id = id
                     //UserData.name = name
-                    UserData.profileImg = progileImg
+                    UserData.profile = progileImg
                     UserData.loginType = Constant.LOGIN_TYPE_NAVER
                     requestLogin()
                 }

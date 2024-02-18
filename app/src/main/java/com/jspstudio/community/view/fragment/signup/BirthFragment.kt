@@ -14,7 +14,7 @@ import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.databinding.FragmentBirthBinding
 import com.jspstudio.community.user.UserData
-import com.jspstudio.community.view.adapter.YearAdapter
+import com.jspstudio.community.view.adapter.BottomSeetListAdapter
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 private const val ARG_PARAM1 = "param1"
@@ -58,14 +58,14 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>("BirthFragment") {
         )
     }
 
-    private fun showYearPicker() {
+    public fun showYearPicker() {
 
         val dialog = BottomSheetDialog(mContext)
         val view = layoutInflater.inflate(R.layout.dialog_bottom_sheet_list, null)
         val yearPickerRecyclerView = view.findViewById<RecyclerView>(R.id.yearPickerRecyclerView)
 
         val years = (1920..2012).reversed().map { it.toString() }
-        val adapter = YearAdapter(years) { year ->
+        val adapter = BottomSeetListAdapter(mContext, years) { year ->
             binding.tvSelBirth.text = year
             UserData.birth = year
             dialog.dismiss()

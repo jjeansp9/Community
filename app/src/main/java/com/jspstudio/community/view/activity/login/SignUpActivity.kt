@@ -1,6 +1,9 @@
 package com.jspstudio.community.view.activity.login
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -12,12 +15,17 @@ import com.jspstudio.community.firebase.FireStoreMgr
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.user.UserInfoCheck
+import com.jspstudio.community.util.LogMgr
+import com.jspstudio.community.view.activity.MainActivity
 import com.jspstudio.community.view.adapter.SignUpVPAdapter
 import com.jspstudio.community.view.custom.CustomToast
+import com.jspstudio.community.view.fragment.signup.BirthFragment
 import com.jspstudio.community.view.fragment.signup.GenderFragment
+import com.jspstudio.community.view.fragment.signup.MbtiFragment
 import com.jspstudio.community.view.fragment.signup.NameFragment
 import com.jspstudio.community.view.util.Constant
 import com.jspstudio.community.viewmodel.LoginViewModel
+
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up, "SignUpActivity") {
 
@@ -95,6 +103,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 Constant.SIGN_UP_BIRTH -> birthConfirm(nextItem)
                 Constant.SIGN_UP_MBTI -> mbtiConfirmAndFinish()
             }
+
+            LogMgr.e(TAG, "EVENT CLICK")
         }
     }
 
@@ -130,6 +140,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     private fun birthConfirm(nextItem: Int) {
         if (UserData.birth == null || UserData.birth!!.isEmpty()) {
+            (fragment as BirthFragment).showYearPicker()
             CustomToast(this, "태어난 연도를 선택해주세요")
         } else {
             binding.viewPager.currentItem = nextItem
@@ -138,17 +149,24 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     private fun mbtiConfirmAndFinish() {
         if (UserData.mbti == null || UserData.mbti!!.isEmpty()) {
+            (fragment as MbtiFragment).showMbtiPicker()
             CustomToast(this, "MBTI를 선택해주세요")
         } else {
-
-            FireStoreMgr.addUser {
+            binding.btnNext.setOnClickListener(null)
+            FireStoreMgr.addUser(this) {
                 when(it) {
                     ResponseCode.SUCCESS -> {
-                        CustomToast(this, "회원가입 완료")
-                        finish()
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            val intent = Intent(this, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
+                            CustomToast(this, "회원가입 완료")
+                            finish()
+                        }, 1000)
                     }
                     ResponseCode.FAIL -> {
                         CustomToast(this, "다시 시도해주세요")
+                        click()
                     }
                 }
             }

@@ -1,5 +1,6 @@
 package com.jspstudio.community.firebase
 
+import android.content.Context
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
@@ -7,9 +8,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.util.LogMgr
+import com.jspstudio.community.util.UtilPref
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.random.Random
 
 object FireStoreMgr {
     private const val TAG = "FireStoreMgr"
@@ -39,12 +42,12 @@ object FireStoreMgr {
         }
     }
 
-    fun addUser(onResponse: ((responseCode: Int) -> Unit)) {
+    fun addUser(context : Context, onResponse: ((responseCode: Int) -> Unit)) {
         val firestore = FirebaseFirestore.getInstance()
 
         val userRef: CollectionReference = firestore.collection(FirebaseDBName.USER) // 컬렉션명
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+        val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault()).format(Date())
 
         val profile: MutableMap<String, String> = HashMap()
         profile[FirebaseDBName.USER_ID] = UserData.id.toString()
@@ -54,14 +57,30 @@ object FireStoreMgr {
         profile[FirebaseDBName.USER_MBTI] = UserData.mbti.toString()
         profile[FirebaseDBName.USER_PROFILE] = ""
         profile[FirebaseDBName.USER_LOGIN_TYPE] = UserData.loginType.toString()
-        profile[FirebaseDBName.USER_START_DATE] = sdf.format(Date())
+        profile[FirebaseDBName.USER_START_DATE] = date
 
-        UserData.startDate = sdf.format(Date())
+        if (UserData.id == null || UserData.id!!.trim().isEmpty()) {
+            val random = Random
+            val length = random.nextInt(24)
+            val stringBuilder = StringBuilder()
+            val str = "qwertzuiopasdfghjklyxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
 
-        userRef.document(sdf.format(Date()) + "_" + UserData.id.toString()).set(profile)
+            for (i in 0 until length) {
+                val index = random.nextInt(str.length)
+                val randomChar = str[index]
+                stringBuilder.append(randomChar)
+            }
+            UserData.id = stringBuilder.toString()
+        }
+
+        UserData.startDate = date
+
+        userRef.document(date + "_" + UserData.id.toString()).set(profile)
             .addOnCompleteListener { task ->
             if (task.isSuccessful) {
+                UtilPref.setUserData(context)
                 onResponse(ResponseCode.SUCCESS)
+
             } else {
                 onResponse(ResponseCode.FAIL)
             }
