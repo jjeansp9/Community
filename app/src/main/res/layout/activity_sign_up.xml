@@ -36,7 +36,6 @@
             android:id="@+id/layout_stack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/base_horizontal_sub"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/appbar_layout">
 
@@ -44,22 +43,17 @@
                 android:id="@+id/stack_1"
                 android:layout_width="0dp"
                 android:layout_height="4dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_corner_12"/>
+                android:layout_weight="1"/>
             <View
                 android:id="@+id/stack_2"
                 android:layout_width="0dp"
                 android:layout_height="4dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/bg_corner_12"/>
+                android:layout_weight="1"/>
             <View
                 android:id="@+id/stack_3"
                 android:layout_width="0dp"
                 android:layout_height="4dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_corner_12"/>
+                android:layout_weight="1"/>
 
         </LinearLayout>
 

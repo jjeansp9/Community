@@ -10,6 +10,9 @@ import androidx.viewpager2.widget.ViewPager2
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivitySignUpBinding
+import com.jspstudio.community.firebase.FireStoreMgr
+import com.jspstudio.community.firebase.FirebaseDBName
+import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.user.UserInfoCheck
 import com.jspstudio.community.util.LogMgr
@@ -54,23 +57,26 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 when(position) {
                     Constant.SIGN_UP_NAME -> {
                         binding.btnNext.text = getString(R.string.next)
-                        ViewCompat.setBackgroundTintList(binding.stack1, ColorStateList.valueOf(brandColor))
-                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(grayColor))
-                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
+                        binding.stack1.setBackgroundResource(R.color.brand_color)
+                        binding.stack2.setBackgroundResource(R.color.gray_light)
+                        binding.stack3.setBackgroundResource(R.color.gray_light)
+//                        ViewCompat.setBackgroundTintList(binding.stack1, ColorStateList.valueOf(brandColor))
+//                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(grayColor))
+//                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
                     }
                     Constant.SIGN_UP_GENDER_AND_BIRTH -> {
                         binding.btnNext.text = getString(R.string.next)
-
-                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(brandColor))
-                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
+                        binding.stack2.setBackgroundResource(R.color.brand_color)
+                        binding.stack3.setBackgroundResource(R.color.gray_light)
+//                        ViewCompat.setBackgroundTintList(binding.stack2, ColorStateList.valueOf(brandColor))
+//                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(grayColor))
                     }
                     Constant.SIGN_UP_MBTI -> {
                         binding.btnNext.text = getString(R.string.complete)
-                        ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(brandColor))
+                        binding.stack3.setBackgroundResource(R.color.brand_color)
+                        //ViewCompat.setBackgroundTintList(binding.stack3, ColorStateList.valueOf(brandColor))
                     }
                 }
-
-                CustomToast(this@SignUpActivity, position.toString())
             }
         })
     }
@@ -83,8 +89,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             when(nextItem - 1) {
                 Constant.SIGN_UP_NAME -> nameConfirm(nextItem)
                 Constant.SIGN_UP_GENDER_AND_BIRTH -> genderAndBirthConfirm(nextItem)
-                Constant.SIGN_UP_MBTI -> mbtiConfirm()
-                Constant.SIGN_UP_FINISH -> finishSignUp()
+                Constant.SIGN_UP_MBTI -> mbtiConfirmAndFinish()
             }
         }
     }
@@ -98,31 +103,27 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         if (UserData.name!!.isEmpty() || UserData.name!!.replace(" ", "").isEmpty()) {
             (fragment as NameFragment).showNameKeyboard()
             CustomToast(this, "닉네임을 입력해주세요")
-            return
 
         } else if (!UserInfoCheck.nameCheckSpace(UserData.name!!)) {
             (fragment as NameFragment).showNameKeyboard()
-            CustomToast(this, "숫자,특수문자는 사용할 수 없습니다")
-            return
+            CustomToast(this, "영문,한글 외에는 사용할 수 없습니다")
 
         } else if (UserData.name!!.length < Constant.NAME_MIN_LENGTH) {
             (fragment as NameFragment).showNameKeyboard()
             CustomToast(this, "닉네임은 ${Constant.NAME_MIN_LENGTH}글자 이상이어야 합니다")
-            return
+
+        } else {
+            binding.viewPager.currentItem = nextItem
         }
-        binding.viewPager.currentItem = nextItem
     }
 
     private fun genderAndBirthConfirm(nextItem: Int) {
         binding.viewPager.currentItem = nextItem
     }
 
-    private fun mbtiConfirm() {
-    }
-
-    private fun finishSignUp() {
-        finish()
+    private fun mbtiConfirmAndFinish() {
         CustomToast(this, "회원가입 완료됨")
+        finish()
     }
 
     private val callback = object : OnBackPressedCallback(true) {

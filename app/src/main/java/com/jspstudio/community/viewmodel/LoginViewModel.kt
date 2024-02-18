@@ -13,6 +13,8 @@ import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jspstudio.community.base.BaseViewModel
+import com.jspstudio.community.firebase.FireStoreMgr
+import com.jspstudio.community.firebase.FirebaseDBName
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
@@ -128,28 +130,11 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     val resultCode : LiveData<Int> = _resultCode
 
     private fun requestLogin() {
-        // 파이어베이스를 이용하여 회원정보 저장
-
-        // firebase db에 저장하기 위해 Map Collection으로 묶어서 저장
-        val firestore = FirebaseFirestore.getInstance()
-
-        val userRef: CollectionReference = firestore.collection("user") // 컬렉션명 : user
-
-        userRef.addSnapshotListener { value, error ->
-            val docChangeList : List<DocumentChange> = value!!.documentChanges
-            for (documentChange : DocumentChange in docChangeList) {
-                // 변경된 document의 데이터를 촬영한 스냅샷 얻어오기
-                val snapshot : DocumentSnapshot = documentChange.document
-                val profile : Map<String, String> = snapshot.data as Map<String, String>
-                LogMgr.e(TAG, snapshot.data.toString())
-                val id = profile["id"]
-                if (id.toString() == UserData.id.toString()) { // db에 저장된 id가 있는경우 메인화면으로
-                    _resultCode.value = ResponseCode.SUCCESS
-                    return@addSnapshotListener
-                }
+        FireStoreMgr.checkData(FirebaseDBName.USER, FirebaseDBName.USER_ID, UserData.id.toString()) {
+            when(it) {
+                ResponseCode.DUPLICATE_ERROR -> _resultCode.value = ResponseCode.SUCCESS
+                ResponseCode.NOT_FOUND -> _resultCode.value = ResponseCode.NOT_FOUND
             }
-
-            _resultCode.value = ResponseCode.NOT_FOUND // 없는경우 회원가입으로
         }
 
 //        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
