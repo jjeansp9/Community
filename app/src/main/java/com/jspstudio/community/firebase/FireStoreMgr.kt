@@ -7,6 +7,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.util.LogMgr
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object FireStoreMgr {
     private const val TAG = "FireStoreMgr"
@@ -33,6 +36,56 @@ object FireStoreMgr {
                 LogMgr.e(TAG, id + "," + data)
             }
             onResponse(ResponseCode.NOT_FOUND)
+        }
+    }
+
+    fun addUser(onResponse: ((responseCode: Int) -> Unit)) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        val userRef: CollectionReference = firestore.collection(FirebaseDBName.USER) // 컬렉션명
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
+
+        val profile: MutableMap<String, String> = HashMap()
+        profile[FirebaseDBName.USER_ID] = UserData.id.toString()
+        profile[FirebaseDBName.USER_NAME] = UserData.name.toString()
+        profile[FirebaseDBName.USER_GENDER] = UserData.gender.toString()
+        profile[FirebaseDBName.USER_BIRTH] = UserData.birth.toString()
+        profile[FirebaseDBName.USER_MBTI] = UserData.mbti.toString()
+        profile[FirebaseDBName.USER_PROFILE] = ""
+        profile[FirebaseDBName.USER_LOGIN_TYPE] = UserData.loginType.toString()
+        profile[FirebaseDBName.USER_START_DATE] = sdf.format(Date())
+
+        UserData.startDate = sdf.format(Date())
+
+        userRef.document(sdf.format(Date()) + "_" + UserData.id.toString()).set(profile)
+            .addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                onResponse(ResponseCode.SUCCESS)
+            } else {
+                onResponse(ResponseCode.FAIL)
+            }
+        }
+    }
+
+    fun deleteUserById(userId: String, onResponse: ((responseCode: Int) -> Unit)) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        // 컬렉션 참조 생성
+        val userRef: CollectionReference = firestore.collection(FirebaseDBName.USER)
+
+        // USER_ID를 기반으로 특정 문서 찾기
+        // 이 예제에서는 문서 ID가 UserData.id를 포함하고 있다고 가정
+        // 실제 문서 ID 구성 방식에 따라 적절히 조정 필요
+        val documentId = "특정 조건에 맞는 문서 ID" // 예: sdf.format(Date()) + "_" + userId
+
+        // 문서 삭제
+        userRef.document(documentId).delete().addOnSuccessListener {
+            // 성공적으로 문서가 삭제되었을 때의 처리
+            onResponse(ResponseCode.SUCCESS)
+        }.addOnFailureListener { e ->
+            // 문서 삭제에 실패했을 때의 처리
+            onResponse(ResponseCode.FAIL)
         }
     }
 }

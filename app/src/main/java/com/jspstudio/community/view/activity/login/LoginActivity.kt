@@ -1,17 +1,11 @@
-package com.jspstudio.community.view.activity
+package com.jspstudio.community.view.activity.login
 
 import android.content.Intent
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityLoginBinding
@@ -19,8 +13,7 @@ import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
 import com.jspstudio.community.sns.NaverLoginMgr
-import com.jspstudio.community.util.LogMgr
-import com.jspstudio.community.view.util.Constant
+import com.jspstudio.community.view.activity.MainActivity
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login, "LoginActivity") {

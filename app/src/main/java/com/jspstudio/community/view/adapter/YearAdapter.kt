@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.jspstudio.community.R
 
 class YearAdapter(private val years: List<String>, private val onClick: (String) -> Unit) : RecyclerView.Adapter<YearAdapter.YearViewHolder>() {
 
@@ -24,6 +25,7 @@ class YearAdapter(private val years: List<String>, private val onClick: (String)
 
         fun bind(year: String) {
             yearTextView.text = year
+            itemView.setBackgroundResource(R.drawable.selector_list)
             itemView.setOnClickListener {
                 onClick(year)
             }

@@ -27,6 +27,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:padding="8dp"
             android:background="@drawable/bg_stroke_default">
 
@@ -34,12 +35,16 @@
                 android:id="@+id/rb_male"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18"
+                android:textColor="@color/font_color_default"
                 android:text="남성"/>
 
             <RadioButton
                 android:id="@+id/rb_female"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_18"
+                android:textColor="@color/font_color_default"
                 android:text="여성"/>
 
         </RadioGroup>

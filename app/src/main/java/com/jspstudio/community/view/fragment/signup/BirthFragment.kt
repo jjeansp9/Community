@@ -1,6 +1,5 @@
 package com.jspstudio.community.view.fragment.signup
 
-import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
@@ -8,16 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import android.widget.FrameLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.databinding.FragmentBirthBinding
+import com.jspstudio.community.user.UserData
 import com.jspstudio.community.view.adapter.YearAdapter
-import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 private const val ARG_PARAM1 = "param1"
@@ -26,8 +23,6 @@ private const val ARG_PARAM2 = "param2"
 class BirthFragment : BaseFragment<FragmentBirthBinding>("BirthFragment") {
     private var param1: String? = null
     private var param2: String? = null
-
-    private var selectedYear: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,15 +49,34 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>("BirthFragment") {
         }
     }
 
+    private fun setTvDrawable(res : Int) {
+        binding.tvSelBirth.setCompoundDrawablesWithIntrinsicBounds(
+            0, // 왼쪽 드로어블 리소스 ID
+            0, // 상단 드로어블 리소스 ID
+            res, // 오른쪽(끝) 드로어블 리소스 ID
+            0 // 하단 드로어블 리소스 ID
+        )
+    }
+
     private fun showYearPicker() {
+
         val dialog = BottomSheetDialog(mContext)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_year_picker, null)
+        val view = layoutInflater.inflate(R.layout.dialog_bottom_sheet_list, null)
         val yearPickerRecyclerView = view.findViewById<RecyclerView>(R.id.yearPickerRecyclerView)
 
-        val years = (1900..2012).map { it.toString() }
+        val years = (1920..2012).reversed().map { it.toString() }
         val adapter = YearAdapter(years) { year ->
-            selectedYear = year
+            binding.tvSelBirth.text = year
+            UserData.birth = year
             dialog.dismiss()
+        }
+        dialog.setOnShowListener {
+            binding.tvSelBirth.setBackgroundResource(R.drawable.bg_stroke_focus)
+            setTvDrawable(R.drawable.ic_arrow_up)
+        }
+        dialog.setOnDismissListener {
+            binding.tvSelBirth.setBackgroundResource(R.drawable.bg_stroke_default)
+            setTvDrawable(R.drawable.ic_arrow_down)
         }
 
         yearPickerRecyclerView.adapter = adapter

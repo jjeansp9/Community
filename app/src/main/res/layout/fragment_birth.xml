@@ -16,12 +16,24 @@
         android:padding="@dimen/base_horizontal">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_24"
+            android:textColor="@color/font_color_default"
+            android:textStyle="bold"
+            android:text="태어난 연도를 선택해주세요" />
+
+        <TextView
             android:id="@+id/tv_sel_birth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableEnd="@drawable/ic_arrow_down"
             android:background="@drawable/bg_stroke_default"
+            android:textSize="@dimen/text_size_18"
+            android:textColor="@color/font_color_default"
             android:padding="@dimen/et_padding"
-            android:text="생일 선택"/>
+            android:text="연도 선택"/>
 
     </LinearLayout>
 </layout>

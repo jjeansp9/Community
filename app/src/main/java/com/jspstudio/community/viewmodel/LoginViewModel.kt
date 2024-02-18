@@ -123,6 +123,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     }
 
     fun guestLogin() {
+        UserData.loginType = Constant.LOGIN_TYPE_NORMAL
         _resultCode.value = ResponseCode.NOT_FOUND
     }
 

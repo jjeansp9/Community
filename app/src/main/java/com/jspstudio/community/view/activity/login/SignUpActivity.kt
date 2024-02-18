@@ -1,23 +1,17 @@
-package com.jspstudio.community.view.activity
+package com.jspstudio.community.view.activity.login
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivitySignUpBinding
 import com.jspstudio.community.firebase.FireStoreMgr
-import com.jspstudio.community.firebase.FirebaseDBName
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.user.UserInfoCheck
-import com.jspstudio.community.util.LogMgr
-import com.jspstudio.community.util.Util
-import com.jspstudio.community.util.ViewPagerUtil
 import com.jspstudio.community.view.adapter.SignUpVPAdapter
 import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.view.fragment.signup.GenderFragment
@@ -54,8 +48,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 super.onPageSelected(position)
                 val brandColor = ContextCompat.getColor(this@SignUpActivity, R.color.brand_color)
                 val grayColor = ContextCompat.getColor(this@SignUpActivity, R.color.gray_light)
+                val currentFragmentTag = "f" + binding.viewPager.currentItem
+                fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
                 when(position) {
                     Constant.SIGN_UP_NAME -> {
+                        (fragment as NameFragment).showNameKeyboard()
                         binding.btnNext.text = getString(R.string.next)
                         binding.stack1.setBackgroundResource(R.color.brand_color)
                         binding.stack2.setBackgroundResource(R.color.gray_light)
@@ -92,8 +89,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     private fun click() {
         binding.btnNext.setOnClickListener {
             val nextItem = binding.viewPager.currentItem + 1
-            val currentFragmentTag = "f" + binding.viewPager.currentItem
-            fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
             when(nextItem - 1) {
                 Constant.SIGN_UP_NAME -> nameConfirm(nextItem)
                 Constant.SIGN_UP_GENDER -> genderConfirm(nextItem)
@@ -107,9 +102,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     }
     private fun nameConfirm(nextItem: Int) {
-
-        if (UserData.name == null) return
-        if (UserData.name!!.isEmpty() || UserData.name!!.replace(" ", "").isEmpty()) {
+        if (UserData.name == null || UserData.name!!.isEmpty() || UserData.name!!.replace(" ", "").isEmpty()) {
             (fragment as NameFragment).showNameKeyboard()
             CustomToast(this, "닉네임을 입력해주세요")
 
@@ -136,12 +129,30 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     private fun birthConfirm(nextItem: Int) {
-        binding.viewPager.currentItem = nextItem
+        if (UserData.birth == null || UserData.birth!!.isEmpty()) {
+            CustomToast(this, "태어난 연도를 선택해주세요")
+        } else {
+            binding.viewPager.currentItem = nextItem
+        }
     }
 
     private fun mbtiConfirmAndFinish() {
-        CustomToast(this, "회원가입 완료됨")
-        finish()
+        if (UserData.mbti == null || UserData.mbti!!.isEmpty()) {
+            CustomToast(this, "MBTI를 선택해주세요")
+        } else {
+
+            FireStoreMgr.addUser {
+                when(it) {
+                    ResponseCode.SUCCESS -> {
+                        CustomToast(this, "회원가입 완료")
+                        finish()
+                    }
+                    ResponseCode.FAIL -> {
+                        CustomToast(this, "다시 시도해주세요")
+                    }
+                }
+            }
+        }
     }
 
     private val callback = object : OnBackPressedCallback(true) {

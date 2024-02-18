@@ -8,4 +8,5 @@ object UserData {
     var gender: String? = ""
     var birth: String? = ""
     var mbti: String? = ""
+    var startDate: String? = ""
 }

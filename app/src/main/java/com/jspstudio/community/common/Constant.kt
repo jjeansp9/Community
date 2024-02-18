@@ -4,6 +4,7 @@ object Constant {
     const val LOGIN_TYPE_KAKAO = "KAKAO"
     const val LOGIN_TYPE_NAVER = "NAVER"
     const val LOGIN_TYPE_GOOGLE = "GOOGLE"
+    const val LOGIN_TYPE_NORMAL = "NORMAL"
     const val LOGIN_TYPE_GUEST = "GUEST"
 
     const val SIGN_UP_NAME = 0
