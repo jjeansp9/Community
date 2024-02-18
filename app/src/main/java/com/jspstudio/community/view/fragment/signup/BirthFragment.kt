@@ -7,6 +7,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowInsets
 import android.widget.FrameLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
@@ -67,30 +68,21 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>("BirthFragment") {
         yearPickerRecyclerView.adapter = adapter
         dialog.setContentView(view)
 
-//        val displayMetrics = DisplayMetrics()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//            val display = mContext.windowManager.currentWindowMetrics
-//            // API 레벨 30에서는 다음과 같이 사용합니다.
-//        } else {
-//            @Suppress("DEPRECATION")
-//            mContext.windowManager.defaultDisplay.getMetrics(displayMetrics)
-//        }
-//        val screenHeight = displayMetrics.heightPixels
-//        val desiredMaxHeight = (screenHeight * 0.75).toInt()
-//
-//        // BottomSheetDialog의 최대 높이 설정
-//        dialog.setOnShowListener { dialogInterface ->
-//            val bottomSheetDialog = dialogInterface as BottomSheetDialog
-//            val bottomSheet = bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout?
-//            val bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet!!)
-//            bottomSheetBehavior.peekHeight = desiredMaxHeight // 원하는 최대 높이값 설정
-//            // bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED // 필요한 경우 BottomSheet를 확장 상태로 설정
-//        }
-        dialog.behavior.state = BottomSheetBehavior.STATE_EXPANDED
-        (dialog as? BottomSheetDialog)?.behavior?.state = BottomSheetBehavior.STATE_EXPANDED
-        val displayMetrics = DisplayMetrics()
-        val screenHeight = displayMetrics.heightPixels
-        dialog.behavior.maxHeight = 500
+        val height: Int
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = mContext.windowManager.currentWindowMetrics
+            val insets = windowMetrics.windowInsets.getInsetsIgnoringVisibility(
+                WindowInsets.Type.systemBars() or WindowInsets.Type.displayCutout()
+            )
+            val insetsHeight = insets.top + insets.bottom
+            height = (windowMetrics.bounds.height() - insetsHeight) * 2 / 3
+        } else {
+            @Suppress("DEPRECATION")
+            val displayMetrics = DisplayMetrics()
+            mContext.windowManager.defaultDisplay.getMetrics(displayMetrics)
+            height = displayMetrics.heightPixels * 2 / 3
+        }
+        dialog.behavior.maxHeight = height
 
         dialog.show()
     }

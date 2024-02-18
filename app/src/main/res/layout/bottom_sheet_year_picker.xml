@@ -10,7 +10,7 @@
         android:layout_height="6dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/bg_corner_8"
-        android:backgroundTint="@color/gray"
+        android:backgroundTint="@color/gray_light"
         android:layout_marginTop="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
