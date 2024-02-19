@@ -1,6 +1,8 @@
 package com.jspstudio.community.firebase
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
@@ -8,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.util.LogMgr
+import com.jspstudio.community.util.Util
 import com.jspstudio.community.util.UtilPref
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -30,15 +33,42 @@ object FireStoreMgr {
                 val snapshot : DocumentSnapshot = documentChange.document
                 val profile : Map<String, String> = snapshot.data as Map<String, String>
                 LogMgr.e(TAG, snapshot.data.toString())
-                val id = profile[fieldName]
-                if (id.toString() == data) {
+                val getData = profile[fieldName]
+                if (getData.toString() == data) {
                     onResponse(ResponseCode.DUPLICATE_ERROR)
                     return@addSnapshotListener
                 }
-
-                LogMgr.e(TAG, id + "," + data)
             }
             onResponse(ResponseCode.NOT_FOUND)
+        }
+    }
+
+    fun getUserData(context: Context, onResponse: ((responseCode: Int) -> Unit)) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        val userRef: CollectionReference = firestore.collection(FirebaseDBName.USER) // 컬렉션명
+
+        userRef.addSnapshotListener { value, error ->
+            val docChangeList : List<DocumentChange> = value!!.documentChanges
+            for (documentChange : DocumentChange in docChangeList) {
+                // 변경된 document의 데이터를 촬영한 스냅샷 얻어오기
+                val snapshot : DocumentSnapshot = documentChange.document
+                val profile : Map<String, String> = snapshot.data as Map<String, String>
+                LogMgr.e(TAG, snapshot.data.toString())
+                val id = profile[FirebaseDBName.USER_ID]
+                if (id.toString() == UserData.id) {
+                    UserData.name = profile[FirebaseDBName.USER_NAME]
+                    UserData.gender = profile[FirebaseDBName.USER_GENDER]
+                    UserData.birth = profile[FirebaseDBName.USER_BIRTH]
+                    UserData.mbti = profile[FirebaseDBName.USER_MBTI]
+                    UserData.profile = profile[FirebaseDBName.USER_PROFILE]
+                    UserData.loginType = profile[FirebaseDBName.USER_LOGIN_TYPE]
+                    UserData.startDate = profile[FirebaseDBName.USER_START_DATE]
+                    UtilPref.setUserData(context)
+                    onResponse(ResponseCode.SUCCESS)
+                    return@addSnapshotListener
+                }
+            }
         }
     }
 
@@ -50,12 +80,12 @@ object FireStoreMgr {
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault()).format(Date())
 
         val profile: MutableMap<String, String> = HashMap()
-        profile[FirebaseDBName.USER_ID] = UserData.id.toString()
+
         profile[FirebaseDBName.USER_NAME] = UserData.name.toString()
         profile[FirebaseDBName.USER_GENDER] = UserData.gender.toString()
         profile[FirebaseDBName.USER_BIRTH] = UserData.birth.toString()
         profile[FirebaseDBName.USER_MBTI] = UserData.mbti.toString()
-        profile[FirebaseDBName.USER_PROFILE] = ""
+        profile[FirebaseDBName.USER_PROFILE] = Util.getStr(UserData.profile.toString())
         profile[FirebaseDBName.USER_LOGIN_TYPE] = UserData.loginType.toString()
         profile[FirebaseDBName.USER_START_DATE] = date
 
@@ -72,7 +102,7 @@ object FireStoreMgr {
             }
             UserData.id = stringBuilder.toString()
         }
-
+        profile[FirebaseDBName.USER_ID] = UserData.id.toString()
         UserData.startDate = date
 
         userRef.document(date + "_" + UserData.id.toString()).set(profile)

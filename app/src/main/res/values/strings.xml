@@ -6,9 +6,9 @@
     <string name="naver_client_secret">x8vBpMJJO8</string>
     <string name="google_web_client_id">856461700851-9r6n0k6mfmgu68oemu77rlfmqej77d29.apps.googleusercontent.com</string>
 
-    <string name="sns_kakao">카카오 로그인</string>
-    <string name="sns_naver">네이버 로그인</string>
-    <string name="sns_google">구글 로그인</string>
+    <string name="sns_kakao">카카오톡으로 로그인</string>
+    <string name="sns_naver">네이버로 로그인</string>
+    <string name="sns_google">구글로 로그인</string>
 
     <string name="complete">완료</string>
     <string name="confirm">확인</string>

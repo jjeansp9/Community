@@ -27,9 +27,9 @@
 
     <keep_state_fragment
         android:id="@+id/third_fragment"
-        android:name="com.jspstudio.community.view.fragment.ThirdFragment"
+        android:name="com.jspstudio.community.view.fragment.AccountFragment"
         app:popUpToSaveState="true"
-        tools:layout="@layout/fragment_third"
+        tools:layout="@layout/fragment_account"
         android:label="ThirdFragment" />
 
 <!--    <keep_state_fragment-->

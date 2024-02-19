@@ -45,9 +45,9 @@ class KakaoLoginMgr(private val context : Context) {
             UserApiClient.instance.loginWithKakaoTalk(context) {    token, error ->
                 if(error != null) { //카카오톡 로그인 실패
                     LogMgr.e(TAG, "login fail kakaotalk : $error.message")
-                    if(error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                        return@loginWithKakaoTalk
-                    }
+//                    if(error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+//                        return@loginWithKakaoTalk
+//                    }
                     onKakaoAccountLogin()
                 }else if(token != null) {
                     updateSocialToken(token.accessToken)

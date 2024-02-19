@@ -15,11 +15,13 @@ import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
 import com.jspstudio.community.sns.NaverLoginMgr
 import com.jspstudio.community.user.UserData
+import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.util.OnSingleClickListener
 import com.jspstudio.community.util.UtilPref
 import com.jspstudio.community.view.activity.MainActivity
 import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.viewmodel.LoginViewModel
+import com.kakao.sdk.common.util.Utility
 
 class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login, "LoginActivity") {
 
@@ -53,7 +55,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         auth = FirebaseAuth.getInstance()
         click()
         observe()
-        //var keyHash = Utility.getKeyHash(this)
+        var keyHash = Utility.getKeyHash(this)
+        LogMgr.e(TAG, "keyhash : " + keyHash)
     }
 
     private fun checkUser() {
@@ -76,11 +79,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         // todo : 회원가입을 이미 한 유저라면 로그인할 때 pref에 data 저장하기
         binding.btnKakao.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View?) {
-                binding.vmLogin?.kakaoLogin(kakaoLoginMgr!!)
+                binding.vmLogin?.kakaoLogin(this@LoginActivity, kakaoLoginMgr!!)
             }
         })
         //binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin(kakaoLoginMgr!!) } // Kakao Login
-        binding.btnNaver.setOnClickListener { binding.vmLogin?.naverLogin(naverLoginMgr!!) } // Naver Login
+        binding.btnNaver.setOnClickListener { binding.vmLogin?.naverLogin(this, naverLoginMgr!!) } // Naver Login
         binding.btnGoogle.setOnClickListener { binding.vmLogin?.googleLogin(googleLoginMgr!!, auth) } // Google Login
         binding.btnGuest.setOnClickListener { binding.vmLogin?.guestLogin() } // Guest Login
         binding.btnEmail.setOnClickListener { binding.vmLogin?.emailLogin(auth, "jjeansp9@gmail.com", "13132424", this) } // Email Login

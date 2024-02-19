@@ -1,4 +1,4 @@
-package com.jspstudio.community.util
+package com.jspstudio.community.view.fragment
 
 import android.content.Context
 import android.os.Bundle

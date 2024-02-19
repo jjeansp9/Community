@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Parcelable
+import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResultLauncher
@@ -159,5 +160,10 @@ object Util {
         for (match in matches) result.append(match.value) // 매치된 숫자를 결과에 추가
 
         return result.toString()
+    }
+
+    fun getStr(s : String) : String {
+        if (s == null) return ""
+        return s.ifEmpty { "" }
     }
 }

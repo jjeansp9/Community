@@ -1,17 +1,15 @@
 package com.jspstudio.community.viewmodel
 
 import android.app.Activity
-import androidx.activity.ComponentActivity
+import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.actionCodeSettings
 import com.google.firebase.auth.auth
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.jspstudio.community.base.BaseViewModel
 import com.jspstudio.community.firebase.FireStoreMgr
 import com.jspstudio.community.firebase.FirebaseDBName
@@ -29,7 +27,7 @@ import com.navercorp.nid.profile.data.NidProfileResponse
 
 class LoginViewModel() : BaseViewModel("LoginViewModel") {
 
-    fun kakaoLogin(kakaoLoginMgr: KakaoLoginMgr) {
+    fun kakaoLogin(context: Context, kakaoLoginMgr: KakaoLoginMgr) {
         kakaoLoginMgr.startKakaoLogin {
             UserApiClient.instance.me { user, throwable ->
                 if (it != null && it.isNotEmpty()) {
@@ -49,13 +47,13 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
                     //UserData.name = name
                     UserData.profile = progileImg
                     UserData.loginType = Constant.LOGIN_TYPE_KAKAO
-                    requestLogin()
+                    requestLogin(context)
                 }
             }
         }
     }
 
-    fun naverLogin(naverLoginMgr : NaverLoginMgr) {
+    fun naverLogin(context: Context, naverLoginMgr : NaverLoginMgr) {
         naverLoginMgr.startNaverLogin {
             NidOAuthLogin().callProfileApi(object : NidProfileCallback<NidProfileResponse> {
                 override fun onSuccess(result: NidProfileResponse) {
@@ -72,7 +70,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
                     //UserData.name = name
                     UserData.profile = progileImg
                     UserData.loginType = Constant.LOGIN_TYPE_NAVER
-                    requestLogin()
+                    requestLogin(context)
                 }
                 override fun onError(errorCode: Int, message: String) {}
                 override fun onFailure(httpStatus: Int, message: String) {}
@@ -130,25 +128,27 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     private val _resultCode = MutableLiveData<Int>()
     val resultCode : LiveData<Int> = _resultCode
 
-    private fun requestLogin() {
+    private fun requestLogin(context: Context) {
         FireStoreMgr.checkData(FirebaseDBName.USER, FirebaseDBName.USER_ID, UserData.id.toString()) {
             when(it) {
-                ResponseCode.DUPLICATE_ERROR -> _resultCode.value = ResponseCode.SUCCESS
-                ResponseCode.NOT_FOUND -> _resultCode.value = ResponseCode.NOT_FOUND
+                ResponseCode.DUPLICATE_ERROR -> {
+                    FireStoreMgr.getUserData(context) {
+                        if (it == ResponseCode.SUCCESS) {
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                _resultCode.value = ResponseCode.SUCCESS
+                            }, 1000)
+                        }
+                    }
+
+                }
+                ResponseCode.NOT_FOUND -> {
+                    _resultCode.value = ResponseCode.NOT_FOUND
+                }
             }
         }
-
-//        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-//
-//        val profile: MutableMap<String, String> = HashMap()
-//        profile["name"] = UserData.name.toString()
-//        profile["id"] = UserData.id.toString()
-//        profile["profile"] = ""
-//        profile["loginType"] = UserData.loginType.toString()
-//        profile["start_time"] = sdf.format(Date())
-//
-//        userRef.document(sdf.format(Date()) + "_" + UserData.id.toString()).set(profile)
     }
+
+
 
     var _name = MutableLiveData<String>()
     var name : LiveData<String> = _name
