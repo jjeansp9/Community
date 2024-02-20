@@ -22,13 +22,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main, "
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         binding.vmMain = viewModel
-        //binding.vmMain = ViewModelProvider(this)[MainViewModel::class.java]
         binding.lifecycleOwner= this
         setNavigation()
         observe()
     }
     private fun setNavigation() {
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
@@ -44,7 +42,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main, "
 
     private fun observe() {
         binding.vmMain?.title?.observe(this) { title ->
-            CustomToast(this, title)
         }
     }
 }

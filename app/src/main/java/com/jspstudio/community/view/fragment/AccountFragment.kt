@@ -27,7 +27,7 @@ class AccountFragment: BaseFragment<FragmentAccountBinding>("AccountFragment") {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         LogMgr.e(TAG, "profile : " + UserData.profile)
-        Glide.with(mContext).load(UserData.profile).into(binding.imgProfile)
         binding.vmMain?.setTitle("account")
+        binding.vmMain?.setUserInfo()
     }
 }

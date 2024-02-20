@@ -56,11 +56,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 super.onPageSelected(position)
                 val brandColor = ContextCompat.getColor(this@SignUpActivity, R.color.brand_color)
                 val grayColor = ContextCompat.getColor(this@SignUpActivity, R.color.gray_light)
-                val currentFragmentTag = "f" + binding.viewPager.currentItem
-                fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
+
+                if (binding.viewPager.currentItem == 0) {
+                    val currentFragmentTag = "f" + binding.viewPager.currentItem
+                    fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
+                }
+
                 when(position) {
                     Constant.SIGN_UP_NAME -> {
-                        (fragment as NameFragment).showNameKeyboard()
+                        (fragment as? NameFragment)?.showNameKeyboard()
                         binding.btnNext.text = getString(R.string.next)
                         binding.stack1.setBackgroundResource(R.color.brand_color)
                         binding.stack2.setBackgroundResource(R.color.gray_light)
@@ -97,6 +101,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     private fun click() {
         binding.btnNext.setOnClickListener {
             val nextItem = binding.viewPager.currentItem + 1
+            val currentFragmentTag = "f" + binding.viewPager.currentItem
+            fragment = supportFragmentManager.findFragmentByTag(currentFragmentTag)
             when(nextItem - 1) {
                 Constant.SIGN_UP_NAME -> nameConfirm(nextItem)
                 Constant.SIGN_UP_GENDER -> genderConfirm(nextItem)
@@ -104,7 +110,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                 Constant.SIGN_UP_MBTI -> mbtiConfirmAndFinish()
             }
 
-            LogMgr.e(TAG, "EVENT CLICK")
+
         }
     }
 
@@ -113,15 +119,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
     private fun nameConfirm(nextItem: Int) {
         if (UserData.name == null || UserData.name!!.isEmpty() || UserData.name!!.replace(" ", "").isEmpty()) {
-            (fragment as NameFragment).showNameKeyboard()
+            (fragment as? NameFragment)?.showNameKeyboard()
             CustomToast(this, "닉네임을 입력해주세요")
 
         } else if (!UserInfoCheck.nameCheckSpace(UserData.name!!)) {
-            (fragment as NameFragment).showNameKeyboard()
+            (fragment as? NameFragment)?.showNameKeyboard()
             CustomToast(this, "영문,한글 외에는 사용할 수 없습니다")
 
         } else if (UserData.name!!.length < Constant.NAME_MIN_LENGTH) {
-            (fragment as NameFragment).showNameKeyboard()
+            (fragment as? NameFragment)?.showNameKeyboard()
             CustomToast(this, "닉네임은 ${Constant.NAME_MIN_LENGTH}글자 이상이어야 합니다")
 
         } else {
@@ -130,8 +136,8 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     private fun genderConfirm(nextItem: Int) {
-        val isCheck = (fragment as GenderFragment).checkGender()
-        if (!isCheck) {
+        val isCheck = (fragment as? GenderFragment)?.checkGender()
+        if (!isCheck!!) {
             CustomToast(this, "성별을 선택해주세요")
         } else {
             binding.viewPager.currentItem = nextItem
@@ -149,7 +155,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     private fun mbtiConfirmAndFinish() {
         if (UserData.mbti == null || UserData.mbti!!.isEmpty()) {
-            (fragment as MbtiFragment).showMbtiPicker()
+            (fragment as? MbtiFragment)?.showMbtiPicker()
             CustomToast(this, "MBTI를 선택해주세요")
         } else {
             binding.btnNext.setOnClickListener(null)

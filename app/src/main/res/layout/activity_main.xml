@@ -37,6 +37,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/base_horizontal"
                     android:text="@{vmMain.title}"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold"
                     android:textColor="@color/font_color_default"/>
 
             </androidx.appcompat.widget.Toolbar>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="com.jspstudio.community.viewmodel.MainViewModel"/>
         <variable
@@ -8,13 +8,30 @@
     </data>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/base_horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_profile"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@color/gray"/>
+        app:imageUrl="@{vmMain.userData.profile}"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{vmMain.userData.name}"
+        android:textSize="@dimen/text_size_18"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{vmMain.userData.gender}"
+        android:textSize="@dimen/text_size_16"/>
 
 </LinearLayout>
 </layout>

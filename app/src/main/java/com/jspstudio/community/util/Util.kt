@@ -9,8 +9,12 @@ import android.os.Parcelable
 import android.text.TextUtils
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityOptionsCompat
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.jspstudio.community.R
 import java.io.Serializable
 import java.text.DecimalFormat
 import java.text.ParseException
@@ -18,6 +22,21 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 object Util {
+
+    @BindingAdapter("imageUrl")
+    @JvmStatic
+    fun loadImage(view: ImageView, url: String?) {
+        if (!url.isNullOrEmpty()) {
+            Glide.with(view.context)
+                .load(url)
+                .error(R.drawable.baseline_account_circle_24)
+                .into(view)
+        } else {
+            Glide.with(view.context)
+                .load(R.drawable.baseline_account_circle_24)
+                .into(view)
+        }
+    }
 
     fun getFormattedValue(doubleValue: Double, pattern: String): String { return DecimalFormat(pattern).format(doubleValue) } // 숫자 형식
     fun rateOfReturn(beforeValue: Double, afterValue: Double): Double { return ((afterValue - beforeValue) / beforeValue) * 100 } // 수익률 구하기
