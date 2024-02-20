@@ -13,11 +13,6 @@ class MainViewModel : BaseViewModel("MainViewModel") {
     private val _userData = MutableLiveData<UserData>()
     val userData: LiveData<UserData> get() = _userData
 
-    fun setTitle(title: String) {
-        _title.value = title
-    }
-
-    fun setUserInfo() {
-        _userData.value = UserData
-    }
+    fun setTitle(title: String) { _title.value = title } // appbar title
+    fun setUserInfo() { _userData.value = UserData } // user info
 }
