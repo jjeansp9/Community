@@ -20,9 +20,9 @@
 
     <keep_state_fragment
         android:id="@+id/second_fragment"
-        android:name="com.jspstudio.community.view.fragment.SecondFragment"
+        android:name="com.jspstudio.community.view.fragment.MessageFragment"
         app:popUpToSaveState="true"
-        tools:layout="@layout/fragment_second"
+        tools:layout="@layout/fragment_message"
         android:label="SecondFragment" />
 
     <keep_state_fragment

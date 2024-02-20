@@ -6,23 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.jspstudio.community.R
 import com.jspstudio.community.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.FirebaseStorage
+import com.jspstudio.community.base.BaseFragment
+import com.jspstudio.community.viewmodel.MainViewModel
 
-class HomeFragment: Fragment() {
-
-    private lateinit var binding: FragmentHomeBinding
+class HomeFragment: BaseFragment<FragmentHomeBinding>("HomeFragment") {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-
-        // data binding
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.vmMain = ViewModelProvider(mContext)[MainViewModel::class.java]
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
@@ -30,6 +31,7 @@ class HomeFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val hom : CollectionReference
+        binding.vmMain?.setTitle("home")
     }
 
 //    private fun setRecyclerView() {

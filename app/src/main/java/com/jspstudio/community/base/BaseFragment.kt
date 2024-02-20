@@ -26,11 +26,10 @@ abstract class BaseFragment<T : ViewDataBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //context = this
+        mContext = requireActivity()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mContext = requireActivity()
     }
 }

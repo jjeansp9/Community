@@ -3,11 +3,14 @@ package com.jspstudio.community.view.activity
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityMainBinding
+import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.view.fragment.KeepStateFragment
 import com.jspstudio.community.viewmodel.MainViewModel
 
@@ -19,8 +22,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main, "
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         binding.vmMain = viewModel
+        //binding.vmMain = ViewModelProvider(this)[MainViewModel::class.java]
         binding.lifecycleOwner= this
         setNavigation()
+        observe()
     }
     private fun setNavigation() {
 
@@ -35,6 +40,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main, "
 
         // MainActivity의 main_navi와 navController 연결
         binding.mainNavi.setupWithNavController(navController)
+    }
+
+    private fun observe() {
+        binding.vmMain?.title?.observe(this) { title ->
+            CustomToast(this, title)
+        }
     }
 }
 
