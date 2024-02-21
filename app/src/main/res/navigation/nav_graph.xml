@@ -7,7 +7,7 @@
 
     <keep_state_fragment
         android:id="@+id/home_fragment"
-        android:name="com.jspstudio.community.view.fragment.HomeFragment"
+        android:name="com.jspstudio.community.view.fragment.main.HomeFragment"
         app:popUpToSaveState="true"
         tools:layout="@layout/fragment_home"
         android:label="HomeFragment" >
@@ -19,18 +19,18 @@
     </keep_state_fragment>
 
     <keep_state_fragment
-        android:id="@+id/second_fragment"
-        android:name="com.jspstudio.community.view.fragment.MessageFragment"
+        android:id="@+id/message_fragment"
+        android:name="com.jspstudio.community.view.fragment.main.MessageFragment"
         app:popUpToSaveState="true"
         tools:layout="@layout/fragment_message"
-        android:label="SecondFragment" />
+        android:label="MessageFragment" />
 
     <keep_state_fragment
-        android:id="@+id/third_fragment"
-        android:name="com.jspstudio.community.view.fragment.AccountFragment"
+        android:id="@+id/account_fragment"
+        android:name="com.jspstudio.community.view.fragment.main.AccountFragment"
         app:popUpToSaveState="true"
         tools:layout="@layout/fragment_account"
-        android:label="ThirdFragment" />
+        android:label="AccountFragment" />
 
 <!--    <keep_state_fragment-->
 <!--        android:id="@+id/book_detail_fragment"-->

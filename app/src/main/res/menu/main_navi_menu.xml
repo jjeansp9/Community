@@ -7,12 +7,12 @@
         android:title="home"/>
 
     <item
-        android:id="@+id/second_fragment"
+        android:id="@+id/message_fragment"
         android:icon="@drawable/tab_chat_nor"
         android:title="chat"/>
 
     <item
-        android:id="@+id/third_fragment"
+        android:id="@+id/account_fragment"
         android:icon="@drawable/tab_friend_nor"
         android:title="friend"/>
 </menu>

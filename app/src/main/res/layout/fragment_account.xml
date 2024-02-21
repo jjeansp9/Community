@@ -9,29 +9,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="@dimen/base_horizontal">
+    android:background="@color/bg_sub"
+    android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_profile"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        app:imageUrl="@{vmMain.userData.profile}"/>
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@{vmMain.userData.name}"
-        android:textSize="@dimen/text_size_18"
-        android:textStyle="bold"/>
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/base_horizontal">
 
-    <TextView
-        android:id="@+id/tv_gender"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@{vmMain.userData.gender}"
-        android:textSize="@dimen/text_size_16"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_profile"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_gravity="center_horizontal"
+            app:imageUrl="@{vmMain.userData.profile}"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{vmMain.userData.name}"
+            style="@style/Text18spBoldBlack"/>
+
+        <TextView
+            android:id="@+id/tv_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{vmMain.userData.gender}"
+            style="@style/Text16spNormalBlack"/>
+
+        <TextView
+            android:id="@+id/tv_birth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{vmMain.userData.birth}"
+            style="@style/Text16spNormalBlack"/>
+
+        <TextView
+            android:id="@+id/tv_mbti"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{vmMain.userData.mbti}"
+            style="@style/Text16spNormalBlack"/>
+
+        <TextView
+            android:id="@+id/tv_about_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="2dp"
+            android:text="자기소개가 없습니다"
+            style="@style/Text16spNormalGray"/>
+
+        <TextView
+            android:id="@+id/tv_update_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="8dp"
+            android:text="프로필 수정"
+            android:background="@drawable/bg_corner_10"
+            android:backgroundTint="@color/brand_color"
+            style="@style/Text16spNormalWhite"/>
+
+    </LinearLayout>
 
 </LinearLayout>
 </layout>

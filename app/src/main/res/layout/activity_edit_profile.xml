@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <data>
-        <import type="com.jspstudio.community.viewmodel.LoginViewModel"/>
-        <variable
-            name="vmLogin"
-            type="com.jspstudio.community.viewmodel.LoginViewModel" />
-    </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        tools:context=".view.fragment.signup.NameFragment"
-        android:padding="@dimen/base_horizontal"
-        android:id="@+id/root">
+        tools:context=".view.activity.EditProfileActivity"
+        android:padding="@dimen/base_horizontal">
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/tv_profile_sub"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_24"
-            android:textColor="@color/font_color_default"
-            android:textStyle="bold"
-            android:text="이름을 입력해주세요." />
+            android:text="사진 변경"
+            style="@style/Text16spBoldBlack"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_profile"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="4dp"
+            android:src="@drawable/baseline_account_circle_24"/>
+
+        <TextView
+            android:id="@+id/tv_name_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이름 변경"
+            style="@style/Text16spBoldBlack"/>
 
         <EditText
             android:id="@+id/et_name"
@@ -36,8 +42,6 @@
             android:inputType="text"
             android:maxLines="@integer/name_max_lines"
             android:maxLength="@integer/name_max_length"
-            android:onTextChanged="@{(s,start,befor,count)->vmLogin.etName(s.toString())}"
-            android:hint="이름 입력"/>
-
+            android:hint="이름 변경"/>
     </LinearLayout>
 </layout>

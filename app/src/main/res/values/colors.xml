@@ -6,6 +6,7 @@
     <color name="gray_light">#D3D3D3</color>
     <color name="gray_light_2">#AAAAAA</color>
     <color name="brand_color">#6F459E</color>
+    <color name="bg_sub">#F4F4F4</color>
 
     <color name="bnv_sel">#002D41</color>
     <color name="bnv_unSel">#A6A6A6</color>

@@ -126,13 +126,15 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             (fragment as? NameFragment)?.showNameKeyboard()
             CustomToast(this, "영문,한글 외에는 사용할 수 없습니다")
 
-        } else if (UserData.name!!.length < Constant.NAME_MIN_LENGTH) {
-            (fragment as? NameFragment)?.showNameKeyboard()
-            CustomToast(this, "닉네임은 ${Constant.NAME_MIN_LENGTH}글자 이상이어야 합니다")
-
         } else {
             binding.viewPager.currentItem = nextItem
         }
+//        else if (UserData.name!!.length < Constant.NAME_MIN_LENGTH) {
+//            (fragment as? NameFragment)?.showNameKeyboard()
+//            CustomToast(this, "닉네임은 ${Constant.NAME_MIN_LENGTH}글자 이상이어야 합니다")
+//
+//        }
+
     }
 
     private fun genderConfirm(nextItem: Int) {
