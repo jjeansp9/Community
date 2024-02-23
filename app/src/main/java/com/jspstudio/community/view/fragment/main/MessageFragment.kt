@@ -1,4 +1,4 @@
-package com.jspstudio.community.view.fragment
+package com.jspstudio.community.view.fragment.main
 
 import android.os.Bundle
 import android.view.LayoutInflater

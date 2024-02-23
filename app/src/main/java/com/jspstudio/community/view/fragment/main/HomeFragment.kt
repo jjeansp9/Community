@@ -1,16 +1,12 @@
-package com.jspstudio.community.view.fragment
+package com.jspstudio.community.view.fragment.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.jspstudio.community.R
 import com.jspstudio.community.databinding.FragmentHomeBinding
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.storage.FirebaseStorage
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.viewmodel.MainViewModel
 
