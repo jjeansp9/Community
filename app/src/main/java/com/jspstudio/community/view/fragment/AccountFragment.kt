@@ -23,7 +23,7 @@ class AccountFragment: BaseFragment<FragmentAccountBinding>("AccountFragment") {
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
-
+    // todo : 프로필 화면 ui 잘해보자
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         LogMgr.e(TAG, "profile : " + UserData.profile)
