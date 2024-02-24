@@ -33,7 +33,7 @@ class AccountFragment: BaseFragment<FragmentAccountBinding>("AccountFragment") {
 
             }
         }
-
+    // todo ui 구축
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         LogMgr.e(TAG, "profile : " + UserData.profile)
