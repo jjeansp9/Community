@@ -14,6 +14,7 @@ object UtilPref {
     private const val KEY_USER_BIRTH = "user_birth"
     private const val KEY_USER_PROFILE = "user_profile"
     private const val KEY_USER_MBTI = "user_mbti"
+    private const val KEY_USER_ABOUT_ME = "user_about_me"
     private const val KEY_USER_LOGIN_TYPE = "user_login_type"
     private const val KEY_USER_START_DATE = "user_start_date"
 
@@ -43,6 +44,7 @@ object UtilPref {
         pref(context).edit().putString(KEY_USER_GENDER, UserData.gender).apply()
         pref(context).edit().putString(KEY_USER_BIRTH, UserData.birth).apply()
         pref(context).edit().putString(KEY_USER_MBTI, UserData.mbti).apply()
+        pref(context).edit().putString(KEY_USER_ABOUT_ME, UserData.aboutMe).apply()
         pref(context).edit().putString(KEY_USER_PROFILE, UserData.profile).apply()
         pref(context).edit().putString(KEY_USER_LOGIN_TYPE, UserData.loginType).apply()
         pref(context).edit().putString(KEY_USER_START_DATE, UserData.startDate).apply()
@@ -55,10 +57,10 @@ object UtilPref {
         UserData.gender = pref(context).getString(KEY_USER_GENDER, "")
         UserData.birth = pref(context).getString(KEY_USER_BIRTH, "")
         UserData.mbti = pref(context).getString(KEY_USER_MBTI, "")
+        UserData.aboutMe = pref(context).getString(KEY_USER_ABOUT_ME, "")
         UserData.profile = pref(context).getString(KEY_USER_PROFILE, "")
         UserData.loginType = pref(context).getString(KEY_USER_LOGIN_TYPE, "")
         UserData.startDate = pref(context).getString(KEY_USER_START_DATE, "")
-
         LogMgr.e("id : ", UserData.id)
     }
 }

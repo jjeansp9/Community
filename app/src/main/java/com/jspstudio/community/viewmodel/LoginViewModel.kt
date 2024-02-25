@@ -12,7 +12,8 @@ import com.google.firebase.auth.actionCodeSettings
 import com.google.firebase.auth.auth
 import com.jspstudio.community.base.BaseViewModel
 import com.jspstudio.community.firebase.FireStoreMgr
-import com.jspstudio.community.firebase.FirebaseDBName
+import com.jspstudio.community.firebase.user.FireStoreUser
+import com.jspstudio.community.firebase.user.field.FirestoreDBUser
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
@@ -129,17 +130,16 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     val resultCode : LiveData<Int> = _resultCode
 
     private fun requestLogin(context: Context) {
-        FireStoreMgr.checkData(FirebaseDBName.USER, FirebaseDBName.USER_ID, UserData.id.toString()) {
+        FireStoreMgr.checkData(FirestoreDBUser.USER, FirestoreDBUser.USER_ID, UserData.id.toString()) {
             when(it) {
                 ResponseCode.DUPLICATE_ERROR -> {
-                    FireStoreMgr.getUserData(context) {
+                    FireStoreUser.getUserData(context) {
                         if (it == ResponseCode.SUCCESS) {
                             Handler(Looper.getMainLooper()).postDelayed({
                                 _resultCode.value = ResponseCode.SUCCESS
                             }, 1000)
                         }
                     }
-
                 }
                 ResponseCode.NOT_FOUND -> {
                     _resultCode.value = ResponseCode.NOT_FOUND
@@ -148,12 +148,8 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
         }
     }
 
-
-
     var _name = MutableLiveData<String>()
     var name : LiveData<String> = _name
 
-    fun etName(s: String){
-        _name.value = s.ifEmpty { "" }
-    }
+    fun etName(s: String){ _name.value = s.ifEmpty { "" } }
 }

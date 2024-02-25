@@ -9,4 +9,5 @@ object UserData {
     var profile: String? = ""
     var loginType: String? = ""
     var startDate: String? = ""
+    var aboutMe: String? = ""
 }

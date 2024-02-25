@@ -11,11 +11,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivitySignUpBinding
-import com.jspstudio.community.firebase.FireStoreMgr
+import com.jspstudio.community.firebase.user.FireStoreUser
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.user.UserInfoCheck
-import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.view.activity.MainActivity
 import com.jspstudio.community.view.adapter.SignUpVPAdapter
 import com.jspstudio.community.view.custom.CustomToast
@@ -161,7 +160,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
             CustomToast(this, "MBTI를 선택해주세요")
         } else {
             binding.btnNext.setOnClickListener(null)
-            FireStoreMgr.addUser(this) {
+            FireStoreUser.addUser(this) {
                 when(it) {
                     ResponseCode.SUCCESS -> {
                         Handler(Looper.getMainLooper()).postDelayed({
