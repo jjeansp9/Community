@@ -9,5 +9,6 @@ object FireStoreDBAccompany {
     const val MBTI = "mbti"
     const val PROFILE = "profile"
     const val TITLE = "title"
+    const val CONTENT = "content"
     const val INSERT_DATE = "insert_date"
 }

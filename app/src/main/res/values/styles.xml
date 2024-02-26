@@ -225,18 +225,18 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
-    <style name="Text28dpBoldBlack">
+    <style name="Text28spBoldBlack">
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
-    <style name="Text28dpNormalGray">
+    <style name="Text28spNormalGray">
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
-    <style name="Text28dpBoldGray">
-        <item name="android:textSize">28dp</item>
+    <style name="Text28spBoldGray">
+        <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>

@@ -3,26 +3,25 @@ package com.jspstudio.community.view.fragment.main
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.jspstudio.community.databinding.FragmentHomeBinding
-import com.google.firebase.firestore.CollectionReference
 import com.jspstudio.community.base.BaseFragment
+import com.jspstudio.community.common.IntentKey
+import com.jspstudio.community.model.AccompanyData
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.util.Util
-import com.jspstudio.community.view.activity.EditAccompanyActivity
+import com.jspstudio.community.view.activity.accompany.AccompanyDetailActivity
+import com.jspstudio.community.view.activity.accompany.AccompanyEditActivity
 import com.jspstudio.community.view.adapter.AccompanyAdapter
 import com.jspstudio.community.view.custom.CustomSmoothScroller
 import com.jspstudio.community.view.custom.GridSpaceItemDecoration
 import com.jspstudio.community.viewmodel.AccompanyViewModel
 import com.jspstudio.community.viewmodel.MainViewModel
-import retrofit2.Response
 
 class HomeFragment: BaseFragment<FragmentHomeBinding>("HomeFragment") {
 
@@ -62,11 +61,17 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>("HomeFragment") {
     }
 
     private fun initView() {
-        adapter = AccompanyAdapter(mContext, onItemClick = {  })
+        adapter = AccompanyAdapter(mContext, onItemClick = { startDetailActivity(it) })
         binding.recycler.adapter = adapter
         binding.recycler.addItemDecoration(GridSpaceItemDecoration(1, Util.fromDpToPx(12).toInt()))
 
         binding.swipe.setOnRefreshListener { initData() }
+    }
+
+    private fun startDetailActivity(item : AccompanyData) {
+        val intent = Intent(mContext, AccompanyDetailActivity::class.java)
+        intent.putExtra(IntentKey.ACCOMPANY_DATA, item)
+        startActivity(intent)
     }
 
     private fun observe() {
@@ -94,7 +99,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>("HomeFragment") {
 
     private fun onClick() {
         binding.fabAdd.setOnClickListener {
-            resultLauncher.launch(Intent(mContext, EditAccompanyActivity::class.java))
+            resultLauncher.launch(Intent(mContext, AccompanyEditActivity::class.java))
             //startActivity(Intent(mContext, EditAccompanyActivity::class.java))
         }
     }

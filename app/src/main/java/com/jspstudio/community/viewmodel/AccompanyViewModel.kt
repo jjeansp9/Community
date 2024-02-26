@@ -16,25 +16,27 @@ class AccompanyViewModel : BaseViewModel("AccompanyViewModel") {
     var _boardTitle = MutableLiveData<String>()
     var boardTitle : LiveData<String> = _boardTitle
 
+    var _boardContent = MutableLiveData<String>()
+    var boardContent : LiveData<String> = _boardContent
+
     var _responseCode = MutableLiveData<Int>()
     var responseCode : LiveData<Int> = _responseCode
 
-    fun setBoardTitle(s: String){ _boardTitle.value = s.ifEmpty { "" } }
-
-//    fun test() {
-//        val list = ArrayList<AccompanyData>()
-//        list.add(AccompanyData(title = "테스트중입니다"))
-//        list.add(AccompanyData(title = "테스트중입니다1"))
-//        list.add(AccompanyData(title = "테스트중입니다2"))
-//        list.add(AccompanyData(title = "테스트중입니다3"))
-//        _accompanyItem.postValue(list)
-//    }
+    fun setBoardTitle(s: String){ _boardTitle.value = if (s.isEmpty()) "" else s }
+    fun setBoardContent(s: String){ _boardContent.value = if (s.isEmpty()) "" else s }
 
     fun addBoard(context: Context) {
-        if (_boardTitle.value?.isEmpty()!!) {
-            _responseCode.value = ResponseCode.BINDING_ERROR
+        if (_boardTitle.value == null || _boardTitle.value?.isEmpty()!!) {
+            _responseCode.value = ResponseCode.BINDING_ERROR_TITLE
+
+        } else if (_boardContent.value == null || _boardContent.value?.isEmpty()!!) {
+            _responseCode.value = ResponseCode.BINDING_ERROR_CONTENT
+
         } else {
-            val item = AccompanyData(title = _boardTitle.value!!)
+            val item = AccompanyData(
+                title = _boardTitle.value!!,
+                content = _boardContent.value!!
+            )
             FireStoreAccompany.addBoard(context, item) {
                 when(it) {
                     ResponseCode.SUCCESS -> _responseCode.value = ResponseCode.SUCCESS

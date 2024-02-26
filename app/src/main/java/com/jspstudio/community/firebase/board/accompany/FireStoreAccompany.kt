@@ -42,6 +42,7 @@ object FireStoreAccompany {
                     mbti = key[FireStoreDBAccompany.MBTI]!!,
                     profile = key[FireStoreDBAccompany.PROFILE]!!,
                     title = key[FireStoreDBAccompany.TITLE]!!,
+                    content = if (key[FireStoreDBAccompany.CONTENT] == null) "" else key[FireStoreDBAccompany.CONTENT]!!,
                     insertDate = key[FireStoreDBAccompany.INSERT_DATE]!!,
                 ))
             }
@@ -65,6 +66,7 @@ object FireStoreAccompany {
         key[FireStoreDBAccompany.MBTI] = UserData.mbti.toString()
         key[FireStoreDBAccompany.PROFILE] = Util.getStr(UserData.profile.toString())
         key[FireStoreDBAccompany.TITLE] = Util.getStr(item.title)
+        key[FireStoreDBAccompany.CONTENT] = Util.getStr(item.content)
         key[FireStoreDBAccompany.INSERT_DATE] = date
 
         userRef.document(date + "_" + UserData.id.toString()).set(key)

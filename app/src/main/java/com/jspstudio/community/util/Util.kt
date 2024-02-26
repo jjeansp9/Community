@@ -181,8 +181,8 @@ object Util {
         return result.toString()
     }
 
-    fun getStr(s : String) : String {
-        if (s == null) return ""
-        return s.ifEmpty { "" }
+    fun getStr(s : String?) : String {
+        return if (s == null) ""
+        else s.ifEmpty { "" }
     }
 }
