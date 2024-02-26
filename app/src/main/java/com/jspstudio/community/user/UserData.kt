@@ -1,5 +1,7 @@
 package com.jspstudio.community.user
 
+import java.util.Locale
+
 object UserData {
     var id: String? = ""
     var name: String? = ""
@@ -10,4 +12,5 @@ object UserData {
     var loginType: String? = ""
     var startDate: String? = ""
     var aboutMe: String? = ""
+    var nationality: Locale? = null
 }

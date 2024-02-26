@@ -18,7 +18,7 @@ import kotlin.random.Random
 
 object FireStoreUser {
 
-    private const val TAG = "FireStoreUserMgr"
+    private const val TAG = "FireStoreUser"
 
     fun getUserData(context: Context, onResponse: ((responseCode: Int) -> Unit)) {
         val firestore = FirebaseFirestore.getInstance()
@@ -32,16 +32,16 @@ object FireStoreUser {
                 val snapshot : DocumentSnapshot = documentChange.document
                 val profile : Map<String, String> = snapshot.data as Map<String, String>
                 LogMgr.e(TAG, snapshot.data.toString())
-                val id = profile[FirestoreDBUser.USER_ID]
+                val id = profile[FirestoreDBUser.ID]
                 if (id.toString() == UserData.id) {
-                    UserData.name = profile[FirestoreDBUser.USER_NAME]
-                    UserData.gender = profile[FirestoreDBUser.USER_GENDER]
-                    UserData.birth = profile[FirestoreDBUser.USER_BIRTH]
-                    UserData.mbti = profile[FirestoreDBUser.USER_MBTI]
-                    UserData.aboutMe = profile[FirestoreDBUser.USER_ABOUT_ME]
-                    UserData.profile = profile[FirestoreDBUser.USER_PROFILE]
-                    UserData.loginType = profile[FirestoreDBUser.USER_LOGIN_TYPE]
-                    UserData.startDate = profile[FirestoreDBUser.USER_START_DATE]
+                    UserData.name = profile[FirestoreDBUser.NAME]
+                    UserData.gender = profile[FirestoreDBUser.GENDER]
+                    UserData.birth = profile[FirestoreDBUser.BIRTH]
+                    UserData.mbti = profile[FirestoreDBUser.MBTI]
+                    UserData.aboutMe = profile[FirestoreDBUser.ABOUT_ME]
+                    UserData.profile = profile[FirestoreDBUser.PROFILE]
+                    UserData.loginType = profile[FirestoreDBUser.LOGIN_TYPE]
+                    UserData.startDate = profile[FirestoreDBUser.START_DATE]
                     UtilPref.setUserData(context)
                     onResponse(ResponseCode.SUCCESS)
                     return@addSnapshotListener
@@ -57,14 +57,14 @@ object FireStoreUser {
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault()).format(Date())
         val profile: MutableMap<String, String> = HashMap()
 
-        profile[FirestoreDBUser.USER_NAME] = UserData.name.toString()
-        profile[FirestoreDBUser.USER_GENDER] = UserData.gender.toString()
-        profile[FirestoreDBUser.USER_BIRTH] = UserData.birth.toString()
-        profile[FirestoreDBUser.USER_MBTI] = UserData.mbti.toString()
-        profile[FirestoreDBUser.USER_ABOUT_ME] = ""
-        profile[FirestoreDBUser.USER_PROFILE] = Util.getStr(UserData.profile.toString())
-        profile[FirestoreDBUser.USER_LOGIN_TYPE] = UserData.loginType.toString()
-        profile[FirestoreDBUser.USER_START_DATE] = date
+        profile[FirestoreDBUser.NAME] = UserData.name.toString()
+        profile[FirestoreDBUser.GENDER] = UserData.gender.toString()
+        profile[FirestoreDBUser.BIRTH] = UserData.birth.toString()
+        profile[FirestoreDBUser.MBTI] = UserData.mbti.toString()
+        profile[FirestoreDBUser.ABOUT_ME] = ""
+        profile[FirestoreDBUser.PROFILE] = Util.getStr(UserData.profile.toString())
+        profile[FirestoreDBUser.LOGIN_TYPE] = UserData.loginType.toString()
+        profile[FirestoreDBUser.START_DATE] = date
 
         if (UserData.id == null || UserData.id!!.trim().isEmpty()) {
             val random = Random
@@ -79,7 +79,7 @@ object FireStoreUser {
             }
             UserData.id = stringBuilder.toString()
         }
-        profile[FirestoreDBUser.USER_ID] = UserData.id.toString()
+        profile[FirestoreDBUser.ID] = UserData.id.toString()
         UserData.startDate = date
 
         userRef.document(date + "_" + UserData.id.toString()).set(profile)

@@ -2,10 +2,12 @@ package com.jspstudio.community.firebase.board.accompany.field
 
 object FireStoreDBAccompany {
     const val ACCOMPANY = "accompany" // collection name
-    const val USER_ID = "id"
-    const val USER_NAME = "name"
-    const val USER_GENDER = "gender"
-    const val USER_BIRTH = "birth"
-    const val USER_MBTI = "mbti"
-    const val USER_PROFILE = "profile"
+    const val ID = "id"
+    const val NAME = "name"
+    const val GENDER = "gender"
+    const val BIRTH = "birth"
+    const val MBTI = "mbti"
+    const val PROFILE = "profile"
+    const val TITLE = "title"
+    const val INSERT_DATE = "insert_date"
 }

@@ -82,7 +82,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 binding.vmLogin?.kakaoLogin(this@LoginActivity, kakaoLoginMgr!!)
             }
         })
-        //binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin(kakaoLoginMgr!!) } // Kakao Login
+        //binding.btnKakao.setOnClickListener { binding.vmLogin?.kakaoLogin(this, kakaoLoginMgr!!) } // Kakao Login
         binding.btnNaver.setOnClickListener { binding.vmLogin?.naverLogin(this, naverLoginMgr!!) } // Naver Login
         binding.btnGoogle.setOnClickListener { binding.vmLogin?.googleLogin(googleLoginMgr!!, auth) } // Google Login
         binding.btnGuest.setOnClickListener { binding.vmLogin?.guestLogin() } // Guest Login

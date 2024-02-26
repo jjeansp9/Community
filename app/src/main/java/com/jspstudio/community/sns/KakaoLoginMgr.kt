@@ -36,6 +36,7 @@ class KakaoLoginMgr(private val context : Context) {
                 LogMgr.e(TAG, "login fail : $error.message")
             }else if(token != null){
                 updateSocialToken(token.accessToken)
+                LogMgr.e(TAG, "login : $error.message")
             }
         }
     }
@@ -51,11 +52,13 @@ class KakaoLoginMgr(private val context : Context) {
                     onKakaoAccountLogin()
                 }else if(token != null) {
                     updateSocialToken(token.accessToken)
+                    LogMgr.e(TAG, "login2 : message")
                 }
 
             }
         }else{
             onKakaoAccountLogin()
+            LogMgr.e(TAG, "login3 : message")
         }
 
     }

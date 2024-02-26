@@ -69,7 +69,8 @@ class MbtiFragment : BaseFragment<FragmentMbtiBinding>("MbtiFragment") {
         val view = layoutInflater.inflate(R.layout.dialog_bottom_sheet_list, null)
         val yearPickerRecyclerView = view.findViewById<RecyclerView>(R.id.yearPickerRecyclerView)
 
-        val mbtiType = listOf("INTJ", "INTP", "ENTJ", "ENTP",
+        val mbtiType = listOf(
+            "INTJ", "INTP", "ENTJ", "ENTP",
             "INFJ", "INFP", "ENFJ", "ENFP",
             "ISTJ", "ISFJ", "ESTJ", "ESFJ",
             "ISTP", "ISFP", "ESTP", "ESFP").sorted()

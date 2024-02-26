@@ -28,6 +28,11 @@ import com.navercorp.nid.profile.data.NidProfileResponse
 
 class LoginViewModel() : BaseViewModel("LoginViewModel") {
 
+    var _name = MutableLiveData<String>()
+    var name : LiveData<String> = _name
+
+    fun etName(s: String){ _name.value = s.ifEmpty { "" } }
+
     fun kakaoLogin(context: Context, kakaoLoginMgr: KakaoLoginMgr) {
         kakaoLoginMgr.startKakaoLogin {
             UserApiClient.instance.me { user, throwable ->
@@ -130,7 +135,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     val resultCode : LiveData<Int> = _resultCode
 
     private fun requestLogin(context: Context) {
-        FireStoreMgr.checkData(FirestoreDBUser.USER, FirestoreDBUser.USER_ID, UserData.id.toString()) {
+        FireStoreMgr.checkData(FirestoreDBUser.USER, FirestoreDBUser.ID, UserData.id.toString()) {
             when(it) {
                 ResponseCode.DUPLICATE_ERROR -> {
                     FireStoreUser.getUserData(context) {
@@ -147,9 +152,4 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
             }
         }
     }
-
-    var _name = MutableLiveData<String>()
-    var name : LiveData<String> = _name
-
-    fun etName(s: String){ _name.value = s.ifEmpty { "" } }
 }
