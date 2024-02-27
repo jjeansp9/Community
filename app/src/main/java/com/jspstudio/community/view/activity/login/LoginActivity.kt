@@ -76,7 +76,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     }
 
     private fun click() {
-        // todo : 회원가입을 이미 한 유저라면 로그인할 때 pref에 data 저장하기
         binding.btnKakao.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View?) {
                 binding.vmLogin?.kakaoLogin(this@LoginActivity, kakaoLoginMgr!!)
