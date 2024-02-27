@@ -20,7 +20,8 @@ class AccompanyEditActivity : BaseActivity<ActivityAccompanyEditBinding>(R.layou
     }
 
     private fun onClick() {
-        binding.appBarComplete.setOnClickListener { binding.vmAccompany?.addBoard(this) }
+        binding.btnComplete.setOnClickListener { binding.vmAccompany?.addBoard(this) }
+        binding.btnBack.setOnClickListener { finish() }
     }
 
     private fun observe() {
