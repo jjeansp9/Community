@@ -14,6 +14,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.jspstudio.community.R
 import java.io.Serializable
 import java.text.DecimalFormat
@@ -27,6 +30,10 @@ object Util {
     @BindingAdapter("profileImg")
     @JvmStatic
     fun profileImg(view: ImageView, url: String?) {
+
+        val cornerRadiusPx = fromDpToPx(12)
+        val requestOptions = RequestOptions().transform(CenterCrop(), RoundedCorners(cornerRadiusPx.toInt()))
+
         if (!url.isNullOrEmpty()) {
             Glide.with(view.context)
                 .load(url)

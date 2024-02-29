@@ -5,19 +5,15 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
-import com.jspstudio.community.databinding.ActivityEditProfileBinding
+import com.jspstudio.community.databinding.ActivityChatBinding
 import com.jspstudio.community.viewmodel.MainViewModel
+import com.jspstudio.community.viewmodel.MessageViewModel
 
-class EditProfileActivity : BaseActivity<ActivityEditProfileBinding>(R.layout.activity_edit_profile, "EditProfileActivity") {
-
-    private val viewModel: MainViewModel by viewModels()
-
+class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "ChatActivity") {
+    private val viewModel: MessageViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.vmMain = viewModel
+        binding.vmMsg = viewModel
         binding.lifecycleOwner= this
-
-
-
     }
 }
