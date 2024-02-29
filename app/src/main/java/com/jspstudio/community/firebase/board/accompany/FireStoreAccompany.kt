@@ -67,6 +67,8 @@ object FireStoreAccompany {
         key[FireStoreDBAccompany.PROFILE] = Util.getStr(UserData.profile.toString())
         key[FireStoreDBAccompany.TITLE] = Util.getStr(item.title)
         key[FireStoreDBAccompany.CONTENT] = Util.getStr(item.content)
+        key[FireStoreDBAccompany.START_DATE] = Util.getStr(item.startDate)
+        key[FireStoreDBAccompany.END_DATE] = Util.getStr(item.endDate)
         key[FireStoreDBAccompany.INSERT_DATE] = date
 
         userRef.document(date + "_" + UserData.id.toString()).set(key)

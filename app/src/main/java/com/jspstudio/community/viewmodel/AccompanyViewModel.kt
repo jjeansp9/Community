@@ -19,11 +19,15 @@ class AccompanyViewModel : BaseViewModel("AccompanyViewModel") {
     var _boardContent = MutableLiveData<String>()
     var boardContent : LiveData<String> = _boardContent
 
+    var _boardDate = MutableLiveData<MutableList<String>>()
+    var boardDate : LiveData<MutableList<String>> = _boardDate
+
     var _responseCode = MutableLiveData<Int>()
     var responseCode : LiveData<Int> = _responseCode
 
     fun setBoardTitle(s: String){ _boardTitle.value = if (s.isEmpty()) "" else s }
     fun setBoardContent(s: String){ _boardContent.value = if (s.isEmpty()) "" else s }
+    fun setBoardDate(date: MutableList<String>?) { _boardDate.value = date!! }
 
     fun addBoard(context: Context) {
         if (_boardTitle.value == null || _boardTitle.value?.isEmpty()!!) {
@@ -32,10 +36,15 @@ class AccompanyViewModel : BaseViewModel("AccompanyViewModel") {
         } else if (_boardContent.value == null || _boardContent.value?.isEmpty()!!) {
             _responseCode.value = ResponseCode.BINDING_ERROR_CONTENT
 
+        } else if (_boardDate.value == null || _boardDate.value?.isEmpty()!!) {
+            _responseCode.value = ResponseCode.BINDING_ERROR_DATE
+
         } else {
             val item = AccompanyData(
                 title = _boardTitle.value!!,
-                content = _boardContent.value!!
+                content = _boardContent.value!!,
+                startDate = _boardDate.value!![0],
+                endDate = _boardDate.value!![1]
             )
             FireStoreAccompany.addBoard(context, item) {
                 when(it) {

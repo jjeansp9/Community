@@ -14,5 +14,7 @@ data class AccompanyData(
     val profile : String = "",
     val title : String = "",
     val content : String = "",
+    val startDate : String = "",
+    val endDate : String = "",
     val insertDate : String = ""
 ) : Parcelable

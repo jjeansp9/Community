@@ -64,7 +64,7 @@ object Util {
     /**
      * 파라미터로 받은 editText의 개수만큼 focus 얻어오고 키보드를 내리는 메소드
      * */
-    fun hideKeyboard(mContext: Context, focusList: Array<View?>) {
+    fun hideKeyboard(mContext: Context, focusList: List<View?>) {
         val inputMethodManager = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             ?: return
         for (view in focusList) {
