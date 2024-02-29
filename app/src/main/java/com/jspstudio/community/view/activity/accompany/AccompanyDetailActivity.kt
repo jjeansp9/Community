@@ -1,14 +1,19 @@
 package com.jspstudio.community.view.activity.accompany
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.activity.viewModels
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.common.IntentKey
 import com.jspstudio.community.databinding.ActivityAccompanyDetailBinding
 import com.jspstudio.community.model.AccompanyData
+import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.util.Util
+import com.jspstudio.community.util.UtilAnim
+import com.jspstudio.community.view.activity.ChatActivity
 import com.jspstudio.community.viewmodel.AccompanyViewModel
 
 class AccompanyDetailActivity : BaseActivity<ActivityAccompanyDetailBinding>(R.layout.activity_accompany_detail, "AccompanyDetailActivity") {
@@ -21,10 +26,15 @@ class AccompanyDetailActivity : BaseActivity<ActivityAccompanyDetailBinding>(R.l
         binding.vmAccompany = viewModel
         binding.lifecycleOwner= this
         initData()
+        onClick()
     }
 
     private fun initData() {
         item = Util.getParcelableExtra(intent, IntentKey.ACCOMPANY_DATA, AccompanyData::class.java)!!
         binding.vmAccompany?.getBoardDetail(item)
+    }
+
+    private fun onClick() {
+        binding.btnChat.setOnClickListener { startActivity(Intent(this, ChatActivity::class.java)) }
     }
 }

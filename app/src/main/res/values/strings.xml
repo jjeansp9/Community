@@ -28,6 +28,7 @@
     <string name="age_sub2">년생</string>
 
     <string name="travel_info_sub">여행정보</string>
+    <string name="chat_start">채팅하기</string>
 
     <string name="accompany_appbar_title">글쓰기</string>
 </resources>
