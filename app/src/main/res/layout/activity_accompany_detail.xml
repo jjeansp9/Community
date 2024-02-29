@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <import type="com.jspstudio.community.viewmodel.AccompanyViewModel"/>
         <variable
@@ -14,20 +14,79 @@
         android:padding="@dimen/base_horizontal"
         tools:context=".view.activity.accompany.AccompanyDetailActivity">
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/Text18spBoldBlack"
-            android:text="제목입니다"/>
+            android:orientation="horizontal">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                app:profileImg="@{vmAccompany.accompanyDetail.profile}"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:layout_marginStart="4dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    style="@style/Text14spNormalGray"
+                    android:text="@{vmAccompany.accompanyDetail.name}" />
+                <TextView
+                    android:id="@+id/tv_birth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:layout_marginStart="4dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    style="@style/Text14spNormalGray"
+                    android:text="@{vmAccompany.accompanyDetail.birth}" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Text18spNormalBlack"
+            android:text="@{vmAccompany.accompanyDetail.title}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_calendar"/>
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                style="@style/Text14spNormalGray"
+                android:text="@{vmAccompany.accompanyDetail.startDate + (` ~ `) + vmAccompany.accompanyDetail.endDate}"/>
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/content"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            style="@style/Text18spBoldBlack"
-            android:text="내용입니다"/>
+            style="@style/Text14spNormalGray"
+            android:lineSpacingMultiplier="1.04"
+            android:text="@{vmAccompany.accompanyDetail.content}"/>
 
     </LinearLayout>
 </layout>

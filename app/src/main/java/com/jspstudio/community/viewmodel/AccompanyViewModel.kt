@@ -13,6 +13,9 @@ class AccompanyViewModel : BaseViewModel("AccompanyViewModel") {
     val _accompanyItem = MutableLiveData<MutableList<AccompanyData>?>()
     val accompanyItem : LiveData<MutableList<AccompanyData>?> = _accompanyItem
 
+    val _accompanyDetail = MutableLiveData<AccompanyData?>()
+    val accompanyDetail : LiveData<AccompanyData?> = _accompanyDetail
+
     var _boardTitle = MutableLiveData<String>()
     var boardTitle : LiveData<String> = _boardTitle
 
@@ -27,7 +30,8 @@ class AccompanyViewModel : BaseViewModel("AccompanyViewModel") {
 
     fun setBoardTitle(s: String){ _boardTitle.value = if (s.isEmpty()) "" else s }
     fun setBoardContent(s: String){ _boardContent.value = if (s.isEmpty()) "" else s }
-    fun setBoardDate(date: MutableList<String>?) { _boardDate.value = date!! }
+    fun setBoardDate(date: MutableList<String>?) { _boardDate.value = date ?: mutableListOf()
+    }
 
     fun addBoard(context: Context) {
         if (_boardTitle.value == null || _boardTitle.value?.isEmpty()!!) {
@@ -46,7 +50,7 @@ class AccompanyViewModel : BaseViewModel("AccompanyViewModel") {
                 startDate = _boardDate.value!![0],
                 endDate = _boardDate.value!![1]
             )
-            FireStoreAccompany.addBoard(context, item) {
+            FireStoreAccompany.addAccompany(context, item) {
                 when(it) {
                     ResponseCode.SUCCESS -> _responseCode.value = ResponseCode.SUCCESS
                     ResponseCode.BINDING_ERROR -> _responseCode.value = ResponseCode.BINDING_ERROR
@@ -57,11 +61,15 @@ class AccompanyViewModel : BaseViewModel("AccompanyViewModel") {
 
     fun getBoard(context : Context) {
         LogMgr.e(TAG, "item size : " + _accompanyItem.value?.size.toString())
-        FireStoreAccompany.getBoard(context) {
+        FireStoreAccompany.getAccompany(context) {
             if (it.size > 0) {
                 _accompanyItem.postValue(it)
                 _responseCode.value = ResponseCode.SUCCESS
             }
         }
+    }
+
+    fun getBoardDetail(item : AccompanyData?) {
+        if (item != null) _accompanyDetail.value = item
     }
 }

@@ -58,6 +58,7 @@ class AccompanyEditActivity : BaseActivity<ActivityAccompanyEditBinding>(R.layou
             }
         }
     }
+    // 24.3.15 ~ 23.10.9
 
     private fun initCalendar() {
         val getDate : MutableList<String> = mutableListOf()

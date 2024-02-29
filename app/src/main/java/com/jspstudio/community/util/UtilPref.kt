@@ -2,6 +2,7 @@ package com.jspstudio.community.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.jspstudio.community.R
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 
@@ -54,7 +55,8 @@ object UtilPref {
     fun getUserData(context: Context) {
         UserData.id = pref(context).getString(KEY_USER_ID, "")
         UserData.name = pref(context).getString(KEY_USER_NAME, "")
-        UserData.gender = pref(context).getString(KEY_USER_GENDER, "")
+        UserData.gender = if (pref(context).getString(KEY_USER_GENDER, "") == "female") context.getString(R.string.female)
+                          else context.getString(R.string.male)
         UserData.birth = pref(context).getString(KEY_USER_BIRTH, "")
         UserData.mbti = pref(context).getString(KEY_USER_MBTI, "")
         UserData.aboutMe = pref(context).getString(KEY_USER_ABOUT_ME, "")
@@ -62,5 +64,26 @@ object UtilPref {
         UserData.loginType = pref(context).getString(KEY_USER_LOGIN_TYPE, "")
         UserData.startDate = pref(context).getString(KEY_USER_START_DATE, "")
         LogMgr.e("id : ", UserData.id)
+    }
+
+    fun clearUserData(context: Context) {
+        pref(context).edit().putString(KEY_USER_ID, "").apply()
+        pref(context).edit().putString(KEY_USER_NAME, "").apply()
+        pref(context).edit().putString(KEY_USER_GENDER, "").apply()
+        pref(context).edit().putString(KEY_USER_BIRTH, "").apply()
+        pref(context).edit().putString(KEY_USER_MBTI, "").apply()
+        pref(context).edit().putString(KEY_USER_ABOUT_ME, "").apply()
+        pref(context).edit().putString(KEY_USER_PROFILE, "").apply()
+        pref(context).edit().putString(KEY_USER_LOGIN_TYPE, "").apply()
+        pref(context).edit().putString(KEY_USER_START_DATE, "").apply()
+        UserData.id = ""
+        UserData.name = ""
+        UserData.gender = ""
+        UserData.birth = ""
+        UserData.mbti = ""
+        UserData.aboutMe = ""
+        UserData.profile = ""
+        UserData.loginType = ""
+        UserData.startDate = ""
     }
 }

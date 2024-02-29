@@ -43,6 +43,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>("HomeFragment") {
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             isModify = true
+            initData()
         }
         LogMgr.e(TAG, result.resultCode.toString())
     }

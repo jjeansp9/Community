@@ -24,7 +24,7 @@
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:layout_gravity="center_horizontal"
-            app:imageUrl="@{vmMain.userData.profile}"/>
+            app:profileImg="@{vmMain.userData.profile}"/>
 
         <TextView
             android:id="@+id/tv_name"
@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="@{vmMain.userData.birth}"
+            android:text="@{vmMain.userData.birth + @string/age_sub2}"
             style="@style/Text16spNormalBlack"/>
 
         <TextView

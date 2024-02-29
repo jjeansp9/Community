@@ -47,7 +47,7 @@ class AccompanyAdapter(
             binding.root.setOnTouchListener {v, event ->
                 when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
-                        UtilAnim.btnClickEffect(v, 100, 0.97f, 0.97f, true)
+                        UtilAnim.btnClickEffect(v, 50, 0.97f, 0.97f, true)
                         true
                     }
                     MotionEvent.ACTION_CANCEL -> {

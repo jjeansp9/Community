@@ -19,34 +19,87 @@
             android:backgroundTint="@color/white"
             android:padding="@dimen/base_horizontal">
 
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Text18spBoldBlack"
-                android:text="@{item.title.isEmpty ? (``) : item.title}"/>
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_vertical"
+                    app:profileImg="@{item.profile}"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        style="@style/Text14spNormalGray"
+                        android:text="@{item.name}" />
+                    <TextView
+                        android:id="@+id/tv_birth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        style="@style/Text14spNormalGray"
+                        android:text="@{item.birth}" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_profile"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_horizontal"
-                    app:imageUrl="@{item.profile}"/>
-
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_calendar"/>
                 <TextView
-                    android:id="@+id/tv_name"
+                    android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    style="@style/Text14spNormalGray"
-                    android:text="@{item.name}" />
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    style="@style/Text12spBoldBlack"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@{item.startDate + (` ~ `) + item.endDate}"/>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="start"
+                style="@style/Text16spNormalBlack"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{item.title.isEmpty ? (``) : item.title}"/>
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="start"
+                style="@style/Text14spNormalGray"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="@{item.content.isEmpty ? (``) : item.content}"/>
 
         </LinearLayout>
     </FrameLayout>

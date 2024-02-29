@@ -20,5 +20,14 @@
     <string name="next">다음</string>
     <string name="previous">이전</string>
 
+    <string name="male">남성</string>
+    <string name="female">여성</string>
+    <string name="male_sub">남</string>
+    <string name="female_sub">여</string>
+    <string name="age_sub">대</string>
+    <string name="age_sub2">년생</string>
+
+    <string name="travel_info_sub">여행정보</string>
+
     <string name="accompany_appbar_title">글쓰기</string>
 </resources>

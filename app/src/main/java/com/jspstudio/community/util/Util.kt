@@ -19,13 +19,14 @@ import java.io.Serializable
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Locale
 
 object Util {
 
-    @BindingAdapter("imageUrl")
+    @BindingAdapter("profileImg")
     @JvmStatic
-    fun loadImage(view: ImageView, url: String?) {
+    fun profileImg(view: ImageView, url: String?) {
         if (!url.isNullOrEmpty()) {
             Glide.with(view.context)
                 .load(url)
@@ -184,5 +185,23 @@ object Util {
     fun getStr(s : String?) : String {
         return if (s == null) ""
         else s.ifEmpty { "" }
+    }
+
+    fun calculateAgeFromYearOfBirth(yearOfBirth: String): String {
+        val currentYear = LocalDate.now().year
+        val age = (currentYear - yearOfBirth.toInt()) - 1
+        return when(age) {
+            in 10 .. 19 -> "10"
+            in 20 .. 29 -> "20"
+            in 30 .. 39 -> "30"
+            in 40 .. 49 -> "40"
+            in 50 .. 59 -> "50"
+            in 60 .. 69 -> "60"
+            in 70 .. 79 -> "70"
+            in 80 .. 89 -> "80"
+            in 90 .. 99 -> "90"
+            in 100 .. 109 -> "100"
+            else -> ""
+        }
     }
 }

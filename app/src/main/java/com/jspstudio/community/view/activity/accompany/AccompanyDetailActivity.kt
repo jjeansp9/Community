@@ -25,7 +25,6 @@ class AccompanyDetailActivity : BaseActivity<ActivityAccompanyDetailBinding>(R.l
 
     private fun initData() {
         item = Util.getParcelableExtra(intent, IntentKey.ACCOMPANY_DATA, AccompanyData::class.java)!!
-        binding.title.text = item.title
-        binding.content.text = item.content
+        binding.vmAccompany?.getBoardDetail(item)
     }
 }
