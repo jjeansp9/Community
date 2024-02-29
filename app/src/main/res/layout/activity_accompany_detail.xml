@@ -15,7 +15,7 @@
         tools:context=".view.activity.accompany.AccompanyDetailActivity">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
@@ -27,24 +27,23 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_gravity="center_vertical"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:layout_marginStart="4dp"
                     android:maxLines="1"
                     android:ellipsize="end"
                     style="@style/Text14spNormalGray"
                     android:text="@{vmAccompany.accompanyDetail.name}" />
                 <TextView
                     android:id="@+id/tv_birth"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:layout_marginStart="4dp"
                     android:maxLines="1"
                     android:ellipsize="end"
                     style="@style/Text14spNormalGray"
@@ -56,6 +55,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             style="@style/Text18spNormalBlack"
             android:text="@{vmAccompany.accompanyDetail.title}"/>
 
@@ -78,15 +78,23 @@
                 android:text="@{vmAccompany.accompanyDetail.startDate + (` ~ `) + vmAccompany.accompanyDetail.endDate}"/>
         </LinearLayout>
 
-
         <TextView
             android:id="@+id/content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            style="@style/Text14spNormalGray"
-            android:lineSpacingMultiplier="1.04"
+            style="@style/Text16spNormalGray"
+            android:lineSpacingMultiplier="1.1"
             android:text="@{vmAccompany.accompanyDetail.content}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_corner_16"
+            android:backgroundTint="@color/bg_sub">
+
+        </LinearLayout>
 
     </LinearLayout>
 </layout>
