@@ -35,6 +35,10 @@ class AccompanyDetailActivity : BaseActivity<ActivityAccompanyDetailBinding>(R.l
     }
 
     private fun onClick() {
-        binding.btnChat.setOnClickListener { startActivity(Intent(this, ChatActivity::class.java)) }
+        binding.btnChat.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra(IntentKey.ACCOMPANY_DATA, item)
+            startActivity(intent)
+        }
     }
 }

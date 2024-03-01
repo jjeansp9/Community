@@ -26,7 +26,7 @@ object FireStoreChat {
         val list : MutableList<MessageData> = mutableListOf()
 
         val firestore = FirebaseFirestore.getInstance()
-        val userRef: CollectionReference = firestore.collection(DocChat.CHAT) // 컬렉션명
+        val userRef: CollectionReference = firestore.collection(DocChat.CHAT).document().collection() // 컬렉션명
         userRef.addSnapshotListener { value, error ->
             val docChangeList : List<DocumentChange> = value!!.documentChanges
             for (documentChange : DocumentChange in docChangeList) {
@@ -53,11 +53,12 @@ object FireStoreChat {
         }
     }
 
-    fun addMsg(context : Context, item : MessageData, onResponse: ((responseCode: Int) -> Unit)) {
+    fun sendMsg(context : Context, userId: String, msg : String, onResponse: ((responseCode: Int) -> Unit)) {
         val firestore = FirebaseFirestore.getInstance()
 
         val userRef: CollectionReference = firestore.collection(DocChat.CHAT) // 컬렉션명
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.KOREA).format(Date())
+        val date2 = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA).format(Date())
         val key: MutableMap<String, String> = HashMap()
 
         key[DocChat.ID] = UserData.id.toString()
@@ -66,10 +67,10 @@ object FireStoreChat {
         key[DocChat.BIRTH] = UserData.birth.toString()
         key[DocChat.MBTI] = UserData.mbti.toString()
         key[DocChat.PROFILE] = Util.getStr(UserData.profile.toString())
-        key[DocChat.MESSAGE] = Util.getStr(item.message)
+        key[DocChat.MESSAGE] = Util.getStr(msg)
         key[DocChat.MSG_INSERT_DATE] = date
 
-        userRef.document(date + "_" + UserData.id.toString()).set(key)
+        userRef.document(UserData.id.toString() + "_To_" + userId).collection(DocChat.CHAT).document(date + "_" + UserData.id.toString()).set(key)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onResponse(ResponseCode.SUCCESS)

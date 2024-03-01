@@ -5,23 +5,28 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jspstudio.community.R
+import com.jspstudio.community.databinding.ListChatMeBinding
+import com.jspstudio.community.databinding.ListChatOtherBinding
 import com.jspstudio.community.databinding.ListMessageBinding
 import com.jspstudio.community.model.AccompanyData
 import com.jspstudio.community.model.MessageData
-import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.util.UtilAnim
 
-class MessageAdapter(
+class ChatAdapter(
     private val context: Context,
+    private val id: String,
     private val onItemClick : (item: MessageData) -> Unit,
 ) : ListAdapter<MessageData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
+    private val getId = id
+
     companion object {
+        private const val VIEW_TYPE_ME = 1
+        private const val VIEW_TYPE_OTHER = 2
+
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MessageData>() {
             override fun areItemsTheSame(
                 oldItem: MessageData,
@@ -39,46 +44,49 @@ class MessageAdapter(
         }
     }
 
-    inner class HomeViewHolder(private val binding: ListMessageBinding) :
+    inner class MeViewHolder(private val binding: ListChatMeBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ClickableViewAccessibility")
         fun bind(item: MessageData, position: Int) {
             binding.item = item
-
-            binding.root.setOnTouchListener {v, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        UtilAnim.btnClickEffect(v, 50, 0.97f, 0.97f, true)
-                        true
-                    }
-                    MotionEvent.ACTION_CANCEL -> {
-                        UtilAnim.btnClickEffect(v,  100, 1f, 1f, false)
-                        true
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        UtilAnim.btnClickEffect(v, 100, 1f, 1f, false)
-                        if (binding.item != null) onItemClick(binding.item!!)
-                        true
-                    }
-
-                    else -> {
-                        false
-                    }
-                }
-            }
-
             binding.executePendingBindings()
         }
     }
 
+    inner class OtherViewHolder(private val binding: ListChatOtherBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("ClickableViewAccessibility")
+        fun bind(item: MessageData, position: Int) {
+            binding.item = item
+            binding.executePendingBindings()
+        }
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ListMessageBinding.inflate(inflater, parent, false)
-        return HomeViewHolder(binding)
+        return when(viewType) {
+            VIEW_TYPE_ME -> {
+                val binding = ListChatMeBinding.inflate(inflater, parent, false)
+                MeViewHolder(binding)
+            }
+            VIEW_TYPE_OTHER -> {
+                val binding = ListChatOtherBinding.inflate(inflater, parent, false)
+                OtherViewHolder(binding)
+            }
+            else -> throw java.lang.IllegalArgumentException("invalid viewtype")
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position) as MessageData
-        (holder as HomeViewHolder).bind(item, position)
+        when(holder) {
+            is MeViewHolder -> holder.bind(item, position)
+            is OtherViewHolder -> holder.bind(item, position)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (getId == getItem(position).id) VIEW_TYPE_ME else VIEW_TYPE_OTHER
     }
 }

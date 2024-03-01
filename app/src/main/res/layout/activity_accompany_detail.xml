@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 style="@style/Text16spNormalGray"
-                android:lineSpacingMultiplier="1.1"
+                android:lineSpacingMultiplier="1.2"
                 android:text="@{vmAccompany.accompanyDetail.content}"/>
 
             <LinearLayout

@@ -23,4 +23,10 @@
     <dimen name="base_horizontal_sub">16dp</dimen>
     <dimen name="btn_padding">12dp</dimen>
     <dimen name="et_padding">14dp</dimen>
+
+    <dimen name="chat_horizontal">8dp</dimen>
+    <dimen name="chat_padding">6dp</dimen>
+    <dimen name="chat_margin_top">4dp</dimen>
+    <dimen name="chat_bg_corner">10dp</dimen>
+    <dimen name="chat_bg_corner_2">4dp</dimen>
 </resources>
