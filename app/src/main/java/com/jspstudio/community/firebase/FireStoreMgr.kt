@@ -1,20 +1,11 @@
 package com.jspstudio.community.firebase
 
-import android.content.Context
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jspstudio.community.firebase.user.field.FirestoreDBUser
 import com.jspstudio.community.network.ResponseCode
-import com.jspstudio.community.user.UserData
 import com.jspstudio.community.util.LogMgr
-import com.jspstudio.community.util.Util
-import com.jspstudio.community.util.UtilPref
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import kotlin.random.Random
 
 object FireStoreMgr {
     private const val TAG = "FireStoreMgr"

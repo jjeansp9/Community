@@ -5,7 +5,7 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.jspstudio.community.firebase.user.field.FirestoreDBUser
+import com.jspstudio.community.firebase.user.field.DocUser
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.util.LogMgr
@@ -23,7 +23,7 @@ object FireStoreUser {
     fun getUserData(context: Context, onResponse: ((responseCode: Int) -> Unit)) {
         val firestore = FirebaseFirestore.getInstance()
 
-        val userRef: CollectionReference = firestore.collection(FirestoreDBUser.USER) // 컬렉션명
+        val userRef: CollectionReference = firestore.collection(DocUser.USER) // 컬렉션명
 
         userRef.addSnapshotListener { value, error ->
             val docChangeList : List<DocumentChange> = value!!.documentChanges
@@ -32,16 +32,16 @@ object FireStoreUser {
                 val snapshot : DocumentSnapshot = documentChange.document
                 val profile : Map<String, String> = snapshot.data as Map<String, String>
                 LogMgr.e(TAG, snapshot.data.toString())
-                val id = profile[FirestoreDBUser.ID]
+                val id = profile[DocUser.ID]
                 if (id.toString() == UserData.id) {
-                    UserData.name = profile[FirestoreDBUser.NAME]
-                    UserData.gender = profile[FirestoreDBUser.GENDER]
-                    UserData.birth = profile[FirestoreDBUser.BIRTH]
-                    UserData.mbti = profile[FirestoreDBUser.MBTI]
-                    UserData.aboutMe = profile[FirestoreDBUser.ABOUT_ME]
-                    UserData.profile = profile[FirestoreDBUser.PROFILE]
-                    UserData.loginType = profile[FirestoreDBUser.LOGIN_TYPE]
-                    UserData.startDate = profile[FirestoreDBUser.START_DATE]
+                    UserData.name = profile[DocUser.NAME]
+                    UserData.gender = profile[DocUser.GENDER]
+                    UserData.birth = profile[DocUser.BIRTH]
+                    UserData.mbti = profile[DocUser.MBTI]
+                    UserData.aboutMe = profile[DocUser.ABOUT_ME]
+                    UserData.profile = profile[DocUser.PROFILE]
+                    UserData.loginType = profile[DocUser.LOGIN_TYPE]
+                    UserData.startDate = profile[DocUser.START_DATE]
                     UtilPref.setUserData(context)
                     onResponse(ResponseCode.SUCCESS)
                     return@addSnapshotListener
@@ -53,18 +53,18 @@ object FireStoreUser {
     fun addUser(context : Context, onResponse: ((responseCode: Int) -> Unit)) {
         val firestore = FirebaseFirestore.getInstance()
 
-        val userRef: CollectionReference = firestore.collection(FirestoreDBUser.USER) // 컬렉션명
+        val userRef: CollectionReference = firestore.collection(DocUser.USER) // 컬렉션명
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault()).format(Date())
         val profile: MutableMap<String, String> = HashMap()
 
-        profile[FirestoreDBUser.NAME] = UserData.name.toString()
-        profile[FirestoreDBUser.GENDER] = UserData.gender.toString()
-        profile[FirestoreDBUser.BIRTH] = UserData.birth.toString()
-        profile[FirestoreDBUser.MBTI] = UserData.mbti.toString()
-        profile[FirestoreDBUser.ABOUT_ME] = ""
-        profile[FirestoreDBUser.PROFILE] = Util.getStr(UserData.profile.toString())
-        profile[FirestoreDBUser.LOGIN_TYPE] = UserData.loginType.toString()
-        profile[FirestoreDBUser.START_DATE] = date
+        profile[DocUser.NAME] = UserData.name.toString()
+        profile[DocUser.GENDER] = UserData.gender.toString()
+        profile[DocUser.BIRTH] = UserData.birth.toString()
+        profile[DocUser.MBTI] = UserData.mbti.toString()
+        profile[DocUser.ABOUT_ME] = ""
+        profile[DocUser.PROFILE] = Util.getStr(UserData.profile.toString())
+        profile[DocUser.LOGIN_TYPE] = UserData.loginType.toString()
+        profile[DocUser.START_DATE] = date
 
         if (UserData.id == null || UserData.id!!.trim().isEmpty()) {
             val random = Random
@@ -79,7 +79,7 @@ object FireStoreUser {
             }
             UserData.id = stringBuilder.toString()
         }
-        profile[FirestoreDBUser.ID] = UserData.id.toString()
+        profile[DocUser.ID] = UserData.id.toString()
         UserData.startDate = date
 
         userRef.document(date + "_" + UserData.id.toString()).set(profile)
@@ -98,7 +98,7 @@ object FireStoreUser {
         val firestore = FirebaseFirestore.getInstance()
 
         // 컬렉션 참조 생성
-        val userRef: CollectionReference = firestore.collection(FirestoreDBUser.USER)
+        val userRef: CollectionReference = firestore.collection(DocUser.USER)
 
         // USER_ID를 기반으로 특정 문서 찾기
         // 이 예제에서는 문서 ID가 UserData.id를 포함하고 있다고 가정

@@ -1,6 +1,6 @@
 package com.jspstudio.community.firebase.user.field
 
-object FirestoreDBUser {
+object DocUser {
     const val USER = "user" // collection name
     const val ID = "id"
     const val NAME = "name"

@@ -13,5 +13,5 @@ data class MessageData(
     val mbti : String = "",
     val profile : String = "",
     val message : String = "",
-    val insertDate : String = ""
+    val msgInsertDate : String = ""
 ) : Parcelable

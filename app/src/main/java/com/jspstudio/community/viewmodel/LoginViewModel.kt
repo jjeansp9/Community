@@ -13,7 +13,7 @@ import com.google.firebase.auth.auth
 import com.jspstudio.community.base.BaseViewModel
 import com.jspstudio.community.firebase.FireStoreMgr
 import com.jspstudio.community.firebase.user.FireStoreUser
-import com.jspstudio.community.firebase.user.field.FirestoreDBUser
+import com.jspstudio.community.firebase.user.field.DocUser
 import com.jspstudio.community.user.UserData
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
@@ -135,7 +135,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     val resultCode : LiveData<Int> = _resultCode
 
     private fun requestLogin(context: Context) {
-        FireStoreMgr.checkData(FirestoreDBUser.USER, FirestoreDBUser.ID, UserData.id.toString()) {
+        FireStoreMgr.checkData(DocUser.USER, DocUser.ID, UserData.id.toString()) {
             when(it) {
                 ResponseCode.DUPLICATE_ERROR -> {
                     FireStoreUser.getUserData(context) {

@@ -1,6 +1,6 @@
 package com.jspstudio.community.firebase.board.accompany.field
 
-object FireStoreDBAccompany {
+object DocAccompany {
     const val ACCOMPANY = "accompany" // collection name
     const val ID = "id"
     const val NAME = "name"

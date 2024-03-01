@@ -1,12 +1,10 @@
 package com.jspstudio.community.view.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityChatBinding
-import com.jspstudio.community.viewmodel.MainViewModel
 import com.jspstudio.community.viewmodel.MessageViewModel
 
 class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "ChatActivity") {
