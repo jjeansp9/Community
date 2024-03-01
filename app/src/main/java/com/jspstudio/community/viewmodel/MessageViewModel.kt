@@ -31,8 +31,8 @@ class MessageViewModel : BaseViewModel("MessageViewModel") {
         }
     }
 
-    fun getMsg(context: Context) {
-        FireStoreChat.getMsg(context) {
+    fun getMsg(context: Context, userId: String) {
+        FireStoreChat.getMsg(context, userId) {
             if (it.size > 0) {
                 _messageItem.postValue(it)
                 _responseCode.value = ResponseCode.SUCCESS

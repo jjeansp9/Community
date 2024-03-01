@@ -39,7 +39,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "
 
     private fun initData() {
         item = Util.getParcelableExtra(intent, IntentKey.ACCOMPANY_DATA, AccompanyData::class.java)!!
-        binding.vmMsg?.getMsg(this)
+        binding.vmMsg?.getMsg(this, item.id)
     }
 
     private fun onClick() {
