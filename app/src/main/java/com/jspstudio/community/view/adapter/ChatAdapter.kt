@@ -19,6 +19,7 @@ class ChatAdapter(
     private val context: Context,
     private val id: String,
     private val onItemClick : (item: MessageData) -> Unit,
+    private val onRootClick : (isHideKeyboard: Boolean) -> Unit,
 ) : ListAdapter<MessageData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     private val getId = id
@@ -49,6 +50,24 @@ class ChatAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(item: MessageData, position: Int) {
             binding.item = item
+            binding.root.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        true
+                    }
+                    MotionEvent.ACTION_CANCEL -> {
+                        true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        onRootClick(true)
+                        true
+                    }
+
+                    else -> {
+                        false
+                    }
+                }
+            }
             binding.executePendingBindings()
         }
     }
@@ -58,6 +77,24 @@ class ChatAdapter(
         @SuppressLint("ClickableViewAccessibility")
         fun bind(item: MessageData, position: Int) {
             binding.item = item
+            binding.root.setOnTouchListener { v, event ->
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        true
+                    }
+                    MotionEvent.ACTION_CANCEL -> {
+                        true
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        onRootClick(true)
+                        true
+                    }
+
+                    else -> {
+                        false
+                    }
+                }
+            }
             binding.executePendingBindings()
         }
     }

@@ -38,9 +38,13 @@ class MessageFragment: BaseFragment<FragmentMessageBinding>("MessageFragment") {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.vmMain?.setTitle("message")
-        initData()
         initView()
         initObserver()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initData()
     }
 
     private fun initData() {

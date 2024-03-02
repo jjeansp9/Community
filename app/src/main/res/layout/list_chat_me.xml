@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/chat_margin_top"
                 android:padding="@dimen/chat_padding"
-                style="@style/Text14spNormalBlack"
+                style="@style/Text16spNormalBlack"
                 android:background="@drawable/bg_chat_me"
                 android:lineSpacingMultiplier="1.2"
                 android:text="@{item.message}"/>

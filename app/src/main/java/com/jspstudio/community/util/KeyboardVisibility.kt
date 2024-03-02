@@ -1,4 +1,4 @@
-package com.jspstudio.community.view.custom
+package com.jspstudio.community.util
 
 import android.graphics.Rect
 import android.view.ViewTreeObserver
