@@ -2,7 +2,7 @@ package com.jspstudio.community.user
 
 import java.util.Locale
 
-object UserData {
+object MyData {
     var id: String? = ""
     var name: String? = ""
     var gender: String? = ""

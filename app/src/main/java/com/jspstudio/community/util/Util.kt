@@ -195,6 +195,7 @@ object Util {
     }
 
     fun calculateAgeFromYearOfBirth(yearOfBirth: String): String {
+        if (yearOfBirth == null || yearOfBirth.isEmpty()) return ""
         val currentYear = LocalDate.now().year
         val age = (currentYear - yearOfBirth.toInt()) - 1
         return when(age) {

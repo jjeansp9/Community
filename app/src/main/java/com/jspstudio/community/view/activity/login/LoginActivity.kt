@@ -14,12 +14,11 @@ import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
 import com.jspstudio.community.sns.NaverLoginMgr
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.util.OnSingleClickListener
 import com.jspstudio.community.util.UtilPref
 import com.jspstudio.community.view.activity.MainActivity
-import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.viewmodel.LoginViewModel
 import com.kakao.sdk.common.util.Utility
 
@@ -61,7 +60,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun checkUser() {
         UtilPref.getUserData(this)
-        if (UserData.id != null && UserData.id!!.trim().isNotEmpty()) {
+        if (MyData.id != null && MyData.id!!.trim().isNotEmpty()) {
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)

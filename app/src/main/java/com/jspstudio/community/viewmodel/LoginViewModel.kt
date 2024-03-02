@@ -14,7 +14,7 @@ import com.jspstudio.community.base.BaseViewModel
 import com.jspstudio.community.firebase.FireStoreMgr
 import com.jspstudio.community.firebase.user.FireStoreUser
 import com.jspstudio.community.firebase.user.field.DocUser
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.network.ResponseCode
 import com.jspstudio.community.sns.GoogleLoginMgr
 import com.jspstudio.community.sns.KakaoLoginMgr
@@ -49,10 +49,10 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
                     val name = user?.kakaoAccount?.profile?.nickname.toString()
                     val progileImg = user?.kakaoAccount!!.profile!!.profileImageUrl.toString()
 
-                    UserData.id = id
+                    MyData.id = id
                     //UserData.name = name
-                    UserData.profile = progileImg
-                    UserData.loginType = Constant.LOGIN_TYPE_KAKAO
+                    MyData.profile = progileImg
+                    MyData.loginType = Constant.LOGIN_TYPE_KAKAO
                     requestLogin(context)
                 }
             }
@@ -72,10 +72,10 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
                     LogMgr.e(TAG, "naver email: " + email)
                     if (progileImg != null) LogMgr.e(TAG, "naver profil url: " + progileImg)
 
-                    UserData.id = id
+                    MyData.id = id
                     //UserData.name = name
-                    UserData.profile = progileImg
-                    UserData.loginType = Constant.LOGIN_TYPE_NAVER
+                    MyData.profile = progileImg
+                    MyData.loginType = Constant.LOGIN_TYPE_NAVER
                     requestLogin(context)
                 }
                 override fun onError(errorCode: Int, message: String) {}
@@ -127,7 +127,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     }
 
     fun guestLogin() {
-        UserData.loginType = Constant.LOGIN_TYPE_NORMAL
+        MyData.loginType = Constant.LOGIN_TYPE_NORMAL
         _resultCode.value = ResponseCode.NOT_FOUND
     }
 
@@ -135,7 +135,7 @@ class LoginViewModel() : BaseViewModel("LoginViewModel") {
     val resultCode : LiveData<Int> = _resultCode
 
     private fun requestLogin(context: Context) {
-        FireStoreMgr.checkData(DocUser.USER, DocUser.ID, UserData.id.toString()) {
+        FireStoreMgr.checkData(DocUser.USER, DocUser.ID, MyData.id.toString()) {
             when(it) {
                 ResponseCode.DUPLICATE_ERROR -> {
                     FireStoreUser.getUserData(context) {

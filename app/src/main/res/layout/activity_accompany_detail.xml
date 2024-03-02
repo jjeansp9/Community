@@ -31,7 +31,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_gravity="center_vertical"
-                    app:profileImg="@{vmAccompany.accompanyDetail.profile}"/>
+                    app:profileImg="@{vmAccompany.accompanyDetail.user.profile}"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         style="@style/Text14spNormalGray"
-                        android:text="@{vmAccompany.accompanyDetail.name}" />
+                        android:text="@{vmAccompany.accompanyDetail.user.name}" />
                     <TextView
                         android:id="@+id/tv_birth"
                         android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                         android:maxLines="1"
                         android:ellipsize="end"
                         style="@style/Text14spNormalGray"
-                        android:text="@{vmAccompany.accompanyDetail.birth}" />
+                        android:text="@{vmAccompany.accompanyDetail.user.birth}" />
                 </LinearLayout>
             </LinearLayout>
 

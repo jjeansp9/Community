@@ -13,7 +13,7 @@ import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivitySignUpBinding
 import com.jspstudio.community.firebase.user.FireStoreUser
 import com.jspstudio.community.network.ResponseCode
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.user.UserInfoCheck
 import com.jspstudio.community.view.activity.MainActivity
 import com.jspstudio.community.view.adapter.SignUpVPAdapter
@@ -117,11 +117,11 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     }
     private fun nameConfirm(nextItem: Int) {
-        if (UserData.name == null || UserData.name!!.isEmpty() || UserData.name!!.replace(" ", "").isEmpty()) {
+        if (MyData.name == null || MyData.name!!.isEmpty() || MyData.name!!.replace(" ", "").isEmpty()) {
             (fragment as? NameFragment)?.showNameKeyboard()
             CustomToast(this, "닉네임을 입력해주세요")
 
-        } else if (!UserInfoCheck.nameCheckSpace(UserData.name!!)) {
+        } else if (!UserInfoCheck.nameCheckSpace(MyData.name!!)) {
             (fragment as? NameFragment)?.showNameKeyboard()
             CustomToast(this, "영문,한글 외에는 사용할 수 없습니다")
 
@@ -146,7 +146,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     private fun birthConfirm(nextItem: Int) {
-        if (UserData.birth == null || UserData.birth!!.isEmpty()) {
+        if (MyData.birth == null || MyData.birth!!.isEmpty()) {
             (fragment as BirthFragment).showYearPicker()
             CustomToast(this, "태어난 연도를 선택해주세요")
         } else {
@@ -155,7 +155,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     private fun mbtiConfirmAndFinish() {
-        if (UserData.mbti == null || UserData.mbti!!.isEmpty()) {
+        if (MyData.mbti == null || MyData.mbti!!.isEmpty()) {
             (fragment as? MbtiFragment)?.showMbtiPicker()
             CustomToast(this, "MBTI를 선택해주세요")
         } else {

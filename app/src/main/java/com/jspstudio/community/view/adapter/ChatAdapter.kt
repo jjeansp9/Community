@@ -87,6 +87,6 @@ class ChatAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getId == getItem(position).id) VIEW_TYPE_ME else VIEW_TYPE_OTHER
+        return if (getId == getItem(position).user.id) VIEW_TYPE_ME else VIEW_TYPE_OTHER
     }
 }

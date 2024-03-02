@@ -2,6 +2,7 @@ package com.jspstudio.community.firebase.chat.field
 
 object DocChat {
     const val CHAT = "chat" // collection name
+    const val MSG_LIST = "message_list" // collection name
     const val ID = "id"
     const val NAME = "name"
     const val GENDER = "gender"

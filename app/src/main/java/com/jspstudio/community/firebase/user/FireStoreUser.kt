@@ -7,7 +7,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jspstudio.community.firebase.user.field.DocUser
 import com.jspstudio.community.network.ResponseCode
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.util.Util
 import com.jspstudio.community.util.UtilPref
@@ -33,15 +33,15 @@ object FireStoreUser {
                 val profile : Map<String, String> = snapshot.data as Map<String, String>
                 LogMgr.e(TAG, snapshot.data.toString())
                 val id = profile[DocUser.ID]
-                if (id.toString() == UserData.id) {
-                    UserData.name = profile[DocUser.NAME]
-                    UserData.gender = profile[DocUser.GENDER]
-                    UserData.birth = profile[DocUser.BIRTH]
-                    UserData.mbti = profile[DocUser.MBTI]
-                    UserData.aboutMe = profile[DocUser.ABOUT_ME]
-                    UserData.profile = profile[DocUser.PROFILE]
-                    UserData.loginType = profile[DocUser.LOGIN_TYPE]
-                    UserData.startDate = profile[DocUser.START_DATE]
+                if (id.toString() == MyData.id) {
+                    MyData.name = profile[DocUser.NAME]
+                    MyData.gender = profile[DocUser.GENDER]
+                    MyData.birth = profile[DocUser.BIRTH]
+                    MyData.mbti = profile[DocUser.MBTI]
+                    MyData.aboutMe = profile[DocUser.ABOUT_ME]
+                    MyData.profile = profile[DocUser.PROFILE]
+                    MyData.loginType = profile[DocUser.LOGIN_TYPE]
+                    MyData.startDate = profile[DocUser.START_DATE]
                     UtilPref.setUserData(context)
                     onResponse(ResponseCode.SUCCESS)
                     return@addSnapshotListener
@@ -57,16 +57,16 @@ object FireStoreUser {
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault()).format(Date())
         val profile: MutableMap<String, String> = HashMap()
 
-        profile[DocUser.NAME] = UserData.name.toString()
-        profile[DocUser.GENDER] = UserData.gender.toString()
-        profile[DocUser.BIRTH] = UserData.birth.toString()
-        profile[DocUser.MBTI] = UserData.mbti.toString()
+        profile[DocUser.NAME] = MyData.name.toString()
+        profile[DocUser.GENDER] = MyData.gender.toString()
+        profile[DocUser.BIRTH] = MyData.birth.toString()
+        profile[DocUser.MBTI] = MyData.mbti.toString()
         profile[DocUser.ABOUT_ME] = ""
-        profile[DocUser.PROFILE] = Util.getStr(UserData.profile.toString())
-        profile[DocUser.LOGIN_TYPE] = UserData.loginType.toString()
+        profile[DocUser.PROFILE] = Util.getStr(MyData.profile.toString())
+        profile[DocUser.LOGIN_TYPE] = MyData.loginType.toString()
         profile[DocUser.START_DATE] = date
 
-        if (UserData.id == null || UserData.id!!.trim().isEmpty()) {
+        if (MyData.id == null || MyData.id!!.trim().isEmpty()) {
             val random = Random
             val length = random.nextInt(24)
             val stringBuilder = StringBuilder()
@@ -77,12 +77,13 @@ object FireStoreUser {
                 val randomChar = str[index]
                 stringBuilder.append(randomChar)
             }
-            UserData.id = stringBuilder.toString()
+            MyData.id = stringBuilder.toString()
         }
-        profile[DocUser.ID] = UserData.id.toString()
-        UserData.startDate = date
+        profile[DocUser.ID] = MyData.id.toString()
+        MyData.startDate = date
 
-        userRef.document(date + "_" + UserData.id.toString()).set(profile)
+        //userRef.document(date + "_" + UserData.id.toString()).set(profile)
+        userRef.document(MyData.id.toString()).set(profile)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     UtilPref.setUserData(context)

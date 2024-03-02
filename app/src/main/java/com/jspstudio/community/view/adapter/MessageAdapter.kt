@@ -27,7 +27,7 @@ class MessageAdapter(
                 oldItem: MessageData,
                 newItem: MessageData
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.user.id == newItem.user.id
             }
 
             override fun areContentsTheSame(

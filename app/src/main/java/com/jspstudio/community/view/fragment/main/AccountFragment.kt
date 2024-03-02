@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.databinding.FragmentAccountBinding
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.view.activity.EditProfileActivity
 import com.jspstudio.community.viewmodel.MainViewModel
@@ -36,7 +35,7 @@ class AccountFragment: BaseFragment<FragmentAccountBinding>("AccountFragment") {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        LogMgr.e(TAG, "profile : " + UserData.profile)
+        LogMgr.e(TAG, "profile : " + MyData.profile)
 
         binding.vmMain?.setTitle("account")
         binding.vmMain?.setUserInfo()

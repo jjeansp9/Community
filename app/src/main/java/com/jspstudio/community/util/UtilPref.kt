@@ -3,8 +3,7 @@ package com.jspstudio.community.util
 import android.content.Context
 import android.content.SharedPreferences
 import com.jspstudio.community.R
-import com.jspstudio.community.network.ResponseCode
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 
 object UtilPref {
     private const val PREFERENCE_NAME = "com.jspstudio.community.util.preferences"
@@ -40,30 +39,30 @@ object UtilPref {
     fun setNewMember(context: Context, key: String, value: Boolean) { pref(context).edit().putBoolean(key, value).apply() }
 
     fun setUserData(context: Context) {
-        pref(context).edit().putString(KEY_USER_ID, UserData.id).apply()
-        pref(context).edit().putString(KEY_USER_NAME, UserData.name).apply()
-        pref(context).edit().putString(KEY_USER_GENDER, UserData.gender).apply()
-        pref(context).edit().putString(KEY_USER_BIRTH, UserData.birth).apply()
-        pref(context).edit().putString(KEY_USER_MBTI, UserData.mbti).apply()
-        pref(context).edit().putString(KEY_USER_ABOUT_ME, UserData.aboutMe).apply()
-        pref(context).edit().putString(KEY_USER_PROFILE, UserData.profile).apply()
-        pref(context).edit().putString(KEY_USER_LOGIN_TYPE, UserData.loginType).apply()
-        pref(context).edit().putString(KEY_USER_START_DATE, UserData.startDate).apply()
-        LogMgr.e("id : ", UserData.id)
+        pref(context).edit().putString(KEY_USER_ID, MyData.id).apply()
+        pref(context).edit().putString(KEY_USER_NAME, MyData.name).apply()
+        pref(context).edit().putString(KEY_USER_GENDER, MyData.gender).apply()
+        pref(context).edit().putString(KEY_USER_BIRTH, MyData.birth).apply()
+        pref(context).edit().putString(KEY_USER_MBTI, MyData.mbti).apply()
+        pref(context).edit().putString(KEY_USER_ABOUT_ME, MyData.aboutMe).apply()
+        pref(context).edit().putString(KEY_USER_PROFILE, MyData.profile).apply()
+        pref(context).edit().putString(KEY_USER_LOGIN_TYPE, MyData.loginType).apply()
+        pref(context).edit().putString(KEY_USER_START_DATE, MyData.startDate).apply()
+        LogMgr.e("id : ", MyData.id)
     }
 
     fun getUserData(context: Context) {
-        UserData.id = pref(context).getString(KEY_USER_ID, "")
-        UserData.name = pref(context).getString(KEY_USER_NAME, "")
-        UserData.gender = if (pref(context).getString(KEY_USER_GENDER, "") == "female") context.getString(R.string.female)
+        MyData.id = pref(context).getString(KEY_USER_ID, "")
+        MyData.name = pref(context).getString(KEY_USER_NAME, "")
+        MyData.gender = if (pref(context).getString(KEY_USER_GENDER, "") == "female") context.getString(R.string.female)
                           else context.getString(R.string.male)
-        UserData.birth = pref(context).getString(KEY_USER_BIRTH, "")
-        UserData.mbti = pref(context).getString(KEY_USER_MBTI, "")
-        UserData.aboutMe = pref(context).getString(KEY_USER_ABOUT_ME, "")
-        UserData.profile = pref(context).getString(KEY_USER_PROFILE, "")
-        UserData.loginType = pref(context).getString(KEY_USER_LOGIN_TYPE, "")
-        UserData.startDate = pref(context).getString(KEY_USER_START_DATE, "")
-        LogMgr.e("id : ", UserData.id)
+        MyData.birth = pref(context).getString(KEY_USER_BIRTH, "")
+        MyData.mbti = pref(context).getString(KEY_USER_MBTI, "")
+        MyData.aboutMe = pref(context).getString(KEY_USER_ABOUT_ME, "")
+        MyData.profile = pref(context).getString(KEY_USER_PROFILE, "")
+        MyData.loginType = pref(context).getString(KEY_USER_LOGIN_TYPE, "")
+        MyData.startDate = pref(context).getString(KEY_USER_START_DATE, "")
+        LogMgr.e("id : ", MyData.id)
     }
 
     fun clearUserData(context: Context) {
@@ -76,14 +75,14 @@ object UtilPref {
         pref(context).edit().putString(KEY_USER_PROFILE, "").apply()
         pref(context).edit().putString(KEY_USER_LOGIN_TYPE, "").apply()
         pref(context).edit().putString(KEY_USER_START_DATE, "").apply()
-        UserData.id = ""
-        UserData.name = ""
-        UserData.gender = ""
-        UserData.birth = ""
-        UserData.mbti = ""
-        UserData.aboutMe = ""
-        UserData.profile = ""
-        UserData.loginType = ""
-        UserData.startDate = ""
+        MyData.id = ""
+        MyData.name = ""
+        MyData.gender = ""
+        MyData.birth = ""
+        MyData.mbti = ""
+        MyData.aboutMe = ""
+        MyData.profile = ""
+        MyData.loginType = ""
+        MyData.startDate = ""
     }
 }

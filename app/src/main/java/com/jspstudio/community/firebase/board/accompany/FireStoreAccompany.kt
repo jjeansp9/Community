@@ -7,9 +7,11 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jspstudio.community.R
 import com.jspstudio.community.firebase.board.accompany.field.DocAccompany
+import com.jspstudio.community.firebase.chat.field.DocChat
 import com.jspstudio.community.model.AccompanyData
+import com.jspstudio.community.model.UserData
 import com.jspstudio.community.network.ResponseCode
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.util.Util
 import java.text.SimpleDateFormat
@@ -33,13 +35,18 @@ object FireStoreAccompany {
                 val key : Map<String, String> = snapshot.data as Map<String, String>
 
                 LogMgr.e(TAG, snapshot.data.toString())
+                val getItem = UserData(
+                    id = key[DocChat.ID]!!,
+                    name = key[DocChat.NAME]!!,
+                    gender = key[DocChat.GENDER]!!,
+                    birth = Util.calculateAgeFromYearOfBirth(key[DocChat.BIRTH]!!) + context.getString(R.string.age_sub),
+                    mbti = key[DocChat.MBTI]!!,
+                    profile = key[DocChat.PROFILE]!!,
+                    aboutMe = if (key[DocChat.ABOUT_ME] == null) ""
+                              else key[DocChat.ABOUT_ME]!!
+                )
                 list.add(AccompanyData(
-                    id = key[DocAccompany.ID]!!,
-                    name = key[DocAccompany.NAME]!!,
-                    gender = key[DocAccompany.GENDER]!!,
-                    birth = Util.calculateAgeFromYearOfBirth(key[DocAccompany.BIRTH]!!) + context.getString(R.string.age_sub),
-                    mbti = key[DocAccompany.MBTI]!!,
-                    profile = key[DocAccompany.PROFILE]!!,
+                    user = getItem,
                     title = if (key[DocAccompany.TITLE] == null) ""
                             else key[DocAccompany.TITLE]!!,
                     content = if (key[DocAccompany.CONTENT] == null) ""
@@ -64,19 +71,19 @@ object FireStoreAccompany {
         val date = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.KOREA).format(Date())
         val key: MutableMap<String, String> = HashMap()
 
-        key[DocAccompany.ID] = UserData.id.toString()
-        key[DocAccompany.NAME] = UserData.name.toString()
-        key[DocAccompany.GENDER] = UserData.gender.toString()
-        key[DocAccompany.BIRTH] = UserData.birth.toString()
-        key[DocAccompany.MBTI] = UserData.mbti.toString()
-        key[DocAccompany.PROFILE] = Util.getStr(UserData.profile.toString())
+        key[DocAccompany.ID] = MyData.id.toString()
+        key[DocAccompany.NAME] = MyData.name.toString()
+        key[DocAccompany.GENDER] = MyData.gender.toString()
+        key[DocAccompany.BIRTH] = MyData.birth.toString()
+        key[DocAccompany.MBTI] = MyData.mbti.toString()
+        key[DocAccompany.PROFILE] = Util.getStr(MyData.profile.toString())
         key[DocAccompany.TITLE] = Util.getStr(item.title)
         key[DocAccompany.CONTENT] = Util.getStr(item.content)
         key[DocAccompany.START_DATE] = Util.getStr(item.startDate)
         key[DocAccompany.END_DATE] = Util.getStr(item.endDate)
         key[DocAccompany.INSERT_DATE] = date
 
-        userRef.document(date + "_" + UserData.id.toString()).set(key)
+        userRef.document(date + "_" + MyData.id.toString()).set(key)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onResponse(ResponseCode.SUCCESS)

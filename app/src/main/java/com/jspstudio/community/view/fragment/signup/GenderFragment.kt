@@ -7,8 +7,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.databinding.FragmentGenderBinding
-import com.jspstudio.community.user.UserData
-import com.jspstudio.community.view.custom.CustomToast
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.viewmodel.LoginViewModel
 
 private const val ARG_PARAM1 = "param1"
@@ -42,10 +41,10 @@ class GenderFragment : BaseFragment<FragmentGenderBinding>("GenderFragment") {
 
     public fun checkGender() : Boolean {
         if (binding.rbMale.isChecked) {
-            UserData.gender = "male"
+            MyData.gender = "male"
             return true
         } else if (binding.rbFemale.isChecked) {
-            UserData.gender = "female"
+            MyData.gender = "female"
             return true
         }
         return false

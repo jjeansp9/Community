@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.databinding.FragmentMbtiBinding
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.view.adapter.BottomSeetListAdapter
 
 // TODO: Rename parameter arguments, choose names that match
@@ -76,7 +76,7 @@ class MbtiFragment : BaseFragment<FragmentMbtiBinding>("MbtiFragment") {
             "ISTP", "ISFP", "ESTP", "ESFP").sorted()
         val adapter = BottomSeetListAdapter(mContext, mbtiType) { mbti ->
             binding.tvSelMbti.text = mbti
-            UserData.mbti = mbti
+            MyData.mbti = mbti
             dialog.dismiss()
         }
         dialog.setOnShowListener {

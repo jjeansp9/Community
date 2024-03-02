@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.databinding.FragmentBirthBinding
-import com.jspstudio.community.user.UserData
+import com.jspstudio.community.user.MyData
 import com.jspstudio.community.view.adapter.BottomSeetListAdapter
 import com.jspstudio.community.viewmodel.LoginViewModel
 
@@ -67,7 +67,7 @@ class BirthFragment : BaseFragment<FragmentBirthBinding>("BirthFragment") {
         val years = (1920..2012).reversed().map { it.toString() }
         val adapter = BottomSeetListAdapter(mContext, years) { year ->
             binding.tvSelBirth.text = year
-            UserData.birth = year
+            MyData.birth = year
             dialog.dismiss()
         }
         dialog.setOnShowListener {

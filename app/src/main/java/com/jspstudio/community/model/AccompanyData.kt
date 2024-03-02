@@ -6,12 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class AccompanyData(
-    val id : String = "",
-    val name : String = "",
-    val gender : String = "",
-    val birth : String = "",
-    val mbti : String = "",
-    val profile : String = "",
+    val user : UserData = UserData(),
     val title : String = "",
     val content : String = "",
     val startDate : String = "",
