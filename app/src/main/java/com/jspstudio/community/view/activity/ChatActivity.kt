@@ -3,6 +3,7 @@ package com.jspstudio.community.view.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MotionEvent
+import android.widget.Toast
 import androidx.activity.viewModels
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
@@ -28,6 +29,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "
         super.onCreate(savedInstanceState)
         binding.vmMsg = viewModel
         binding.lifecycleOwner= this
+        item = Util.getParcelableExtra(intent, IntentKey.USER_DATA, UserData::class.java)!!
         initView()
         initObserve()
         onClick()
@@ -66,7 +68,6 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "
     }
 
     private fun initData() {
-        item = Util.getParcelableExtra(intent, IntentKey.USER_DATA, UserData::class.java)!!
         binding.vmMsg?.getMsg(this, item)
     }
 
