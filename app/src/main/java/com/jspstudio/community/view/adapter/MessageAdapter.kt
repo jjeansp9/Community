@@ -45,28 +45,28 @@ class MessageAdapter(
         fun bind(item: MessageData, position: Int) {
             binding.item = item
 
-            binding.root.setOnTouchListener {v, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        UtilAnim.btnClickEffect(v, 50, 0.97f, 0.97f, true)
-                        true
-                    }
-                    MotionEvent.ACTION_CANCEL -> {
-                        UtilAnim.btnClickEffect(v,  100, 1f, 1f, false)
-                        true
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        UtilAnim.btnClickEffect(v, 100, 1f, 1f, false)
-                        if (binding.item != null) onItemClick(binding.item!!)
-                        true
-                    }
+//            binding.root.setOnTouchListener {v, event ->
+//                when (event.action) {
+//                    MotionEvent.ACTION_DOWN -> {
+//                        UtilAnim.btnClickEffect(v, 50, 0.97f, 0.97f, true)
+//                        true
+//                    }
+//                    MotionEvent.ACTION_CANCEL -> {
+//                        UtilAnim.btnClickEffect(v,  100, 1f, 1f, false)
+//                        true
+//                    }
+//                    MotionEvent.ACTION_UP -> {
+//                        UtilAnim.btnClickEffect(v, 100, 1f, 1f, false)
+//                        if (binding.item != null) onItemClick(binding.item!!)
+//                        true
+//                    }
+//                    else -> {
+//                        false
+//                    }
+//                }
+//            }
 
-                    else -> {
-                        false
-                    }
-                }
-            }
-
+            binding.root.setOnClickListener { if (binding.item != null) onItemClick(binding.item!!) }
             binding.executePendingBindings()
         }
     }

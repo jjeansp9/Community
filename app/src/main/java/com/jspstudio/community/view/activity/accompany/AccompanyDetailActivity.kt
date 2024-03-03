@@ -24,6 +24,7 @@ class AccompanyDetailActivity : BaseActivity<ActivityAccompanyDetailBinding>(R.l
         binding.vmAccompany = viewModel
         binding.lifecycleOwner= this
         initData()
+        initView()
         onClick()
     }
 
@@ -31,6 +32,11 @@ class AccompanyDetailActivity : BaseActivity<ActivityAccompanyDetailBinding>(R.l
         item = Util.getParcelableExtra(intent, IntentKey.ACCOMPANY_DATA, AccompanyData::class.java)!!
         if (item.user.id == MyData.id.toString()) binding.btnChat.visibility = View.GONE
         binding.vmAccompany?.getBoardDetail(item)
+    }
+
+    private fun initView() {
+        binding.appbar.setOnBackClick {finish()}
+        binding.appbar.setTitle(item.title)
     }
 
     private fun onClick() {

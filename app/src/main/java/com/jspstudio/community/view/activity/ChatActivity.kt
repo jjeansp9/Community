@@ -1,10 +1,17 @@
 package com.jspstudio.community.view.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.ContentUris
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.MotionEvent
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import com.bumptech.glide.Glide
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.common.IntentKey
@@ -25,6 +32,17 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "
     private var item : UserData = UserData()
     private lateinit var keyboardVisibilityUtils: KeyboardVisibility
 
+    private var isEntry = true
+    private var isSend = false
+    private var isOnResume = false
+
+    private val pickImageLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageUri: Uri? = result.data?.data
+            // 이미지 Uri를 사용하는 로직을 여기에 구현
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.vmMsg = viewModel
@@ -37,6 +55,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "
 
     override fun onResume() {
         super.onResume()
+        isOnResume = true
         initData()
     }
 
@@ -78,9 +97,11 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "
             binding.vmMsg?.sendMsg(this, item)
             binding.etMsg.setText("")
         }
+
+        binding.imgAddImg.setOnClickListener {
+            startActivity(Intent(this, GalleryActivity::class.java))
+        }
     }
-    private var isEntry = true
-    private var isSend = false
 
     private fun initObserve() {
         binding.vmMsg?.messageItem?.observe(this) { itemList ->
@@ -92,6 +113,10 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(R.layout.activity_chat, "
                 }
                 if (isEntry) {
                     isEntry = false
+                    binding.recycler.scrollToPosition(newList.size - 1)
+                }
+                if (isOnResume) {
+                    isOnResume = false
                     binding.recycler.scrollToPosition(newList.size - 1)
                 }
             }

@@ -1,219 +1,259 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Definitions for 8dp to 28dp with 2dp steps -->
-    <!-- 8dp Styles -->
     <style name="Text8spNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text8spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text8spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text8spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text8spNormalWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="Text8spBoldWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">8sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text10spNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text10spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text10spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text10spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text10spNormalWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="Text10spBoldWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">10sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text12spNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text12spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text12spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text12spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text12spNormalWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="Text12spBoldWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text14spNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text14spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text14spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text14spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text14spNormalWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="Text14spBoldWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text16spNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text16spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text16spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text16spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text16spNormalWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="Text16spBoldWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text18spNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text18spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text18spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text18spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text18spNormalWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="Text18spBoldWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="Text20spNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text20spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_default</item>
     </style>
     <style name="Text20spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text20spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/font_color_555</item>
     </style>
     <style name="Text20spNormalWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="Text20spBoldWhite">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
@@ -221,21 +261,25 @@
 
     <!-- 28dp Styles -->
     <style name="Text28dpNormalBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
     <style name="Text28spBoldBlack">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/black</item>
     </style>
     <style name="Text28spNormalGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
     <style name="Text28spBoldGray">
+        <item name="android:includeFontPadding">false</item>
         <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/darker_gray</item>

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.jspstudio.community.databinding.FragmentHomeBinding
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.common.IntentKey
@@ -64,7 +65,8 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>("HomeFragment") {
     private fun initView() {
         adapter = AccompanyAdapter(mContext, onItemClick = { startDetailActivity(it) })
         binding.recycler.adapter = adapter
-        binding.recycler.addItemDecoration(GridSpaceItemDecoration(1, Util.fromDpToPx(12).toInt()))
+        binding.recycler.addItemDecoration(DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL))
+        //binding.recycler.addItemDecoration(GridSpaceItemDecoration(1, Util.fromDpToPx(12).toInt()))
 
         binding.swipe.setOnRefreshListener { initData() }
     }

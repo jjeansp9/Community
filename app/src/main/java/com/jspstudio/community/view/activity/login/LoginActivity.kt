@@ -1,12 +1,16 @@
 package com.jspstudio.community.view.activity.login
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import com.google.firebase.auth.FirebaseAuth
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityLoginBinding
@@ -34,7 +38,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        checkUser()
+        checkPermissions()
         enableEdgeToEdge()
         binding.vmLogin = LoginViewModel()
         binding.lifecycleOwner= this
@@ -54,8 +58,45 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         auth = FirebaseAuth.getInstance()
         click()
         observe()
-        var keyHash = Utility.getKeyHash(this)
-        LogMgr.e(TAG, "keyhash : " + keyHash)
+
+        LogMgr.e(TAG, "keyhash : " + Utility.getKeyHash(this))
+    }
+
+    private fun checkPermissions() {
+        var requiredPermissions: Array<String?>? = null
+        requiredPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_MEDIA_IMAGES,
+                Manifest.permission.READ_MEDIA_VIDEO,
+                Manifest.permission.READ_MEDIA_AUDIO,
+                Manifest.permission.POST_NOTIFICATIONS
+            )
+        } else {
+            arrayOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }
+
+        TedPermission.create()
+            .setPermissionListener(object : PermissionListener {
+                override fun onPermissionGranted() {
+                    LogMgr.e(TAG, "permission granted")
+                    checkUser()
+                }
+
+                override fun onPermissionDenied(deniedPermissions: List<String>) {
+                    LogMgr.e(TAG, "denied permission = $deniedPermissions")
+                }
+            })
+            .setPermissions(*requiredPermissions)
+//            .setDeniedMessage(getString(R.string.msg_intro_denied_permission))
+//            .setDeniedCloseButtonText(getString(R.string.title_permission_close))
+//            .setGotoSettingButton(true)
+//            .setGotoSettingButtonText(getString(R.string.title_permission_setting))
+            .check()
     }
 
     private fun checkUser() {
