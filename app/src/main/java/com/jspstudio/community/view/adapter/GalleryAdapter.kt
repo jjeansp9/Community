@@ -2,17 +2,18 @@ package com.jspstudio.community.view.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jspstudio.community.databinding.ListImageBinding
-import com.jspstudio.community.model.AccompanyData
 import com.jspstudio.community.model.ImageData
 import com.jspstudio.community.util.LogMgr
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 class GalleryAdapter(
     private val context: Context,
@@ -47,8 +48,34 @@ class GalleryAdapter(
         fun bind(item: ImageData, position: Int) {
             LogMgr.e("image", "$position ," + item + ", ${item.mimeType}")
 
-            if (item.mimeType.contains("gif")) Glide.with(mContext).asGif().load(item.uri).into(binding.img)
-            else Glide.with(mContext).load(item.uri).into(binding.img)
+            if (item.mimeType.contains("gif")) {
+                Glide.with(mContext).asGif().load(item.uri).into(binding.img)
+                binding.tvDuration.text = "GIF"
+                binding.tvDuration.visibility = View.VISIBLE
+            }
+            else if (item.mimeType.contains("video")) {
+                Glide.with(mContext).load(item.uri).into(binding.img)
+
+                val hours = TimeUnit.MILLISECONDS.toHours(item.duration.toLong())
+                val minutes = TimeUnit.MILLISECONDS.toMinutes(item.duration.toLong()) % 60
+                val seconds = TimeUnit.MILLISECONDS.toSeconds(item.duration.toLong()) % 60
+
+                val getTime = if (hours > 0) String.format(
+                    Locale.getDefault(),
+                    "%01d:%02d:%02d",
+                    hours,
+                    minutes,
+                    seconds
+                ) else String.format(
+                    Locale.getDefault(), "%01d:%02d", minutes, seconds
+                )
+                binding.tvDuration.text = getTime
+                binding.tvDuration.visibility = View.VISIBLE
+            }
+            else {
+                Glide.with(mContext).load(item.uri).into(binding.img)
+                binding.tvDuration.visibility = View.GONE
+            }
 
             binding.img.setOnClickListener { if (item != null) onItemClick(item) }
             binding.executePendingBindings()

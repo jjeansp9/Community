@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/gal_root">
 
         <ImageView
             android:id="@+id/img"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="H,1:1"
             android:scaleType="centerCrop"/>
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="8dp"
+            android:src="@drawable/bg_corner_256_stroke"/>
+
+        <TextView
+            android:id="@+id/tv_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="4dp"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="2dp"
+            android:background="@drawable/bg_corner_4"
+            android:backgroundTint="@color/black_alpha_40"
+            style="@style/Text10spNormalWhite"
+            android:text="1:04"
+            android:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

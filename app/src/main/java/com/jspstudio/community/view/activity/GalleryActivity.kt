@@ -9,6 +9,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.loader.content.CursorLoader
 import com.bumptech.glide.Glide
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
@@ -35,7 +36,7 @@ class GalleryActivity : AppCompatActivity() {
         adapter = GalleryAdapter(this, mList, onItemClick = {  })
         binding.recycler.adapter = adapter
         binding.recycler.itemAnimator = null
-        binding.recycler.addItemDecoration(GridSpaceItemDecoration(4, Util.fromDpToPx(2).toInt()))
+        binding.recycler.addItemDecoration(GridSpaceItemDecoration(3, Util.fromDpToPx(1).toInt()))
         getAlbumType()
     }
 
@@ -88,16 +89,72 @@ class GalleryActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 // 선택된 항목의 값을 가져옴
                 val selItem = parent?.getItemAtPosition(position).toString()
-                if (position == 0) getAlbum(null) // 전체
-                else getAlbum(selItem)
+                if (position == 0) getAlbumAll() // 전체
+                else getAlbumImage(selItem)
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // 아무것도 선택되지 않았을 때의 처리
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
 
-    private fun getAlbum(selFolder : String?) {
+    private fun getAlbumAll() {
+        if (mList.size > 0) mList.clear()
+        val selection = (MediaStore.Files.FileColumns.MEDIA_TYPE + "=" + MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE
+                    + " OR " + MediaStore.Files.FileColumns.MEDIA_TYPE + "=" + MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)
+
+        val projection = arrayOf(
+            MediaStore.Files.FileColumns._ID,
+            MediaStore.Files.FileColumns.DISPLAY_NAME,
+            MediaStore.Files.FileColumns.SIZE,
+            MediaStore.Files.FileColumns.MIME_TYPE,
+            MediaStore.Files.FileColumns.DATE_ADDED,
+            MediaStore.Files.FileColumns.MEDIA_TYPE,
+            MediaStore.Files.FileColumns.DURATION
+        )
+        val collectionUri = MediaStore.Files.getContentUri("external")
+
+        val cursor = contentResolver.query(
+            collectionUri,
+            projection,
+            selection,
+            null,
+            MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
+        )
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                val idIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns._ID)
+                val displayNameColumn = cursor.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME)
+                val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Files.FileColumns.SIZE)
+                val mediaTypeIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.MEDIA_TYPE)
+                val durationIndex = cursor.getColumnIndex(MediaStore.Files.FileColumns.DURATION)
+                val mimeTypeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.MIME_TYPE)
+
+                if (idIndex != -1 && mediaTypeIndex != -1 && durationIndex != -1) {
+                    val uri = ContentUris.withAppendedId(collectionUri, cursor.getLong(idIndex))
+                    val id = cursor.getLong(idIndex)
+                    val mediaType = cursor.getInt(mediaTypeIndex)
+                    val duration = cursor.getInt(durationIndex)
+                    val name = cursor.getString(displayNameColumn)
+                    val size = cursor.getLong(sizeColumn)
+                    val mimeType = cursor.getString(mimeTypeColumn)
+                    var getData = ""
+                    if (mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE) {
+                        getData = "content://media/external/images/media/$id"
+                    } else if (mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO) {
+                        getData = "content://media/external/video/media/$id"
+                    }
+                    mList.add(ImageData(Uri.parse(getData), name, size, mimeType, duration))
+                }
+            } while (cursor.moveToNext())
+        }
+
+        cursor!!.close()
+
+        adapter.submitList(mList)
+        binding.recycler.scrollToPosition(0)
+    }
+
+    private fun getAlbumImage(selFolder: String?) {
         if (mList.size > 0) mList.clear()
         val imagesSelection = if (selFolder != null) "${MediaStore.Images.Media.RELATIVE_PATH} LIKE ?" else null
         val imagesSelectionArgs = if (selFolder != null) arrayOf("%$selFolder%") else null
@@ -143,5 +200,9 @@ class GalleryActivity : AppCompatActivity() {
 
         adapter.submitList(mList.reversed())
         binding.recycler.scrollToPosition(0)
+    }
+
+    private fun getAlbumVideo() {
+
     }
 }

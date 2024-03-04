@@ -59,7 +59,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.2")
     implementation("androidx.navigation:navigation-ui-ktx:2.4.2")
 
-    implementation("com.github.bumptech.glide:glide:4.14.2")
+    implementation("com.github.bumptech.glide:glide:4.13.2")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
     implementation(platform("com.google.firebase:firebase-bom:32.7.1"))
     implementation("com.google.firebase:firebase-auth-ktx")
 

@@ -7,5 +7,6 @@ data class ImageData(
     val uri: Uri? = null,
     val name: String = "",
     val size: Long = 0L,
-    val mimeType: String = ""
+    val mimeType: String = "",
+    val duration: Int = -1
 )
