@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit
 class GalleryAdapter(
     private val context: Context,
     private val list: MutableList<ImageData>,
-    private val onItemClick : (item: ImageData) -> Unit,
+    private val onItemClick : (item: ImageData, position: Int) -> Unit,
 ) : ListAdapter<ImageData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     private val mList = list
@@ -77,7 +77,7 @@ class GalleryAdapter(
                 binding.tvDuration.visibility = View.GONE
             }
 
-            binding.img.setOnClickListener { if (item != null) onItemClick(item) }
+            binding.img.setOnClickListener { if (item != null) onItemClick(item, position) }
             binding.executePendingBindings()
         }
     }

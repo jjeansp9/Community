@@ -10,13 +10,7 @@
         android:name="com.jspstudio.community.view.fragment.main.HomeFragment"
         app:popUpToSaveState="true"
         tools:layout="@layout/fragment_home"
-        android:label="HomeFragment" >
-
-        <action
-            android:id="@+id/action_first_to_detail"
-            app:destination="@+id/book_detail_fragment"/>
-
-    </keep_state_fragment>
+        android:label="HomeFragment"/>
 
     <keep_state_fragment
         android:id="@+id/message_fragment"

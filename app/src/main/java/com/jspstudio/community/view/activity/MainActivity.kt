@@ -3,12 +3,14 @@ package com.jspstudio.community.view.activity
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
+import com.jspstudio.community.databinding.ActivityGalleryBinding
 import com.jspstudio.community.databinding.ActivityMainBinding
 import com.jspstudio.community.view.custom.CustomToast
 import com.jspstudio.community.view.fragment.KeepStateFragment
@@ -41,7 +43,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main, "
     }
 
     private fun observe() {
-        binding.vmMain?.title?.observe(this) { title ->
+        viewModel?.title?.observe(this) { title ->
         }
     }
 }

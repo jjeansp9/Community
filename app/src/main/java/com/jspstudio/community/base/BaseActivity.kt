@@ -21,16 +21,16 @@ abstract class BaseActivity<T : ViewDataBinding>(
         super.onCreate(savedInstanceState)
         //context = this
         binding = DataBindingUtil.setContentView(this, layoutResourceId)
-        this.onBackPressedDispatcher.addCallback(this, callback)
+        //this.onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            android.R.id.home ->{
-                finish()
-                return true
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when(item.itemId){
+//            android.R.id.home ->{
+//                finish()
+//                return true
+//            }
+//        }
+//        return super.onOptionsItemSelected(item)
+//    }
 }
