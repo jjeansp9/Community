@@ -36,4 +36,6 @@
 
     <string name="accompany_appbar_title">글쓰기</string>
     <string name="msg_hint">메세지 입력</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
