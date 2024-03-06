@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/gallery_list_fragment"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph_gallery">
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/gallery_list_fragment"
         android:name="com.jspstudio.community.view.fragment.gallery.GalleryListFragment"
         app:popUpToSaveState="true"
         tools:layout="@layout/fragment_gallery_list"
-        android:label="HomeFragment" >
+        android:label="GalleryFragment" >
 
         <action
             android:id="@+id/action_first_to_detail"
             app:destination="@+id/gallery_detail_fragment"/>
 
-    </keep_state_fragment>
+    </fragment>
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/gallery_detail_fragment"
         android:name="com.jspstudio.community.view.fragment.gallery.GalleryDetailFragment"
         tools:layout="@layout/fragment_gallery_detail"

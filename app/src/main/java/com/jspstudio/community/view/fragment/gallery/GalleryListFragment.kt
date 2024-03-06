@@ -59,6 +59,8 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
         super.onViewCreated(view, savedInstanceState)
 
         adapter = GalleryAdapter(mContext, mList, onItemClick = { it, position ->
+            binding.vmGal?.addFile(it)
+        }, onDetailClick = { it, position ->
             val bundle = bundleOf(
                 IntentKey.GALLERY_DATA to mList,
                 "position" to position

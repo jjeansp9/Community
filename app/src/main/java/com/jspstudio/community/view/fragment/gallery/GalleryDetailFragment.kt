@@ -1,5 +1,6 @@
 package com.jspstudio.community.view.fragment.gallery
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,11 @@ class GalleryDetailFragment : BaseFragment<FragmentGalleryDetailBinding>("Galler
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
 
-            mList = it.getParcelableArrayList<ImageData>(IntentKey.GALLERY_DATA)!!
+            mList = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        it.getParcelableArrayList<ImageData>(IntentKey.GALLERY_DATA, ImageData::class.java)!!
+                    } else {
+                        it.getParcelableArrayList<ImageData>(IntentKey.GALLERY_DATA)!!
+                    }
             position = it.getInt("position")
         }
     }
@@ -57,8 +62,7 @@ class GalleryDetailFragment : BaseFragment<FragmentGalleryDetailBinding>("Galler
                 position: Int,
                 positionOffset: Float,
                 positionOffsetPixels: Int
-            ) {
-            }
+            ) {}
 
             override fun onPageSelected(index: Int) {
                 position = index

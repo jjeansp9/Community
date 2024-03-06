@@ -40,5 +40,32 @@
             android:text="1:04"
             android:visibility="gone"/>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ly_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@drawable/bg_corner_4"
+            android:backgroundTint="@color/black_alpha_40"
+            android:padding="2dp">
+            <ImageView
+                android:id="@+id/img_top"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                app:layout_constraintBottom_toTopOf="@id/img_bottom"
+                app:layout_constraintStart_toEndOf="@id/img_bottom"
+                android:src="@drawable/arrow_top_right"/>
+            <ImageView
+                android:id="@+id/img_bottom"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/arrow_bottom_left"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

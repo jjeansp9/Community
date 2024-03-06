@@ -19,6 +19,7 @@ class GalleryAdapter(
     private val context: Context,
     private val list: MutableList<ImageData>,
     private val onItemClick : (item: ImageData, position: Int) -> Unit,
+    private val onDetailClick : (item: ImageData, position: Int) -> Unit,
 ) : ListAdapter<ImageData, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
     private val mList = list
@@ -78,6 +79,7 @@ class GalleryAdapter(
             }
 
             binding.img.setOnClickListener { if (item != null) onItemClick(item, position) }
+            binding.lyDetail.setOnClickListener { if (item != null) onDetailClick(item, position) }
             binding.executePendingBindings()
         }
     }
