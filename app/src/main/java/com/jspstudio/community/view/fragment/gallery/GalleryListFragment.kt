@@ -60,31 +60,20 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
         super.onViewCreated(view, savedInstanceState)
         //binding.vmGal?.addFile(it)
         adapter = GalleryAdapter(mContext, mList, onItemClick = { it, position ->
-            if (it.isCheck) binding.vmGal?.addFile(it)
+            if (it.isCheck) {
+                binding.vmGal?.addFile(it)
+            }
             else {
                 binding.vmGal?.removeFile(it)
                 map[it.name]!!.cnt = 0
+
             }
 
-//            map.clear()
-//            mList.forEach { map[it.name] = it }
-
-            // map 업데이트 로직 검증
             for (i in binding.vmGal?.getFile()!!.indices) {
                 binding.vmGal?.getFile()!![i].cnt = i + 1
                 map.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
                 adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, map[binding.vmGal?.getFile()!![i].name]!!.cnt)
             }
-
-            mList.clear()
-            mList.addAll(map.values)
-
-            map.values.forEach { imageData ->
-                LogMgr.e(TAG, "Name: ${imageData.name}, Index: ${imageData.index}")
-            }
-
-            val updatedList = ArrayList<ImageData>(mList)
-            //adapter.notifyDataSetChanged()
 
         }, onDetailClick = { it, position ->
             val bundle = bundleOf(
