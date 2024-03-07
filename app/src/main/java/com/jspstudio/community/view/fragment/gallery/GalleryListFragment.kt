@@ -36,6 +36,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
     private lateinit var adapter : GalleryAdapter
     private val mList = mutableListOf<ImageData>()
+    private val map = HashMap<String, ImageData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,9 +58,34 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //binding.vmGal?.addFile(it)
         adapter = GalleryAdapter(mContext, mList, onItemClick = { it, position ->
-            binding.vmGal?.addFile(it)
+            if (it.isCheck) binding.vmGal?.addFile(it)
+            else {
+                binding.vmGal?.removeFile(it)
+                map[it.name]!!.index = 0
+            }
+
+//            map.clear()
+//            mList.forEach { map[it.name] = it }
+
+            // map 업데이트 로직 검증
+            for (i in binding.vmGal?.getFile()!!.indices) {
+                val original = map[binding.vmGal?.getFile()!![i].name]!!
+                val updated = original.copy(index = i + 1)
+                map[updated.name] = updated
+            }
+
+            mList.clear()
+            mList.addAll(map.values)
+
+            map.values.forEach { imageData ->
+                LogMgr.e(TAG, "Name: ${imageData.name}, Index: ${imageData.index}")
+            }
+
+            val updatedList = ArrayList<ImageData>(mList)
+            adapter.submitList(updatedList)
+
         }, onDetailClick = { it, position ->
             val bundle = bundleOf(
                 IntentKey.GALLERY_DATA to mList,
@@ -185,6 +211,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
         cursor!!.close()
 
         adapter.submitList(mList)
+        mList.forEach { map[it.name] = it }
         binding.recycler.scrollToPosition(0)
     }
 
@@ -233,6 +260,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
         }
 
         adapter.submitList(mList.reversed())
+        mList.forEach { map[it.name] = it }
         binding.recycler.scrollToPosition(0)
     }
 

@@ -31,7 +31,7 @@ class GalleryAdapter(
                 oldItem: ImageData,
                 newItem: ImageData
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.index == newItem.index
             }
 
             override fun areContentsTheSame(
@@ -78,7 +78,14 @@ class GalleryAdapter(
                 binding.tvDuration.visibility = View.GONE
             }
 
-            binding.img.setOnClickListener { if (item != null) onItemClick(item, position) }
+            binding.img.setOnClickListener {
+                if (item != null) {
+                    item.isCheck = !item.isCheck
+                    binding.item = item
+                    LogMgr.e("test", "getIndex: " + item.index)
+                    onItemClick(item, position)
+                }
+            }
             binding.lyDetail.setOnClickListener { if (item != null) onDetailClick(item, position) }
             binding.executePendingBindings()
         }

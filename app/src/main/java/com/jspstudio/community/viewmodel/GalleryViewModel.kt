@@ -9,13 +9,23 @@ class GalleryViewModel  : BaseViewModel("GalleryViewModel"){
     private val _fileList = MutableLiveData<MutableList<ImageData>>()
     val fileList: LiveData<MutableList<ImageData>> get() = _fileList
     val getFile = mutableListOf<ImageData>()
+
     fun addFile(file: ImageData) {
         getFile.add(file)
-        _fileList.value = getFile
     }
 
-    fun removeFile(position: Int) {
-        getFile.removeAt(position)
+    fun removeFile(file: ImageData) {
+        getFile.remove(file)
+    }
+    fun getFile() : MutableList<ImageData> {
+        return getFile
+    }
+
+//    0 1 2 3 4 5
+//      2 0   1
+//
+//    2 4 1
+    fun putFile() {
         _fileList.value = getFile
     }
 }

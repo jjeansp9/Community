@@ -56,6 +56,16 @@
                         android:textColor="@color/black"
                         android:textSize="12sp"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:padding="@dimen/appbar_padding"
+                        android:text="전송"
+                        android:onClick="@{() -> vmGal.putFile()}"/>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.appcompat.widget.Toolbar>
