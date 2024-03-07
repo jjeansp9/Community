@@ -13,5 +13,6 @@ data class ImageData(
     val mimeType: String = "",
     val duration: Int = -1,
     var isCheck: Boolean = false,
+    var cnt: Int = 0,
     var index: Int = 0,
 ): Parcelable

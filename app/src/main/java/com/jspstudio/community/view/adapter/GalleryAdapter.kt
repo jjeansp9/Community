@@ -31,7 +31,7 @@ class GalleryAdapter(
                 oldItem: ImageData,
                 newItem: ImageData
             ): Boolean {
-                return oldItem.index == newItem.index
+                return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(
@@ -47,8 +47,8 @@ class GalleryAdapter(
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("ClickableViewAccessibility")
         fun bind(item: ImageData, position: Int) {
+            binding.item = item
             LogMgr.e("image", "$position ," + item + ", ${item.mimeType}")
-
             if (item.mimeType.contains("gif")) {
                 Glide.with(mContext).asGif().load(item.uri).into(binding.img)
                 binding.tvDuration.text = "GIF"
@@ -77,12 +77,11 @@ class GalleryAdapter(
                 Glide.with(mContext).load(item.uri).into(binding.img)
                 binding.tvDuration.visibility = View.GONE
             }
-
             binding.img.setOnClickListener {
                 if (item != null) {
                     item.isCheck = !item.isCheck
                     binding.item = item
-                    LogMgr.e("test", "getIndex: " + item.index)
+                    LogMgr.e("test", "getIndex: " + item.index + ", position: " + position)
                     onItemClick(item, position)
                 }
             }

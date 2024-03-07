@@ -36,7 +36,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
     private lateinit var adapter : GalleryAdapter
     private val mList = mutableListOf<ImageData>()
-    private val map = HashMap<String, ImageData>()
+    private val map = LinkedHashMap<String, ImageData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +63,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
             if (it.isCheck) binding.vmGal?.addFile(it)
             else {
                 binding.vmGal?.removeFile(it)
-                map[it.name]!!.index = 0
+                map[it.name]!!.cnt = 0
             }
 
 //            map.clear()
@@ -71,9 +71,9 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
             // map 업데이트 로직 검증
             for (i in binding.vmGal?.getFile()!!.indices) {
-                val original = map[binding.vmGal?.getFile()!![i].name]!!
-                val updated = original.copy(index = i + 1)
-                map[updated.name] = updated
+                binding.vmGal?.getFile()!![i].cnt = i + 1
+                map.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
+                adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, map[binding.vmGal?.getFile()!![i].name]!!.cnt)
             }
 
             mList.clear()
@@ -84,7 +84,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
             }
 
             val updatedList = ArrayList<ImageData>(mList)
-            adapter.submitList(updatedList)
+            //adapter.notifyDataSetChanged()
 
         }, onDetailClick = { it, position ->
             val bundle = bundleOf(
@@ -203,7 +203,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
                     } else if (mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO) {
                         getData = "content://media/external/video/media/$id"
                     }
-                    mList.add(ImageData(Uri.parse(getData), name, size, mimeType, duration))
+                    mList.add(ImageData(Uri.parse(getData), name, size, mimeType, duration, index = cursor.position))
                 }
             } while (cursor.moveToNext())
         }
@@ -255,7 +255,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
                 LogMgr.e("image", "name : $name, mimeType : $mimeType")
 
-                mList.add(ImageData(uri, name, size, mimeType))
+                mList.add(ImageData(uri, name, size, mimeType, index = cursor.position))
             }
         }
 
