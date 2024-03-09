@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:text="@{String.valueOf(item.cnt)}"
+                android:text="@{String.valueOf(item.num)}"
                 style="@style/Text14spBoldBlack"/>
         </LinearLayout>
 

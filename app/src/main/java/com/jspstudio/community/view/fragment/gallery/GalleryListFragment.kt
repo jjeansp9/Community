@@ -5,19 +5,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
 import com.jspstudio.community.common.IntentKey
-import com.jspstudio.community.databinding.FragmentAccountBinding
 import com.jspstudio.community.databinding.FragmentGalleryListBinding
 import com.jspstudio.community.model.ImageData
 import com.jspstudio.community.util.LogMgr
@@ -25,7 +21,6 @@ import com.jspstudio.community.util.Util
 import com.jspstudio.community.view.adapter.GalleryAdapter
 import com.jspstudio.community.view.custom.GridSpaceItemDecoration
 import com.jspstudio.community.viewmodel.GalleryViewModel
-import com.jspstudio.community.viewmodel.MainViewModel
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -59,20 +54,20 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //binding.vmGal?.addFile(it)
+        LogMgr.e(TAG, "EVENT111")
         adapter = GalleryAdapter(mContext, mList, onItemClick = { it, position ->
             if (it.isCheck) {
                 binding.vmGal?.addFile(it)
             }
             else {
                 binding.vmGal?.removeFile(it)
-                map[it.name]!!.cnt = 0
+                map[it.name]!!.num = 0
 
             }
-
             for (i in binding.vmGal?.getFile()!!.indices) {
-                binding.vmGal?.getFile()!![i].cnt = i + 1
+                binding.vmGal?.getFile()!![i].num = i + 1
                 map.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
-                adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, map[binding.vmGal?.getFile()!![i].name]!!.cnt)
+                adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, map[binding.vmGal?.getFile()!![i].name]!!.num)
             }
 
         }, onDetailClick = { it, position ->
