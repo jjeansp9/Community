@@ -19,33 +19,19 @@ class GalleryViewModel  : BaseViewModel("GalleryViewModel"){
 
     val _map = LinkedHashMap<String, ImageData>()
 
-    private val _selFileList = MutableLiveData<MutableList<ImageData>>()
-    val selFileList: LiveData<MutableList<ImageData>> get() = _selFileList
+    private val _sendFileList = MutableLiveData<MutableList<ImageData>>()
+    val sendFileList: LiveData<MutableList<ImageData>> get() = _sendFileList
 
-    private val _files = MutableLiveData<List<ImageData>>()
-    val files: LiveData<List<ImageData>> = _files
+    private val _selFiles = MutableLiveData<List<ImageData>>()
+    val selFiles: LiveData<List<ImageData>> = _selFiles
 
     val getFile = mutableListOf<ImageData>()
 
-    fun updateFiles(updatedFiles: List<ImageData>) {
-        _files.value = updatedFiles
-    }
-
-    fun addFile(file: ImageData) {
-        getFile.add(file)
-    }
-
-    fun removeFile(file: ImageData) {
-        getFile.remove(file)
-    }
-    fun getFile() : MutableList<ImageData> {
-        return getFile
-    }
-
-    fun putFile() {
-        _selFileList.value = getFile
-        LogMgr.e(TAG, getFile.size.toString())
-    }
+    fun updateFiles(updatedFiles: MutableList<ImageData>) { _selFiles.value = updatedFiles }
+    fun addFile(file: ImageData) { getFile.add(file) }
+    fun removeFile(file: ImageData) { getFile.remove(file) }
+    fun getFile() : MutableList<ImageData> { return getFile }
+    fun sendFile() { _sendFileList.value = getFile }
 
     suspend fun getAlbumAll(context: Context) {
         withContext(Dispatchers.IO) {
@@ -110,9 +96,5 @@ class GalleryViewModel  : BaseViewModel("GalleryViewModel"){
                 }
             }
         }
-
-//        adapter.submitList(mList)
-//        mList.forEach { map[it.name] = it }
-//        binding.recycler.scrollToPosition(0)
     }
 }

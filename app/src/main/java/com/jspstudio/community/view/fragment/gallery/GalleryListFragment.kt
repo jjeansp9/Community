@@ -70,7 +70,6 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
                 if (mList.size == 0) mList.addAll(it)
             } else {
                 val item = ArrayList(it ?: emptyList())
-                //item.forEach { it.isCheck = false }
                 for (i in binding.vmGal?.getFile()!!.indices) {
                     item[binding.vmGal?.getFile()!![i].index] = binding.vmGal?.getFile()!![i]
                     item[binding.vmGal?.getFile()!![i].index].isCheck = true
@@ -80,16 +79,15 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
         }
 
-        binding.vmGal?.files?.observe(viewLifecycleOwner) { it ->
-            val item = arrayListOf<ImageData>()
-            item.addAll(mList)
-            for (i in it.indices) {
-                item[binding.vmGal?.getFile()!![i].index] = binding.vmGal?.getFile()!![i]
-                item[binding.vmGal?.getFile()!![i].index].isCheck = true
+        binding.vmGal?.selFiles?.observe(viewLifecycleOwner) { it ->
+            if (mList.size > 0 && it.isNotEmpty()) {
+                val item = arrayListOf<ImageData>()
+                item.addAll(mList)
+                for (i in it.indices) {
+                    item[binding.vmGal?.getFile()!![i].index] = it[i]
+                }
+                if (it.isNotEmpty()) adapter.submitList(item)
             }
-            if (it.isNotEmpty()) adapter.submitList(item)
-            //adapter.submitList(updatedList.toList()) // 새로운 리스트 인스턴스를 생성하여 전달
-            // 필요한 경우 여기에서 추가 UI 업데이트 로직을 실행
         }
     }
 
@@ -97,29 +95,13 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
         adapter = GalleryAdapter(mContext, onItemClick = { it, position ->
             if (it.isCheck) {
                 binding.vmGal?.addFile(it)
-                LogMgr.e(TAG, "event is check")
             }
             else {
                 binding.vmGal?.removeFile(it)
-                binding.vmGal?._map!![it.name]!!.num = 0
-
-                LogMgr.e(TAG, "event is not check")
+                binding.vmGal?._map!![it.name]!!.num = null
             }
-
-            binding.vmGal?.let { vm ->
-                val updatedFiles = vm.getFile().mapIndexed { index, imageData ->
-                    if (imageData.name == it.name) imageData.copy(num = index + 1) else imageData
-                }
-                vm.updateFiles(updatedFiles)
-            }
-
-//            for (i in binding.vmGal?.getFile()!!.indices) {
-//                binding.vmGal?.getFile()!![i].num = i + 1
-//                binding.vmGal?._map?.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
-//                adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, binding.vmGal?._map!![binding.vmGal?.getFile()!![i].name]!!.num)
-//            }
-
             setCheckNum()
+
         }, onDetailClick = { it, position ->
             if (mList.size > 0) {
                 val bundle = bundleOf(
@@ -140,6 +122,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
             binding.vmGal?._map?.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
             adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, binding.vmGal?._map!![binding.vmGal?.getFile()!![i].name]!!.num)
         }
+        binding.vmGal?.updateFiles(binding.vmGal?.getFile()!!)
     }
 
     private fun getAlbumType() {

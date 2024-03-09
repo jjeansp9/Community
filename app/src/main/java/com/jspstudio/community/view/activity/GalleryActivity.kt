@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseActivity
 import com.jspstudio.community.databinding.ActivityGalleryBinding
+import com.jspstudio.community.firebase.StorageMgr
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.view.fragment.KeepStateFragment
 import com.jspstudio.community.viewmodel.GalleryViewModel
@@ -28,9 +29,9 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
     }
 
     private fun initObserver() {
-        binding.vmGal?.fileList?.observe(this) {
-            //LogMgr.e(TAG, it.size.toString())
-            it.forEach { LogMgr.e(TAG, it.name) }
+        binding.vmGal?.sendFileList?.observe(this) {selFiles ->
+            LogMgr.e(TAG, selFiles.size.toString())
+            selFiles.forEach { StorageMgr.sendImg(this, it.uri!!) }
         }
     }
 

@@ -2,16 +2,14 @@ package com.jspstudio.community.view.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.jspstudio.community.R
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.jspstudio.community.databinding.ListImageBinding
 import com.jspstudio.community.model.ImageData
 import com.jspstudio.community.util.LogMgr
@@ -82,8 +80,6 @@ class GalleryAdapter(
                 if (item != null) {
                     item.isCheck = !item.isCheck
                     binding.item = item
-                    LogMgr.e("test", "getIndex: " + item.index + ", position: " + position + ", check" + item.isCheck)
-
                     onItemClick(item, position)
                 }
             }

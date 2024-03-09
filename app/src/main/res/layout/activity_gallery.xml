@@ -64,7 +64,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:padding="@dimen/appbar_padding"
                         android:text="전송"
-                        android:onClick="@{() -> vmGal.putFile()}"/>
+                        android:onClick="@{() -> vmGal.sendFile()}"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
