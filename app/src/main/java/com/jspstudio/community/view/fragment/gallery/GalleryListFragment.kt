@@ -1,15 +1,19 @@
 package com.jspstudio.community.view.fragment.gallery
 
 import android.content.ContentUris
+import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.jspstudio.community.R
 import com.jspstudio.community.base.BaseFragment
@@ -21,6 +25,7 @@ import com.jspstudio.community.util.Util
 import com.jspstudio.community.view.adapter.GalleryAdapter
 import com.jspstudio.community.view.custom.GridSpaceItemDecoration
 import com.jspstudio.community.viewmodel.GalleryViewModel
+import kotlinx.coroutines.launch
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -53,34 +58,88 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //binding.vmGal?.addFile(it)
-        LogMgr.e(TAG, "EVENT111")
-        adapter = GalleryAdapter(mContext, mList, onItemClick = { it, position ->
+        setRecycler()
+        getAlbumType()
+        initObserver()
+    }
+
+    private fun initObserver() {
+        binding.vmGal?.fileList?.observe(mContext) {
+            if (binding.vmGal?.getFile()?.size == 0) {
+                if (it.isNotEmpty()) adapter.submitList(it)
+                if (mList.size == 0) mList.addAll(it)
+            } else {
+                val item = ArrayList(it ?: emptyList())
+                //item.forEach { it.isCheck = false }
+                for (i in binding.vmGal?.getFile()!!.indices) {
+                    item[binding.vmGal?.getFile()!![i].index] = binding.vmGal?.getFile()!![i]
+                    item[binding.vmGal?.getFile()!![i].index].isCheck = true
+                }
+                if (it.isNotEmpty()) adapter.submitList(item)
+            }
+
+        }
+
+        binding.vmGal?.files?.observe(viewLifecycleOwner) { it ->
+            val item = arrayListOf<ImageData>()
+            item.addAll(mList)
+            for (i in it.indices) {
+                item[binding.vmGal?.getFile()!![i].index] = binding.vmGal?.getFile()!![i]
+                item[binding.vmGal?.getFile()!![i].index].isCheck = true
+            }
+            if (it.isNotEmpty()) adapter.submitList(item)
+            //adapter.submitList(updatedList.toList()) // 새로운 리스트 인스턴스를 생성하여 전달
+            // 필요한 경우 여기에서 추가 UI 업데이트 로직을 실행
+        }
+    }
+
+    private fun setRecycler() {
+        adapter = GalleryAdapter(mContext, onItemClick = { it, position ->
             if (it.isCheck) {
                 binding.vmGal?.addFile(it)
+                LogMgr.e(TAG, "event is check")
             }
             else {
                 binding.vmGal?.removeFile(it)
-                map[it.name]!!.num = 0
+                binding.vmGal?._map!![it.name]!!.num = 0
 
-            }
-            for (i in binding.vmGal?.getFile()!!.indices) {
-                binding.vmGal?.getFile()!![i].num = i + 1
-                map.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
-                adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, map[binding.vmGal?.getFile()!![i].name]!!.num)
+                LogMgr.e(TAG, "event is not check")
             }
 
+            binding.vmGal?.let { vm ->
+                val updatedFiles = vm.getFile().mapIndexed { index, imageData ->
+                    if (imageData.name == it.name) imageData.copy(num = index + 1) else imageData
+                }
+                vm.updateFiles(updatedFiles)
+            }
+
+//            for (i in binding.vmGal?.getFile()!!.indices) {
+//                binding.vmGal?.getFile()!![i].num = i + 1
+//                binding.vmGal?._map?.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
+//                adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, binding.vmGal?._map!![binding.vmGal?.getFile()!![i].name]!!.num)
+//            }
+
+            setCheckNum()
         }, onDetailClick = { it, position ->
-            val bundle = bundleOf(
-                IntentKey.GALLERY_DATA to mList,
-                "position" to position
-            )
-            findNavController().navigate(R.id.action_first_to_detail, bundle)
+            if (mList.size > 0) {
+                val bundle = bundleOf(
+                    IntentKey.GALLERY_DATA to mList,
+                    "position" to position
+                )
+                findNavController().navigate(R.id.action_first_to_detail, bundle)
+            }
         })
         binding.recycler.adapter = adapter
         binding.recycler.itemAnimator = null
         binding.recycler.addItemDecoration(GridSpaceItemDecoration(3, Util.fromDpToPx(1).toInt()))
-        getAlbumType()
+    }
+
+    private fun setCheckNum() {
+        for (i in binding.vmGal?.getFile()!!.indices) {
+            binding.vmGal?.getFile()!![i].num = i + 1
+            binding.vmGal?._map?.replace(binding.vmGal?.getFile()!![i].name, binding.vmGal?.getFile()!![i])
+            adapter.notifyItemChanged(binding.vmGal?.getFile()!![i].index, binding.vmGal?._map!![binding.vmGal?.getFile()!![i].name]!!.num)
+        }
     }
 
     private fun getAlbumType() {
@@ -137,7 +196,8 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 //            }
 //            override fun onNothingSelected(parent: AdapterView<*>?) {}
 //        }
-        getAlbumAll()
+        //getAlbumAll()
+        lifecycleScope.launch { binding.vmGal?.getAlbumAll(mContext) }
     }
 
     private fun getAlbumAll() {
@@ -196,7 +256,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
         adapter.submitList(mList)
         mList.forEach { map[it.name] = it }
-        binding.recycler.scrollToPosition(0)
+        Handler(Looper.getMainLooper()).postDelayed({if (binding.vmGal?.getFile()!!.size > 0) setCheckNum()}, 1000)
     }
 
     private fun getAlbumImage(selFolder: String?) {
@@ -245,7 +305,7 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
         adapter.submitList(mList.reversed())
         mList.forEach { map[it.name] = it }
-        binding.recycler.scrollToPosition(0)
+        Handler(Looper.getMainLooper()).postDelayed({if (binding.vmGal?.getFile()!!.size > 0) setCheckNum()}, 1000)
     }
 
     private fun getAlbumVideo() {
