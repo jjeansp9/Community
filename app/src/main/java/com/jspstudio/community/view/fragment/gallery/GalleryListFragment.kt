@@ -64,18 +64,20 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
 
     private fun initObserver() {
         binding.vmGal?.fileList?.observe(mContext) {
+            mList.clear()
+            mList.addAll(it)
             if (binding.vmGal?.getFile()?.size == 0) {
                 if (it.isNotEmpty()) adapter.submitList(it)
-                if (mList.size == 0) mList.addAll(it)
             } else {
                 val item = ArrayList(it ?: emptyList())
-                for (i in binding.vmGal?.getFile()!!.indices) {
-                    item[binding.vmGal?.getFile()!![i].index] = binding.vmGal?.getFile()!![i]
-                    item[binding.vmGal?.getFile()!![i].index].isCheck = true
+                for (i in it.indices) {
+//                    item[binding.vmGal?.getFile()!![i].index] = binding.vmGal?.getFile()!![i]
+//                    item[binding.vmGal?.getFile()!![i].index].isCheck = true
+
+                    item[i] = binding.vmGal?._map!![item[i].name]
                 }
                 if (it.isNotEmpty()) adapter.submitList(item)
             }
-
         }
 
         binding.vmGal?.selFiles?.observe(mContext) { it ->
@@ -83,7 +85,9 @@ class GalleryListFragment : BaseFragment<FragmentGalleryListBinding>("GalleryLis
                 val item = arrayListOf<ImageData>()
                 item.addAll(mList)
                 for (i in it.indices) {
-                    item[binding.vmGal?.getFile()!![i].index] = it[i]
+                    //item[binding.vmGal?.getFile()!![i].index] = it[i]
+
+                    item[i] = binding.vmGal?._map!![it[i].name]!!
                 }
                 if (it.isNotEmpty()) adapter.submitList(item)
             }

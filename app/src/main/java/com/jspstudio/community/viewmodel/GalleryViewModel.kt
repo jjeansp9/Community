@@ -170,7 +170,7 @@ class GalleryViewModel  : BaseViewModel("GalleryViewModel"){
             projection,
             imagesSelection,
             imagesSelectionArgs,
-            null
+            MediaStore.Files.FileColumns.DATE_ADDED + " DESC"
         )
 
         cursor?.use { cursor ->
