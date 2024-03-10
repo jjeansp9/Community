@@ -1,8 +1,12 @@
 package com.jspstudio.community.view.activity
 
 import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.jspstudio.community.R
@@ -12,6 +16,7 @@ import com.jspstudio.community.firebase.StorageMgr
 import com.jspstudio.community.util.LogMgr
 import com.jspstudio.community.view.fragment.KeepStateFragment
 import com.jspstudio.community.viewmodel.GalleryViewModel
+import kotlinx.coroutines.launch
 
 class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_gallery, "GalleryActivity") {
 
@@ -22,7 +27,7 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
         super.onCreate(savedInstanceState)
         binding.vmGal = viewModel
         binding.lifecycleOwner = this
-
+        setSpinner()
         setNavigation()
         setBackPressed()
         initObserver()
@@ -40,12 +45,38 @@ class GalleryActivity : BaseActivity<ActivityGalleryBinding>(R.layout.activity_g
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val navigator =
-            KeepStateFragment(this, navHostFragment.childFragmentManager, R.id.nav_host_fragment)
+        val navigator = KeepStateFragment(this, navHostFragment.childFragmentManager, R.id.nav_host_fragment)
 
         navController.navigatorProvider.addNavigator(navigator)
-
         navController.setGraph(R.navigation.nav_graph_gallery)
+    }
+
+    private fun setSpinner() {
+        lifecycleScope.launch {
+            binding.vmGal?.getAlbumType(this@GalleryActivity) { item ->
+                if (item.isNotEmpty()) {
+                    ArrayAdapter(
+                        this@GalleryActivity, // Context
+                        R.layout.layout_custom_spinner_item, // Custom layout
+                        item // 데이터 소스
+                    ).also { it ->
+                        it.setDropDownViewResource(R.layout.layout_custom_spinner_dropdown_item)
+                        binding.spinnerFolder.adapter = it
+                    }
+
+                    binding.spinnerFolder.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                            lifecycleScope.launch {
+                                val selItem = parent?.getItemAtPosition(position).toString()
+                                if (position == 0) binding.vmGal?.getAlbumAll(this@GalleryActivity) // 전체
+                                else binding.vmGal?.getAlbumImage(this@GalleryActivity, selItem)
+                            }
+                        }
+                        override fun onNothingSelected(parent: AdapterView<*>?) {}
+                    }
+                }
+            }
+        }
     }
 
     private fun setBackPressed() {
