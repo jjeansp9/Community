@@ -70,7 +70,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>("HomeFragment") {
 
         binding.swipe.setOnRefreshListener { initData() }
     }
-
+// 렌탈남친, 렌탈여친 아이디어 기획
     private fun startDetailActivity(item : AccompanyData) {
         val intent = Intent(mContext, AccompanyDetailActivity::class.java)
         intent.putExtra(IntentKey.ACCOMPANY_DATA, item)
